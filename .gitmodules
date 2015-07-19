@@ -1,0 +1,3 @@
+[submodule "threejs"]
+	path = threejs
+	url = git://github.com/casperlamboo/three.js.git

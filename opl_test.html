@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+
+	<title>KalOnline</title>
+
+	<script src="js/utils.js" type="text/javascript"></script>
+	<script src="threejs/build/three.js" type="text/javascript"></script>
+	<script src="loaders/OPLLoader.js" type="text/javascript"></script>
+	<script src="loaders/GBLoader.js" type="text/javascript"></script>
+	<script src="loaders/GTXLoader.js" type="text/javascript"></script>
+	<script src="threejs/examples/js/controls/EditorControls.js" type="text/javascript"></script>
+
+</head>
+<body>
+
+	<canvas height="480" width="720" id="canvas"></canvas>
+
+	<script type="text/javascript">
+		var scene = new THREE.Scene();
+
+		var canvas = document.getElementById('canvas');
+		var renderer = new THREE.WebGLRenderer({canvas: canvas});
+
+		var camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 100000);
+		camera.position.x = 50;
+		camera.position.y = 50;
+		camera.position.z = -50;
+		camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+		var controls = new THREE.EditorControls(camera, canvas);
+		controls.addEventListener('change', function () {
+			renderer.render(scene, camera);
+		});
+
+		var currentMesh;
+		var done = [];
+
+		var loader = new THREE.OPLLoader();
+		loader.load('data/MAPS/n_031_031.opl', function (map) {
+			scene.add(map);
+		});
+	</script>
+
+</body>
+</html>
