@@ -17,6 +17,54 @@
 	<canvas height="480" width="720" id="canvas"></canvas>
 
 	<script type="text/javascript">
+
+		var formation = {
+			a: {url: 'DATA/Model/Clothes/Cm_0_a01.gb', loaded: false}, 
+			p: {url: 'DATA/Model/Clothes/Cm_0_p01.gb', loaded: false}, 
+			f: {url: 'DATA/Model/Clothes/Cm_0_f01.gb', loaded: false}, 
+			g: {url: 'DATA/Model/Clothes/Cm_0_g01.gb', loaded: false}, 
+			s: {url: 'DATA/Model/Clothes/Cm_0_s01.gb', loaded: false}, 
+			h: {url: 'DATA/Model/Clothes/Cm_0_h01.gb', loaded: false}, 
+			bone: {url: 'DATA/Model/Motion/tm_bone.gb', loaded: false}, 
+			animation: {url: 'DATA/Model/Motion/tm_0_01.gb', loaded: false}
+		};
+
+		function init () {
+			var materials = [];
+			var geometry = new THREE.Geometry();
+
+			for (var i in formation) {
+				if (i !== 'bone' && i !== 'animation') {
+					var piece = formation[i];
+					
+					geometry.merge(piece.geometry, new THREE.Matrix4(), materials.length);
+					materials = materials.concat(piece.materials);
+
+					//hack?
+					geometry.skinWeights = geometry.skinWeights.concat(piece.geometry.skinWeights);
+					geometry.skinIndices = geometry.skinIndices.concat(piece.geometry.skinIndices);
+				}
+			}
+
+			geometry.computeBoundingSphere();
+			geometry.bones = formation.bone.geometry.bones;
+
+			for (var i = 0; i < materials.length; i ++) {
+				var material = materials[i];
+				material.skinning = true;
+			}
+
+			var material = new THREE.MeshFaceMaterial(materials);
+
+			var mesh = new THREE.SkinnedMesh(geometry, material);
+			scene.add(mesh);
+
+			this.animation = new THREE.Animation(mesh, formation.animation.geometry.animation);
+			this.animation.play(0);
+		}
+
+		var clock = new THREE.Clock();
+
 		var scene = new THREE.Scene();
 
 		var canvas = document.getElementById('canvas');
@@ -29,24 +77,36 @@
 		camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 		var controls = new THREE.EditorControls(camera, canvas);
-		controls.addEventListener('change', function () {
+
+		(function animate () {
+		    requestAnimationFrame(animate);
+
+			var delta = clock.getDelta();
+			THREE.AnimationHandler.update(delta);
+
 			renderer.render(scene, camera);
-		});
+		})();
 
-		function loaded (geometry, materials) {
-			var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-
-			scene.add(mesh);
-		}
-
-		//error in file DATA/Model/Clothes/Cm_0_p01.gb
 		var loader = new THREE.GBLoader();
-		loader.load('DATA/Model/Clothes/Cm_0_a01.gb', loaded);
-		loader.load('DATA/Model/Clothes/Cm_0_p01.gb', loaded);
-		loader.load('DATA/Model/Clothes/Cm_0_f01.gb', loaded);
-		loader.load('DATA/Model/Clothes/Cm_0_g01.gb', loaded);
-		loader.load('DATA/Model/Clothes/Cm_0_s01.gb', loaded);
-		loader.load('DATA/Model/Clothes/Cm_0_h01.gb', loaded);
+
+		for (var i in formation) {
+			var piece = formation[i];
+			(function (piece) {
+				loader.load(piece.url, function (geometry, materials) {
+					piece.geometry = geometry;
+					piece.materials = materials;
+					piece.loaded = true;
+
+					for (var i in formation) {
+						piece = formation[i];
+						if (!piece.loaded) {
+							return;
+						}
+					}
+					init();
+				});
+			})(piece);
+		}
 	</script>
 
 </body>

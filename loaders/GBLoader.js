@@ -36,17 +36,15 @@ THREE.GBLoader.prototype = {
 	load: function (url, onLoad, onProgress, onError) {
 		var scope = this;
 
-		this.path = url.slice(0, Math.max(url.lastIndexOf('\\'), url.lastIndexOf('/')));
-
 		var loader = new THREE.XHRLoader(scope.manager);
 		loader.setCrossOrigin(this.crossOrigin);
 		loader.setResponseType('arraybuffer');
 		loader.load(url, function (text) {
-			scope.parse(text, onLoad, onError);
+			scope.parse(text, url, onLoad, onError);
 		}, onProgress, onError);
 	},
 	
-	parse: function (data, onLoad, onError) {
+	parse: function (data, url, onLoad, onError) {
 		var fs = new FileStream(data);
 
 		//var geometry = new THREE.BufferGeometry();
@@ -68,7 +66,7 @@ THREE.GBLoader.prototype = {
 			geometry.bones = this._readBones(fs, header);
 		}
 
-		var materials = this._readMaterials(fs, header);
+		var materials = this._readMaterials(fs, header, url);
 
 		for (var i = 0; i < header.geometryCount; i ++) {
 			this._readGeometry(fs, header, geometry);
@@ -100,10 +98,7 @@ THREE.GBLoader.prototype = {
 		}
 
 		if (header.version >= 12) {
-			var fileName = '';
-			for (var i = 0; i < 64; i ++) {
-				fileName = fileName + fs.read('<s');
-			}
+			var fileName = fs.readString(64);
 			header.fileName = fileName;
 		}
 
@@ -189,16 +184,16 @@ THREE.GBLoader.prototype = {
 				n31, n32, n33, n34,
 				n41, n42, n43, n44
 			);
+			m = new THREE.Matrix4().getInverse(m);
 
 			parentBones.push(m);
 			
 			var parent = fs.read('<B');
 			if (parent === 255) {
 				parent = -1;
-				m.copy(new THREE.Matrix4().getInverse(m));
 			}
 			else {
-				m.copy(parentBones[parent].multiply(new THREE.Matrix4().getInverse(m)));
+				m = new THREE.Matrix4().getInverse(parentBones[parent]).multiply(m);
 			}
 
 			var pos = new THREE.Vector3();
@@ -208,16 +203,16 @@ THREE.GBLoader.prototype = {
 			m.decompose(pos, rot, scl);
 
 			bones.push({
-				"pos": pos,
+				"pos": pos.toArray(),
 				"parent": parent,
-				"rotq": rot,
-				"scl": scl
+				"rotq": rot.toArray(),
+				"scl": scl.toArray()
 			});
 		}
 		return bones;
 	}, 
 
-	_readMaterials: function (fs, header) {
+	_readMaterials: function (fs, header, url) {
 
 		var materials = [];
 
@@ -230,17 +225,18 @@ THREE.GBLoader.prototype = {
 				materialOffset: fs.read('<I')
 			};
 
-			var material = this._readMaterial(fs, header, materialData);
+			var material = this._readMaterial(fs, header, url, materialData);
 			materials.push(material);
 		}
 
 		return materials;
 	}, 
 
-	_readMaterial: function (fs, header, materialData) {
+	_readMaterial: function (fs, header, url, materialData) {
 		var currentPosition = fs.position;
 
 		var material = new THREE.MeshBasicMaterial();
+		//material.skinning = true;
 
 		fs.position = fs.size - header.descriptorSize + materialData.materialOffset;
 
@@ -253,7 +249,9 @@ THREE.GBLoader.prototype = {
 		var mapDiffuseAnisotropy = fs.read('<f');
 
 		fs.position = fs.size - header.descriptorSize + materialData.textureNameOffset;
-		var textureName = this.path + '/tex/';
+		
+		var path = url.slice(0, Math.max(url.lastIndexOf('\\'), url.lastIndexOf('/')));
+		var textureName = path + '/tex/';
 		//for (var j = 0; j < materialData.textureNameLength; j ++) {
 		while (true) {
 			var s = fs.read('<s');
@@ -264,7 +262,6 @@ THREE.GBLoader.prototype = {
 				textureName += s;
 			}
 		}
-		console.log(textureName);
 		textureName = textureName.slice(0, textureName.lastIndexOf('.')) + '.gtx';
 
 		var loader = new THREE.GTXLoader();
@@ -305,8 +302,8 @@ THREE.GBLoader.prototype = {
 			if (vertexFormat === 0 && boneIndexCount > 0) {
 				var vertexWeight = 1 / header.geometryCount;
 				if (vertexWeight > 0.25) {
-					geometry.skinWeights.push(vertexWeight);
-					geometry.skinIndices.push(boneLookup[0]);
+					geometry.skinWeights.push(new THREE.Vector4(vertexWeight, 0, 0, 0));
+					geometry.skinIndices.push(new THREE.Vector4(boneLookup[0], 0, 0, 0));
 				}
 			}
 			else if (vertexFormat > 0 && vertexFormat < 6) {
@@ -337,14 +334,14 @@ THREE.GBLoader.prototype = {
 						vertexWeights.push(difference);
 					}
 
-					geometry.skinWeights.push(vertexWeights[0]);
+					geometry.skinWeights.push(new THREE.Vector4(vertexWeights[0], 0, 0, 0));
 
 					var vertexGroups = [fs.read('<B'), fs.read('<B'), fs.read('<B'), fs.read('<B')];
-					geometry.skinIndices.push(boneLookup[vertexGroups[0]]);
+					geometry.skinIndices.push(new THREE.Vector4(boneLookup[vertexGroups[0]], 0, 0, 0));
 				}
 				else {
-					geometry.skinIndices.push(0);
-					geometry.skinWeights.push(0);
+					geometry.skinIndices.push(new THREE.Vector4(0, 0, 0, 0));
+					geometry.skinWeights.push(new THREE.Vector4(0, 0, 0, 0));
 				}
 			}
 
