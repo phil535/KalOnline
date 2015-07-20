@@ -13,19 +13,13 @@ THREE.OPLLoader.prototype = {
 		var loader = new THREE.XHRLoader(scope.manager);
 		loader.setCrossOrigin(this.crossOrigin);
 		loader.setResponseType('arraybuffer');
-		loader.load(url, function (text) {
-			scope.parse(text, onLoad);
+		loader.load(url, function (data) {
+			scope.parse(data, onLoad);
 		}, onProgress, onError);
 	},
 	
 	parse: function (data, onLoad) {
-
 		var fs = new FileStream(data);
-
-		var map = new THREE.Object3D();
-		var loadIndex = 0;
-
-		var loader = new THREE.GBLoader();
 
 		var header = {
 			CRC32: fs.read('<I'), 
@@ -40,42 +34,33 @@ THREE.OPLLoader.prototype = {
 			objectCount: fs.read('<I')			
 		};
 
-		function load () {
-			loadIndex ++;
+		var opl = [];
 
+		for (var i = 0; i < header.objectCount; i ++) {
 			var urlLength = fs.read('<I');
 
-			var url = "";
-			for (var i = 0; i < urlLength; i ++) {
-				url = url + fs.read('<s');
-			}
-			url += ".gb";
+			var url = fs.readString(urlLength) + '.gb';
 
-			console.log(url);
+			var posX = fs.read('<f') * 8192;
+			var posZ = fs.read('<f');
+			var posY = fs.read('<f') * 8192;
 
-			var pos = new THREE.Vector3(fs.read('<f') * 8192, fs.read('<f') * 8192, fs.read('<f')/10000000);
-			var rot = new THREE.Quaternion(fs.read('<f'), fs.read('<f'), fs.read('<f'), fs.read('<f'));
-			var scl = new THREE.Vector3(fs.read('<f'), fs.read('<f'), fs.read('<f'));
+			var quaternion = new THREE.Quaternion(fs.read('<f'), fs.read('<f'), fs.read('<f'), fs.read('<f'));
 
-			loader.load(url, function (geometry, materials) {
-				var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+			var sclX = fs.read('<f');
+			var sclZ = fs.read('<f');
+			var sclY = fs.read('<f');
 
-				mesh.position.set(pos.x, pos.z, pos.y);
-				mesh.rotation.setFromQuaternion(rot, "XZY");
-				mesh.scale.copy(scl.x, scl.z, scl.z);
-
-				map.add(mesh);
-
-				if (loadIndex < header.objectCount) {
-					load();
-				}
-				else {
-					onLoad(map);
-				}
+			opl.push({
+				url: url, 
+				mapX: header.mapX, 
+				mapY: header.mapY, 
+				pos: new THREE.Vector3(posX, posZ, posY), 
+				rot: new THREE.Euler().setFromQuaternion(quaternion, 'XZY'), 
+				scl: new THREE.Vector3(sclX, sclZ, sclY)
 			});
 		}
 
-		load();
-
+		onLoad(opl);
 	}
 };

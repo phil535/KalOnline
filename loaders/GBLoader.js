@@ -254,7 +254,8 @@ THREE.GBLoader.prototype = {
 
 		fs.position = fs.size - header.descriptorSize + materialData.textureNameOffset;
 		var textureName = this.path + '/tex/';
-		for (var j = 0; j < materialData.textureNameLength; j ++) {
+		//for (var j = 0; j < materialData.textureNameLength; j ++) {
+		while (true) {
 			var s = fs.read('<s');
 			if (s === String.fromCharCode(0)) {
 				break;
@@ -263,6 +264,7 @@ THREE.GBLoader.prototype = {
 				textureName += s;
 			}
 		}
+		console.log(textureName);
 		textureName = textureName.slice(0, textureName.lastIndexOf('.')) + '.gtx';
 
 		var loader = new THREE.GTXLoader();
@@ -372,10 +374,7 @@ THREE.GBLoader.prototype = {
 				face.materialIndex = materialIndex;
 				geometry.faces.push(face);
 
-				if (geometry.faceVertexUvs[materialIndex] === undefined) {
-					geometry.faceVertexUvs[materialIndex] = [];
-				}
-				geometry.faceVertexUvs[materialIndex].push([
+				geometry.faceVertexUvs[0].push([
 					uvs[a], 
 					uvs[b], 
 					uvs[c]
@@ -416,10 +415,7 @@ THREE.GBLoader.prototype = {
 					face.materialIndex = materialIndex;
 					geometry.faces.push(face);
 
-					if (geometry.faceVertexUvs[materialIndex] === undefined) {
-						geometry.faceVertexUvs[materialIndex] = [];
-					}
-					geometry.faceVertexUvs[materialIndex].push([
+					geometry.faceVertexUvs[0].push([
 						uvs[a], 
 						uvs[b], 
 						uvs[c]

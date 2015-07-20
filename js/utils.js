@@ -185,22 +185,36 @@ function FileStream (arrayBuffer) {
 		'D': 8
 	};
 }
-FileStream.prototype.read = function (identifyer) {
-	var littleEndian = identifyer[0] === '<';
-	var format = identifyer[1];
+FileStream.prototype = {
 
-	 switch (format) {
-		case 's' : var value = String.fromCharCode(this.dataView.getInt8(this.position, littleEndian)); break;
-		case 'b' : var value = this.dataView.getInt8(this.position, littleEndian); break;
-		case 'B' : var value = this.dataView.getUint8(this.position, littleEndian); break;
-		case 'h' : var value = this.dataView.getInt16(this.position, littleEndian); break;
-		case 'H' : var value = this.dataView.getUint16(this.position, littleEndian); break;
-		case "i" : var value = this.dataView.getInt32(this.position, littleEndian); break;
-		case "I" : var value = this.dataView.getUint32(this.position, littleEndian); break;
-		case 'f' : var value = this.dataView.getFloat32(this.position, littleEndian); break;
-		case 'd' : var value = this.dataView.getFloat64(this.position, littleEndian); break;
+	read: function (identifyer) {
+		var littleEndian = identifyer[0] === '<';
+		var format = identifyer[1];
+
+		 switch (format) {
+			case 's' : var value = String.fromCharCode(this.dataView.getInt8(this.position, littleEndian)); break;
+			case 'b' : var value = this.dataView.getInt8(this.position, littleEndian); break;
+			case 'B' : var value = this.dataView.getUint8(this.position, littleEndian); break;
+			case 'h' : var value = this.dataView.getInt16(this.position, littleEndian); break;
+			case 'H' : var value = this.dataView.getUint16(this.position, littleEndian); break;
+			case "i" : var value = this.dataView.getInt32(this.position, littleEndian); break;
+			case "I" : var value = this.dataView.getUint32(this.position, littleEndian); break;
+			case 'f' : var value = this.dataView.getFloat32(this.position, littleEndian); break;
+			case 'd' : var value = this.dataView.getFloat64(this.position, littleEndian); break;
+		}
+
+		this.position += this.byteSize[format.toUpperCase()];
+		return value;
+	}, 
+
+	readString: function (length, littleEndian) {
+		var identifyer = ((littleEndian || littleEndian === undefined) ? '<' : '>') + 's';
+
+		var string = '';
+		for (var i = 0; i < length; i ++) {
+			string += this.read(identifyer);
+		}
+
+		return string;
 	}
-
-	this.position += this.byteSize[format.toUpperCase()];
-	return value;
-};
+}
