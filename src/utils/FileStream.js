@@ -1,18 +1,16 @@
 
 if ( typeof DataView === 'undefined'){
 
-	DataView = function(buffer, byteOffset, byteLength){
+	class DataView {
+		constructor (buffer, byteOffset, byteLength) {
 
-		this.buffer = buffer;
-		this.byteOffset = byteOffset || 0;
-		this.byteLength = byteLength || buffer.byteLength || buffer.length;
-		this._isString = typeof buffer === "string";
+			this.buffer = buffer;
+			this.byteOffset = byteOffset || 0;
+			this.byteLength = byteLength || buffer.byteLength || buffer.length;
+			this._isString = typeof buffer === "string";
+		}
 
-	}
-
-	DataView.prototype = {
-
-		_getCharCodes:function(buffer,start,length){
+		_getCharCodes (buffer, start, length) {
 			start = start || 0;
 			length = length || buffer.length;
 			var end = start + length;
@@ -21,9 +19,9 @@ if ( typeof DataView === 'undefined'){
 				codes.push(buffer.charCodeAt(i) & 0xff);
 			}
 			return codes;
-		},
+		}
 
-		_getBytes: function (length, byteOffset, littleEndian) {
+		_getBytes (length, byteOffset, littleEndian) {
 
 			var result;
 
@@ -87,11 +85,9 @@ if ( typeof DataView === 'undefined'){
 
 			return result;
 
-		},
+		}
 
-		// Compatibility functions on a String Buffer
-
-		getFloat64: function (byteOffset, littleEndian) {
+		getFloat64 (byteOffset, littleEndian) {
 
 			var b = this._getBytes(8, byteOffset, littleEndian),
 
@@ -116,9 +112,9 @@ if ( typeof DataView === 'undefined'){
 
 			return sign * (1 + mantissa * Math.pow(2, -52)) * Math.pow(2, exponent);
 
-		},
+		}
 
-		getFloat32: function (byteOffset, littleEndian) {
+		getFloat32 (byteOffset, littleEndian) {
 
 			var b = this._getBytes(4, byteOffset, littleEndian),
 
@@ -139,55 +135,48 @@ if ( typeof DataView === 'undefined'){
 			}
 
 			return sign * (1 + mantissa * Math.pow(2, -23)) * Math.pow(2, exponent);
-		},
+		}
 
-		getInt32: function (byteOffset, littleEndian) {
+		getInt32 (byteOffset, littleEndian) {
 			var b = this._getBytes(4, byteOffset, littleEndian);
 			return (b[3] << 24) | (b[2] << 16) | (b[1] << 8) | b[0];
-		},
+		}
 
-		getUint32: function (byteOffset, littleEndian) {
+		getUint32 (byteOffset, littleEndian) {
 			return this.getInt32(byteOffset, littleEndian) >>> 0;
-		},
+		}
 
-		getInt16: function (byteOffset, littleEndian) {
+		getInt16 (byteOffset, littleEndian) {
 			return (this.getUint16(byteOffset, littleEndian) << 16) >> 16;
-		},
+		}
 
-		getUint16: function (byteOffset, littleEndian) {
+		getUint16 (byteOffset, littleEndian) {
 			var b = this._getBytes(2, byteOffset, littleEndian);
 			return (b[1] << 8) | b[0];
-		},
+		}
 
-		getInt8: function (byteOffset) {
+		getInt8 (byteOffset) {
 			return (this.getUint8(byteOffset) << 24) >> 24;
-		},
+		}
 
-		getUint8: function (byteOffset) {
+		getUint8 (byteOffset) {
 			return this._getBytes(1, byteOffset)[0];
 		}
 
 	 };
-
 }
 
-function FileStream (arrayBuffer) {
-	this.dataView = new DataView(arrayBuffer);
-	this.size = this.dataView.byteLength;
-	this.position = 0;
+export default class FileStream {
 
-	this.byteSize = {
-		'S': 1, 
-		'B': 1, 
-		'H': 2, 
-		'I': 4, 
-		'F': 4, 
-		'D': 8
-	};
-}
-FileStream.prototype = {
+	constructor (arrayBuffer) {
+		this.byteSize = {'S': 1, 'B': 1, 'H': 2, 'I': 4, 'F': 4, 'D': 8};
 
-	read: function (identifyer) {
+		this.dataView = new DataView(arrayBuffer);
+		this.size = this.dataView.byteLength;
+		this.position = 0;
+	}
+
+	read (identifyer) {
 		var littleEndian = identifyer[0] === '<';
 		var format = identifyer[1];
 
@@ -205,9 +194,9 @@ FileStream.prototype = {
 
 		this.position += this.byteSize[format.toUpperCase()];
 		return value;
-	}, 
+	} 
 
-	readString: function (length, littleEndian) {
+	readString (length, littleEndian) {
 		var identifyer = ((littleEndian || littleEndian === undefined) ? '<' : '>') + 's';
 
 		var string = '';

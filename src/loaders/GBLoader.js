@@ -1,4 +1,3 @@
-
 /*
 * Original software SwordScript GB
 * Ported to JavaScript by Casper Lamboo
@@ -23,28 +22,27 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+import 'mrdoob/three.js';
+import FileStream from '../utils/FileStream.js';
+import GTXLoader from './GTXLoader.js';
 
-THREE.GBLoader = function (manager) {
+export default class GBLoader {
 
-	this.manager = (manager !== undefined) ? manager : THREE.DefaultLoadingManager;
-};
+	constructor (manager = THREE.DefaultLoadingManager) {
 
-THREE.GBLoader.prototype = {
+		this.manager = manager;
+	}
 
-	constructor: THREE.GBLoader,
-
-	load: function (url, onLoad, onProgress, onError) {
-		var scope = this;
-
-		var loader = new THREE.XHRLoader(scope.manager);
+	load (url, onLoad, onProgress, onError) {
+		var loader = new THREE.XHRLoader(this.manager);
 		loader.setCrossOrigin(this.crossOrigin);
 		loader.setResponseType('arraybuffer');
-		loader.load(url, function (text) {
-			scope.parse(text, url, onLoad, onError);
+		loader.load(url, (text) => {
+			this.parse(text, url, onLoad, onError);
 		}, onProgress, onError);
-	},
+	}
 	
-	parse: function (data, url, onLoad, onError) {
+	parse (data, url, onLoad, onError) {
 		var fs = new FileStream(data);
 
 		//var geometry = new THREE.BufferGeometry();
@@ -83,9 +81,9 @@ THREE.GBLoader.prototype = {
 		if (onLoad !== undefined) {
 			onLoad(geometry, materials);
 		}
-	}, 
+	}
 
-	_readHeader: function (fs) {
+	_readHeader (fs) {
 		var header = {
 			version: fs.read('<B'),
 			boneCount: fs.read('<B'),
@@ -136,9 +134,9 @@ THREE.GBLoader.prototype = {
 		header.unknown1 = fs.read('<H');
 
 		return header;
-	}, 
+	}
 
-	_readBoundingBox: function (fs, header) {
+	_readBoundingBox (fs, header) {
 		var boundingBox = new THREE.Box3();
 
 		if (header.version >= 11) {
@@ -152,9 +150,9 @@ THREE.GBLoader.prototype = {
 		}
 
 		return boundingBox;
-	},
+	}
 
-	_readBoundingSphere: function (fs, header) {
+	_readBoundingSphere (fs, header) {
 		var boundingSphere = new THREE.Sphere();
 
 		if (header.version >= 9) {
@@ -166,9 +164,9 @@ THREE.GBLoader.prototype = {
 		}
 
 		return boundingSphere;
-	}, 
+	}
 
-	_readBones: function (fs, header) {
+	_readBones (fs, header) {
 		var bones = [];	
 		var parentBones = [];
 
@@ -210,10 +208,9 @@ THREE.GBLoader.prototype = {
 			});
 		}
 		return bones;
-	}, 
+	}
 
-	_readMaterials: function (fs, header, url) {
-
+	_readMaterials (fs, header, url) {
 		var materials = [];
 
 		for (var i = 0; i < header.materialCount; i ++) {
@@ -230,13 +227,13 @@ THREE.GBLoader.prototype = {
 		}
 
 		return materials;
-	}, 
+	}
 
-	_readMaterial: function (fs, header, url, materialData) {
+	_readMaterial (fs, header, url, materialData) {
 		var currentPosition = fs.position;
 
 		var material = new THREE.MeshBasicMaterial();
-		//material.skinning = true;
+		// material.skinning = true;
 
 		fs.position = fs.size - header.descriptorSize + materialData.materialOffset;
 
@@ -264,18 +261,24 @@ THREE.GBLoader.prototype = {
 		}
 		textureName = textureName.slice(0, textureName.lastIndexOf('.')) + '.gtx';
 
-		var loader = new THREE.GTXLoader();
-		var map = loader.load(textureName);
-		map.wrapS = map.wrapT = THREE.RepeatWrapping;
+		//var map = THREE.ImageUtils.loadTexture(textureName);
 
-		material.map = map;
+		try {
+			var loader = new GTXLoader();
+			var map = loader.load(textureName);
+			map.wrapS = map.wrapT = THREE.RepeatWrapping;
+			material.map = map;
+		}
+		catch (error) {
+			console.warn(error);
+		}
 
 		fs.position = currentPosition;
 
 		return material;
-	}, 
+	}
 
-	_readGeometry: function (fs, header, geometry) {
+	_readGeometry (fs, header, geometry) {
 		var triangleList = 0;
 		var triangleStrip = 1;
 
@@ -371,6 +374,8 @@ THREE.GBLoader.prototype = {
 				face.materialIndex = materialIndex;
 				geometry.faces.push(face);
 
+		
+
 				geometry.faceVertexUvs[0].push([
 					uvs[a], 
 					uvs[b], 
@@ -421,9 +426,9 @@ THREE.GBLoader.prototype = {
 				faceIndices.shift();
 			}
 		}
-	}, 
+	}
 
-	_readAnimation: function (fs, header) {
+	_readAnimation (fs, header) {
 		var hierarchy = [];
 
 		for (var i = 0; i < header.boneCount; i ++) {
@@ -486,9 +491,9 @@ THREE.GBLoader.prototype = {
 			"name": "namehere",
 			"length": keyFrameDuration
 		};
-	}, 
+	}
 
-	_readCollision: function (fs, header) {
+	_readCollision (fs, header) {
 		//fix something here
 		if (fs.position !== fs.size - header.descriptorSize - header.collisionSize) {
 			console.warn("error 'file stream is at incorrect position at collision' in file: " + file);
@@ -524,4 +529,4 @@ THREE.GBLoader.prototype = {
 
 		return geometry;
 	}
-};
+}
