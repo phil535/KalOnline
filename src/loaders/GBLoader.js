@@ -23,7 +23,7 @@
 * THE SOFTWARE.
 */
 import 'mrdoob/three.js';
-import FileStream from '../utils/FileStream.js';
+import FileStream from 'casperlamboo/filestream';
 import GTXLoader from './GTXLoader.js';
 
 export default class GBLoader {
@@ -43,7 +43,7 @@ export default class GBLoader {
 	}
 	
 	parse (data, url, onLoad, onError) {
-		var fs = new FileStream(data);
+		var fs = new FileStream(data, true);
 
 		//var geometry = new THREE.BufferGeometry();
 		var geometry = new THREE.Geometry();
@@ -85,14 +85,14 @@ export default class GBLoader {
 
 	_readHeader (fs) {
 		var header = {
-			version: fs.read('<B'),
-			boneCount: fs.read('<B'),
-			isBoneFile: Boolean(fs.read('<B')),
-			geometryCount: fs.read('<B')
+			version: fs.read('B'),
+			boneCount: fs.read('B'),
+			isBoneFile: Boolean(fs.read('B')),
+			geometryCount: fs.read('B')
 		}
 
 		if (header.version >= 10) {
-			header.crc32 = fs.read('<I');
+			header.crc32 = fs.read('I');
 		}
 
 		if (header.version >= 12) {
@@ -100,38 +100,38 @@ export default class GBLoader {
 			header.fileName = fileName;
 		}
 
-		var fileNameLength = fs.read('<I');
+		var fileNameLength = fs.read('I');
 
 		var verticesCount = [];
 		for (var i = 0; i < ((header.version >= 9) ? 12 : 6); i ++) {
-			verticesCount.push(fs.read('<H'));
+			verticesCount.push(fs.read('H'));
 		}
 
-		header.indexCount = fs.read('<H');
-		header.boneIndexCount = fs.read('<H');
-		header.keyFrameCount = fs.read('<H');
-		header.unknown0 = fs.read('<H');
-
-		if (header.version === 8) {
-			header.descriptorSize = fs.read('<H');
-			header.collisionSize = fs.read('<H');
-		}
-		else {
-			header.descriptorSize = fs.read('<I');
-			header.collisionSize = fs.read('<I');
-		}
-
-		header.transformationCount = fs.read('<H');
+		header.indexCount = fs.read('H');
+		header.boneIndexCount = fs.read('H');
+		header.keyFrameCount = fs.read('H');
+		header.unknown0 = fs.read('H');
 
 		if (header.version === 8) {
-			header.animationCount = fs.read('<B');
+			header.descriptorSize = fs.read('H');
+			header.collisionSize = fs.read('H');
 		}
 		else {
-			header.animationCount = fs.read('<H');
+			header.descriptorSize = fs.read('I');
+			header.collisionSize = fs.read('I');
 		}
 
-		header.materialCount = fs.read('<H');
-		header.unknown1 = fs.read('<H');
+		header.transformationCount = fs.read('H');
+
+		if (header.version === 8) {
+			header.animationCount = fs.read('B');
+		}
+		else {
+			header.animationCount = fs.read('H');
+		}
+
+		header.materialCount = fs.read('H');
+		header.unknown1 = fs.read('H');
 
 		return header;
 	}
@@ -140,13 +140,13 @@ export default class GBLoader {
 		var boundingBox = new THREE.Box3();
 
 		if (header.version >= 11) {
-			boundingBox.min.x = fs.read('<f');
-			boundingBox.min.y = fs.read('<f');
-			boundingBox.min.z = fs.read('<f');
+			boundingBox.min.x = fs.read('f');
+			boundingBox.min.y = fs.read('f');
+			boundingBox.min.z = fs.read('f');
 
-			boundingBox.max.x = fs.read('<f');
-			boundingBox.max.y = fs.read('<f');
-			boundingBox.max.z = fs.read('<f');
+			boundingBox.max.x = fs.read('f');
+			boundingBox.max.y = fs.read('f');
+			boundingBox.max.z = fs.read('f');
 		}
 
 		return boundingBox;
@@ -156,11 +156,11 @@ export default class GBLoader {
 		var boundingSphere = new THREE.Sphere();
 
 		if (header.version >= 9) {
-			boundingSphere.center.x = fs.read('<f');
-			boundingSphere.center.y = fs.read('<f');
-			boundingSphere.center.z = fs.read('<f');
+			boundingSphere.center.x = fs.read('f');
+			boundingSphere.center.y = fs.read('f');
+			boundingSphere.center.z = fs.read('f');
 
-			boundingSphere.radius = fs.read('<f');
+			boundingSphere.radius = fs.read('f');
 		}
 
 		return boundingSphere;
@@ -171,10 +171,10 @@ export default class GBLoader {
 		var parentBones = [];
 
 		for (var i = 0; i < header.boneCount; i ++) {
-			var n11 = fs.read('<f'), n21 = fs.read('<f'), n31 = fs.read('<f'), n41 = fs.read('<f'),
-			n12 = fs.read('<f'), n22 = fs.read('<f'), n32 = fs.read('<f'), n42 = fs.read('<f'),
-			n13 = fs.read('<f'), n23 = fs.read('<f'), n33 = fs.read('<f'), n43 = fs.read('<f'),
-			n14 = fs.read('<f'), n24 = fs.read('<f'), n34 = fs.read('<f'), n44 = fs.read('<f');
+			var n11 = fs.read('f'), n21 = fs.read('f'), n31 = fs.read('f'), n41 = fs.read('f'),
+			n12 = fs.read('f'), n22 = fs.read('f'), n32 = fs.read('f'), n42 = fs.read('f'),
+			n13 = fs.read('f'), n23 = fs.read('f'), n33 = fs.read('f'), n43 = fs.read('f'),
+			n14 = fs.read('f'), n24 = fs.read('f'), n34 = fs.read('f'), n44 = fs.read('f');
 
 			var m = new THREE.Matrix4().set(
 				n11, n12, n13, n14,
@@ -186,7 +186,7 @@ export default class GBLoader {
 
 			parentBones.push(m);
 			
-			var parent = fs.read('<B');
+			var parent = fs.read('B');
 			if (parent === 255) {
 				parent = -1;
 			}
@@ -215,11 +215,11 @@ export default class GBLoader {
 
 		for (var i = 0; i < header.materialCount; i ++) {
 			var materialData = {
-				textureNameOffset: fs.read('<I'),
-				textureMapOption: fs.read('<H'),
-				textureNameLength: fs.read('<I'),
-				overlayOffset: fs.read('<I'),
-				materialOffset: fs.read('<I')
+				textureNameOffset: fs.read('I'),
+				textureMapOption: fs.read('H'),
+				textureNameLength: fs.read('I'),
+				overlayOffset: fs.read('I'),
+				materialOffset: fs.read('I')
 			};
 
 			var material = this._readMaterial(fs, header, url, materialData);
@@ -237,13 +237,13 @@ export default class GBLoader {
 
 		fs.position = fs.size - header.descriptorSize + materialData.materialOffset;
 
-		var colorAmbient = [fs.read('<B') / 255, fs.read('<B') / 255, fs.read('<B') / 255];
+		var colorAmbient = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
 		fs.position += 1;
-		var colorDiffuse = [fs.read('<B') / 255, fs.read('<B') / 255, fs.read('<B') / 255];
+		var colorDiffuse = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
 		fs.position += 1;
-		var colorSpecular = [fs.read('<B') / 255, fs.read('<B') / 255, fs.read('<B') / 255];
+		var colorSpecular = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
 		fs.position += 1;
-		var mapDiffuseAnisotropy = fs.read('<f');
+		var mapDiffuseAnisotropy = fs.read('f');
 
 		fs.position = fs.size - header.descriptorSize + materialData.textureNameOffset;
 		
@@ -251,7 +251,7 @@ export default class GBLoader {
 		var textureName = path + '/tex/';
 		//for (var j = 0; j < materialData.textureNameLength; j ++) {
 		while (true) {
-			var s = fs.read('<s');
+			var s = fs.read('s');
 			if (s === String.fromCharCode(0)) {
 				break;
 			}
@@ -282,24 +282,24 @@ export default class GBLoader {
 		var triangleList = 0;
 		var triangleStrip = 1;
 
-		var nameOffset = fs.read('<I');
-		var materialIndex = fs.read('<I');
-		var vertexFormat = fs.read('<B');
-		var primitiveType = fs.read('<B');
-		var vertexCount = fs.read('<H');
-		var faceIndexCount = fs.read('<H');
-		var boneIndexCount = fs.read('<B');
+		var nameOffset = fs.read('I');
+		var materialIndex = fs.read('I');
+		var vertexFormat = fs.read('B');
+		var primitiveType = fs.read('B');
+		var vertexCount = fs.read('H');
+		var faceIndexCount = fs.read('H');
+		var boneIndexCount = fs.read('B');
 		var faceOffset = geometry.vertices.length;
 
 		var boneLookup = [];
 		for (var i = 0; i < boneIndexCount; i ++) {
-			boneLookup.push(fs.read('<B'));
+			boneLookup.push(fs.read('B'));
 		}
 
 		var uvs = [];
 
 		for (var i = 0; i < vertexCount; i ++) {
-			var pos = new THREE.Vector3(fs.read('<f'), fs.read('<f'), fs.read('<f'));
+			var pos = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'));
 			geometry.vertices.push(pos);
 
 			if (vertexFormat === 0 && boneIndexCount > 0) {
@@ -324,7 +324,7 @@ export default class GBLoader {
 
 				var sum = 0;
 				for (var j = 0; j < vertexWeightCount; j ++) {
-					var vertexWeight = fs.read('<f');
+					var vertexWeight = fs.read('f');
 					if (vertexWeight > 0) {
 						sum += vertexWeight;
 						vertexWeights.push(vertexWeight);
@@ -339,7 +339,7 @@ export default class GBLoader {
 
 					geometry.skinWeights.push(new THREE.Vector4(vertexWeights[0], 0, 0, 0));
 
-					var vertexGroups = [fs.read('<B'), fs.read('<B'), fs.read('<B'), fs.read('<B')];
+					var vertexGroups = [fs.read('B'), fs.read('B'), fs.read('B'), fs.read('B')];
 					geometry.skinIndices.push(new THREE.Vector4(boneLookup[vertexGroups[0]], 0, 0, 0));
 				}
 				else {
@@ -348,10 +348,10 @@ export default class GBLoader {
 				}
 			}
 
-			var no = [fs.read('<f'), fs.read('<f'), fs.read('<f')];
+			var no = [fs.read('f'), fs.read('f'), fs.read('f')];
 
-			var uvX = fs.read('<f');
-			var uvY = fs.read('<f');
+			var uvX = fs.read('f');
+			var uvY = fs.read('f');
 			uvs.push(new THREE.Vector2(uvX, uvY));
 			//geometry.faceVertexUvs.push(new THREE.Vector2(uvX, uvY));
 
@@ -363,9 +363,9 @@ export default class GBLoader {
 
 		if (primitiveType === triangleList) {
 			for (var i = 0; i < faceIndexCount; i += 3) {
-				var a = fs.read('<H');
-				var b = fs.read('<H');
-				var c = fs.read('<H');
+				var a = fs.read('H');
+				var b = fs.read('H');
+				var c = fs.read('H');
 
 				var face = new THREE.Face3();
 				face.a = a + faceOffset;
@@ -384,10 +384,10 @@ export default class GBLoader {
 			}
 		}
 		else if (primitiveType === triangleStrip) {
-			var faceIndices = [fs.read('<H'), fs.read('<H')];
+			var faceIndices = [fs.read('H'), fs.read('H')];
 
 			for (var i = 2; i < faceIndexCount; i ++) {
-				faceIndices.push(fs.read('<H'));
+				faceIndices.push(fs.read('H'));
 
 				var faceIndicesCopy = [];
 				if (i % 2 === 0) {
@@ -436,12 +436,12 @@ export default class GBLoader {
 		}
 
 		for (var i = 0; i < header.animationCount; i ++) {
-			var index = fs.read('<I');
-			var keyFrameCount = fs.read('<H');
+			var index = fs.read('I');
+			var keyFrameCount = fs.read('H');
 
 			for (var j = 0; j < keyFrameCount; j ++) {
-				var keyFrameDuration = fs.read('<H');
-				var animationIndex = fs.read('<I');
+				var keyFrameDuration = fs.read('H');
+				var animationIndex = fs.read('I');
 
 				if (animationIndex == index) {
 					var keyFrameDuration = Math.max(keyFrameDuration / 1000.0, 0);
@@ -456,15 +456,15 @@ export default class GBLoader {
 		var boneLookup = [];
 		for (var i = 0; i < keyFrameCount; i ++) {
 			for (var j = 0; j < header.boneCount; j ++) {
-				boneLookup.push(fs.read('<H'));
+				boneLookup.push(fs.read('H'));
 			}
 		}
 
 		var transformations = [];
 		for (var i = 0; i < header.transformationCount; i ++) {
-			var translation = new THREE.Vector3(fs.read('<f'), fs.read('<f'), fs.read('<f'));
-			var rotation = new THREE.Quaternion(fs.read('<f'), fs.read('<f'), fs.read('<f'), fs.read('<f'));
-			var scale = new THREE.Vector3(fs.read('<f'), fs.read('<f'), fs.read('<f'));
+			var translation = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'));
+			var rotation = new THREE.Quaternion(fs.read('f'), fs.read('f'), fs.read('f'), fs.read('f'));
+			var scale = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'));
 
 			transformations.push(new THREE.Matrix4().compose(translation, rotation, scale));
 		}
@@ -507,16 +507,16 @@ export default class GBLoader {
 			faces: []
 		};
 
-		var vertexCount = fs.read('<H');
-		var faceIndexCount = fs.read('<H');
+		var vertexCount = fs.read('H');
+		var faceIndexCount = fs.read('H');
 
-		var boundingBoxMin = new THREE.Vector3(fs.read('<f'), fs.read('<f'), fs.read('<f'));
-		var boundingBoxMax = new THREE.Vector3(fs.read('<f'), fs.read('<f'), fs.read('<f'));
+		var boundingBoxMin = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'));
+		var boundingBoxMax = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'));
 
 		var delta = boundingBoxMax.sub(boundingBoxMin).multiplyScalar(0xffff);
 
 		for (var i = 0; i < vertexCount; i ++) {
-			var vertex = new THREE.Vector3(fs.read('<f'), fs.read('<f'), fs.read('<f'))
+			var vertex = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'))
 				.multiply(delta)
 				.add(boundingBoxMin);
 
@@ -524,7 +524,7 @@ export default class GBLoader {
 		}
 
 		for (var i = 0; i < faceIndexCount; i ++) {
-			geometry.faces.push(fs.read('<H'), fs.read('<H'), fs.read('<H'));
+			geometry.faces.push(fs.read('H'), fs.read('H'), fs.read('H'));
 		}
 
 		return geometry;

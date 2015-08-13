@@ -1,22 +1,29 @@
 System.config({
-  "baseURL": "/",
-  "defaultJSExtensions": true,
-  "transpiler": "babel",
-  "babelOptions": {
+  baseURL: "/",
+  defaultJSExtensions: true,
+  transpiler: "babel",
+  babelOptions: {
     "optional": [
       "runtime"
     ]
   },
-  "paths": {
+  paths: {
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
-  }
-});
+  },
 
-System.config({
-  "map": {
+  meta: {
+    "three.js/controls/EditorControls": {
+      "deps": [
+        "three.js"
+      ]
+    }
+  },
+
+  map: {
     "babel": "npm:babel-core@5.8.5",
     "babel-runtime": "npm:babel-runtime@5.8.5",
+    "casperlamboo/filestream": "github:casperlamboo/filestream@master",
     "core-js": "npm:core-js@0.9.18",
     "mrdoob/three.js": "github:mrdoob/three.js@master",
     "mrdoob/three.js/controls/EditorControls": "github:mrdoob/three.js@master/examples/js/controls/EditorControls.js",
@@ -31,13 +38,5 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.1",
       "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     }
-  }, 
-  "meta": {
-    "three.js/controls/EditorControls": {
-      "deps": [
-        "three.js"
-      ]
-    }
   }
 });
-
