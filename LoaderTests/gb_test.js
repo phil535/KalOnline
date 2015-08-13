@@ -34,8 +34,5 @@ loader.load('../DATA/Model/Clothes/Cm_10_h01.gb', loaded);
 (function animate () {
     requestAnimationFrame(animate);
 
-	let delta = clock.getDelta();
-	THREE.AnimationHandler.update(delta);
-
 	renderer.render(scene, camera);
 }());
