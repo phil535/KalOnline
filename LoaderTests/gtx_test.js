@@ -17,7 +17,7 @@ controls.addEventListener('change', () => {
 });
 
 let loader = new GTXLoader();
-let map = loader.load('../DATA/Model/Clothes/tex/CM_0_P01.gtx', () => {
+let map = loader.load('../DATA/Monster/Clothes/tex/M001.gtx', () => {
 	renderer.render(scene, camera);
 });
 

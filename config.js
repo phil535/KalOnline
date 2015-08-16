@@ -5,7 +5,8 @@ System.config({
   babelOptions: {
     "optional": [
       "runtime"
-    ]
+    ],
+    "stage": 0
   },
   paths: {
     "github:*": "jspm_packages/github/*",

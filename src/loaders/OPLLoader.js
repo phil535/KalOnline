@@ -7,16 +7,18 @@ export default class OPLLoader {
 		this.manager = manager;
 	}
 
-	load (url, onLoad, onProgress, onError) {
-		let loader = new THREE.XHRLoader(this.manager);
-		loader.setCrossOrigin(this.crossOrigin);
-		loader.setResponseType('arraybuffer');
-		loader.load(url, (data) => {
-			this.parse(data, onLoad);
-		}, onProgress, onError);
+	load (url) {
+		return new Promise((resolve, reject) => {
+			let loader = new THREE.XHRLoader(this.manager);
+			loader.setCrossOrigin(this.crossOrigin);
+			loader.setResponseType('arraybuffer');
+			loader.load(url, (data) => {
+				this.parse(data, resolve);
+			}, undefined, reject);
+		});
 	}
 	
-	parse (data, onLoad) {
+	parse (data, resolve) {
 		let fs = new FileStream(data, true);
 
 		let header = {
@@ -57,7 +59,7 @@ export default class OPLLoader {
 			});
 		}
 
-		onLoad({
+		resolve({
 			header, 
 			opl
 		});

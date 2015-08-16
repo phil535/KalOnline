@@ -1,27 +1,26 @@
-/*
-* Original software SwordScript GB
-* Ported to JavaScript by Casper Lamboo
-* 
-* Copyright (c) 2007-2008 Peter S. Stevens
-* 
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-* 
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-* 
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
+// Original software SwordScript GB
+// Ported to JavaScript by Casper Lamboo
+// 
+// Copyright (c) 2007-2008 Peter S. Stevens
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 import 'mrdoob/three.js';
 import FileStream from 'casperlamboo/filestream';
 import GTXLoader from './GTXLoader.js';
@@ -33,16 +32,18 @@ export default class GBLoader {
 		this.manager = manager;
 	}
 
-	load (url, onLoad, onProgress, onError) {
-		var loader = new THREE.XHRLoader(this.manager);
-		loader.setCrossOrigin(this.crossOrigin);
-		loader.setResponseType('arraybuffer');
-		loader.load(url, (text) => {
-			this.parse(text, url, onLoad, onError);
-		}, onProgress, onError);
+	load (url) {
+		return new Promise((resolve, reject) => {
+			var loader = new THREE.XHRLoader(this.manager);
+			loader.setCrossOrigin(this.crossOrigin);
+			loader.setResponseType('arraybuffer');
+			loader.load(url, (text) => {
+				this.parse(text, url, resolve, reject);
+			}, undefined, reject);
+		});
 	}
 	
-	parse (data, url, onLoad, onError) {
+	parse (data, url, resolve, reject) {
 		var fs = new FileStream(data, true);
 
 		//var geometry = new THREE.BufferGeometry();
@@ -51,9 +52,7 @@ export default class GBLoader {
 		var header = this._readHeader(fs);
 
 		if (header.version < 8 || header.version > 12) {
-			if (onError !== undefined) {
-				onError('Only versions 8 through 12 are supported');
-			}
+			reject('Only versions 8 through 12 are supported');
 			return;
 		}
 
@@ -78,9 +77,7 @@ export default class GBLoader {
 			this._readCollision(fs, header);
 		}
 
-		if (onLoad !== undefined) {
-			onLoad(geometry, materials);
-		}
+		resolve({geometry, materials});
 	}
 
 	_readHeader (fs) {
@@ -260,8 +257,9 @@ export default class GBLoader {
 			}
 		}
 		textureName = textureName.slice(0, textureName.lastIndexOf('.')) + '.gtx';
+		console.log(textureName);
 
-		//var map = THREE.ImageUtils.loadTexture(textureName);
+		// var map = THREE.ImageUtils.loadTexture(textureName);
 
 		try {
 			var loader = new GTXLoader();
@@ -443,15 +441,17 @@ export default class GBLoader {
 				var keyFrameDuration = fs.read('H');
 				var animationIndex = fs.read('I');
 
-				if (animationIndex == index) {
+				// if (animationIndex == index) {
 					var keyFrameDuration = Math.max(keyFrameDuration / 1000.0, 0);
 
 					for (var k = 0; k < hierarchy.length; k ++) {
 						hierarchy[k]["keys"][j] = {"time": keyFrameDuration};
 					}
-				}
+				// }
 			}
 		}
+
+		// console.log(JSON.parse(JSON.stringify(hierarchy)));
 
 		var boneLookup = [];
 		for (var i = 0; i < keyFrameCount; i ++) {
@@ -479,9 +479,17 @@ export default class GBLoader {
 
 				localMatrix.decompose(translation, rotation, scale);
 
-				hierarchy[j]["keys"][i]["pos"] = translation.toArray();
-				hierarchy[j]["keys"][i]["rot"] = rotation.toArray();
-				hierarchy[j]["keys"][i]["scl"] = scale.toArray();
+				try {
+					hierarchy[j]["keys"][i]["pos"] = translation.toArray();
+					hierarchy[j]["keys"][i]["rot"] = rotation.toArray();
+					hierarchy[j]["keys"][i]["scl"] = scale.toArray();
+				}
+				catch (error) {
+					// console.log(error.toString());
+					// console.log(hierarchy[j]["keys"], i);
+					// console.log(hierarchy[j]["keys"].length, i);
+					// console.log(hierarchy.length, j);
+				}
 			}
 		}
 
@@ -496,7 +504,7 @@ export default class GBLoader {
 	_readCollision (fs, header) {
 		//fix something here
 		if (fs.position !== fs.size - header.descriptorSize - header.collisionSize) {
-			console.warn("error 'file stream is at incorrect position at collision' in file: " + file);
+			console.warn('error "file stream is at incorrect position at collision" in file: ' + file);
 			return;
 		}
 
