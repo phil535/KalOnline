@@ -3,57 +3,51 @@ export default class Model {
 		this.container = new THREE.Object3D();
 	}
 
-	createGeometry (formation, bones) {
-		return new Promise ((resolve, reject) => {
-			(async () => {
-				let geometry = new THREE.Geometry();
-				let materials = [];
+	async createGeometry (formation, gbBones) {
+		let geometry = new THREE.Geometry();
+		let materials = [];
 
-				for (let piece of formation) {
-					let {geometry: pieceGeometry, materials: pieceMaterials} = await piece.load();
+		for (let piece of formation) {
+			let {geometry: pieceGeometry, materials: pieceMaterials} = await piece.load();
 
-					geometry.merge(pieceGeometry, new THREE.Matrix4(), materials.length);
-					materials.push(...pieceMaterials);
+			geometry.merge(pieceGeometry, new THREE.Matrix4(), materials.length);
+			materials.push(...pieceMaterials);
 
-					geometry.skinWeights.push(...pieceGeometry.skinWeights);
-					geometry.skinIndices.push(...pieceGeometry.skinIndices);
-				}
+			geometry.skinWeights.push(...pieceGeometry.skinWeights);
+			geometry.skinIndices.push(...pieceGeometry.skinIndices);
+		}
 
-				let material = new THREE.MeshFaceMaterial(materials);
+		let material = new THREE.MeshFaceMaterial(materials);
 
-				let mesh;
-				if (bones !== undefined) {
-					let {geometry: {bones: pieceBone}} = await bones.load();
+		let mesh;
+		if (gbBones !== undefined) {
+			let {geometry: {bones}} = await gbBones.load();
 
-					geometry.bones = pieceBone;
+			geometry.bones = bones;
 
-					for (let material of materials) {
-						material.skinning = true;
-					}
+			for (let material of materials) {
+				material.skinning = true;
+			}
 
-					mesh = new THREE.SkinnedMesh(geometry, material);
-				}
-				else {
-					mesh = new THREE.Mesh(geometry, material);
-				}
+			mesh = new THREE.SkinnedMesh(geometry, material);
+		}
+		else {
+			mesh = new THREE.Mesh(geometry, material);
+		}
 
-				if (this.mesh !== undefined) {
-					this.mesh.geometry.dispose();
-					this.container.remove(this.mesh);
-				}
-				this.mesh = mesh;
-				this.container.add(this.mesh);
+		if (this.animation !== undefined) {
+			let animation = new THREE.Animation(mesh, this.animation.data); 
+			animation.timeScale = this.animation.timeScale;
+			animation.play(this.animation.currentTime);
+			this.animation = animation;
+		}
 
-				if (this.animation) {
-					let animation = new THREE.Animation(this.mesh, this.animation.data); 
-					animation.timeScale = this.animation.timeScale;
-					animation.play(this.animation.currentTime);
-					this.animation = animation;
-				}
-
-				resolve(mesh);
-			}());
-		});
+		if (this.mesh !== undefined) {
+			this.mesh.geometry.dispose();
+			this.container.remove(this.mesh);
+		}
+		this.mesh = mesh;
+		this.container.add(this.mesh);
 	}
 
 	async setAnimation (gbObject) {
