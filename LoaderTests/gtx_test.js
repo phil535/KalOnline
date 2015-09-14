@@ -1,11 +1,11 @@
 import 'mrdoob/three.js';
 import 'mrdoob/three.js/controls/EditorControls';
-import GTXLoader from 'src/loaders/GTXLoader.js';
+import GTXLoader from '/src/loaders/GTXLoader.js';
 
 let scene = new THREE.Scene();
 
 let canvas = document.getElementById('canvas');
-let renderer = new THREE.WebGLRenderer({canvas: canvas});
+let renderer = new THREE.WebGLRenderer({canvas});
 
 let camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 1000);
 camera.position.x = camera.position.y = camera.position.z = 50;
@@ -17,7 +17,7 @@ controls.addEventListener('change', () => {
 });
 
 let loader = new GTXLoader();
-let map = loader.load('../DATA/Monster/Clothes/tex/M001.gtx', () => {
+let map = loader.load('/DATA/Monster/Clothes/tex/M001.gtx', () => {
 	renderer.render(scene, camera);
 });
 

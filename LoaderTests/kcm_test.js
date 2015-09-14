@@ -1,10 +1,10 @@
 import 'mrdoob/three.js';
 import 'mrdoob/three.js/controls/EditorControls';
-import GTXLoader from 'src/loaders/GTXLoader.js';
-import KCMLoader from 'src/loaders/KCMLoader.js';
+import GTXLoader from '/src/loaders/GTXLoader.js';
+import KCMLoader from '/src/loaders/KCMLoader.js';
 
 let loaderKCM = new KCMLoader();
-loaderKCM.load('../data/MAPS/n_031_031.kcm').then((kcm) => {
+loaderKCM.load('/data/MAPS/n_031_031.kcm').then((kcm) => {
 	let {colorMap} = kcm;
 
 	let canvas = document.getElementById('canvas');

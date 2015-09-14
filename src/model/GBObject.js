@@ -1,8 +1,9 @@
-import GBLoader from './loaders/GBLoader.js';
+import GBLoader from '../loaders/GBLoader.js';
 
+let URLLookup = {};
 let loader = new GBLoader();
 
-export default class GBObject {
+class GBObject {
 	constructor (url) {
 		this.url = url;
 		this.loaded = false;
@@ -15,7 +16,8 @@ export default class GBObject {
 				return;
 			}
 
-			loader.load(this.url).then((geometryData) => {
+			let promise = loader.load(this.url);
+			promise.then((geometryData) => {
 				this.loaded = true;
 
 				for (let i in geometryData) {
@@ -24,6 +26,14 @@ export default class GBObject {
 
 				resolve(this);
 			});
+			promise.catch(reject);
 		});
 	}
 }
+
+export default function factory (url) {
+	if (URLLookup[url] !== undefined) {
+		return URLLookup[url];
+	}
+	return URLLookup[url] = new GBObject(url);
+};

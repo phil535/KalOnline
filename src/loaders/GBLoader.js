@@ -28,7 +28,6 @@ import GTXLoader from './GTXLoader.js';
 export default class GBLoader {
 
 	constructor (manager = THREE.DefaultLoadingManager) {
-
 		this.manager = manager;
 	}
 
@@ -198,10 +197,10 @@ export default class GBLoader {
 			m.decompose(pos, rot, scl);
 
 			bones.push({
-				"pos": pos.toArray(),
-				"parent": parent,
-				"rotq": rot.toArray(),
-				"scl": scl.toArray()
+				'pos': pos.toArray(),
+				'parent': parent,
+				'rotq': rot.toArray(),
+				'scl': scl.toArray()
 			});
 		}
 		return bones;
@@ -257,7 +256,6 @@ export default class GBLoader {
 			}
 		}
 		textureName = textureName.slice(0, textureName.lastIndexOf('.')) + '.gtx';
-		console.log(textureName);
 
 		// var map = THREE.ImageUtils.loadTexture(textureName);
 
@@ -430,7 +428,7 @@ export default class GBLoader {
 		var hierarchy = [];
 
 		for (var i = 0; i < header.boneCount; i ++) {
-			hierarchy.push({"keys": [], "parent": i - 1});
+			hierarchy.push({'keys': [], 'parent': i - 1});
 		}
 
 		for (var i = 0; i < header.animationCount; i ++) {
@@ -445,7 +443,7 @@ export default class GBLoader {
 					var keyFrameDuration = Math.max(keyFrameDuration / 1000.0, 0);
 
 					for (var k = 0; k < hierarchy.length; k ++) {
-						hierarchy[k]["keys"][j] = {"time": keyFrameDuration};
+						hierarchy[k].keys[j] = {'time': keyFrameDuration};
 					}
 				// }
 			}
@@ -469,42 +467,34 @@ export default class GBLoader {
 			transformations.push(new THREE.Matrix4().compose(translation, rotation, scale));
 		}
 
-		for (var j = 0; j < header.boneCount; j ++) {
-			for (var i = 0; i < keyFrameCount; i ++) {
-				var localMatrix = transformations[boneLookup[i * header.boneCount + j]].clone();
+		for (let j = 0; j < header.boneCount; j ++) {
+			for (let i = 0; i < keyFrameCount; i ++) {
+				let localMatrix = transformations[boneLookup[i * header.boneCount + j]].clone();
 
-				var translation = new THREE.Vector3();
-				var rotation = new THREE.Quaternion();
-				var scale = new THREE.Vector3();
+				let translation = new THREE.Vector3();
+				let rotation = new THREE.Quaternion();
+				let scale = new THREE.Vector3();
 
 				localMatrix.decompose(translation, rotation, scale);
 
-				try {
-					hierarchy[j]["keys"][i]["pos"] = translation.toArray();
-					hierarchy[j]["keys"][i]["rot"] = rotation.toArray();
-					hierarchy[j]["keys"][i]["scl"] = scale.toArray();
-				}
-				catch (error) {
-					// console.log(error.toString());
-					// console.log(hierarchy[j]["keys"], i);
-					// console.log(hierarchy[j]["keys"].length, i);
-					// console.log(hierarchy.length, j);
-				}
+				hierarchy[j].keys[i].pos = translation.toArray();
+				hierarchy[j].keys[i].rot = rotation.toArray();
+				hierarchy[j].keys[i].scl = scale.toArray();
 			}
 		}
 
 		return {
-			"hierarchy": hierarchy,
-			"fps": 30,
-			"name": "namehere",
-			"length": keyFrameDuration
+			hierarchy: hierarchy,
+			fps: 30,
+			name: 'namehere',
+			length: keyFrameDuration
 		};
 	}
 
 	_readCollision (fs, header) {
 		//fix something here
 		if (fs.position !== fs.size - header.descriptorSize - header.collisionSize) {
-			console.warn('error "file stream is at incorrect position at collision" in file: ' + file);
+			console.warn('error "file stream is at incorrect position at collision"');
 			return;
 		}
 

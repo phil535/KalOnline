@@ -1,53 +1,15 @@
 import 'mrdoob/three.js';
 import 'mrdoob/three.js/controls/EditorControls';
-import GBObject from '../src/GBObject.js';
-import GTXLoader from '../src/loaders/GTXLoader.js';
+import GBObject from 'src/model/GBObject.js';
+import GTXLoader from 'src/loaders/GTXLoader.js';
+import Model from 'src/model/Model.js';
 
-let monster = {
-	formation: [
-		new GBObject('../DATA/Monster/Clothes/M001_H1.gb'), 
-		new GBObject('../DATA/Monster/Clothes/M001_B1.gb'), 
-	], 
-	bone: new GBObject('../DATA/Monster/Motion/T001_Bone.gb'), 
-	animation: new GBObject('../DATA/Monster/Motion/T001_0_A_01.gb'), 
-};
-
-function createGeometry (formation, bone, animation) {
-	return new Promise ((resolve, reject) => {
-		(async () => {
-			let {geometry: pieceBone} = await bone.load();
-			let {geometry: pieceAnimation} = await animation.load();
-
-			let geometry = new THREE.Geometry();
-			let materials = [];
-
-			for (let piece of formation) {
-				let {geometry: pieceGeometry, materials: pieceMaterials} = await piece.load();
-
-				geometry.merge(pieceGeometry, new THREE.Matrix4(), materials.length);
-				materials.push(...pieceMaterials);
-
-				geometry.skinWeights.push(...pieceGeometry.skinWeights);
-				geometry.skinIndices.push(...pieceGeometry.skinIndices);
-			}
-
-			geometry.computeBoundingSphere();
-			geometry.bones = pieceBone.bones;
-
-			for (let material of materials) {
-				material.skinning = true;
-			}
-
-			let material = new THREE.MeshFaceMaterial(materials);
-			// let material = new THREE.MeshBasicMaterial({wireframe: true, skinning: true});
-			let mesh = new THREE.SkinnedMesh(geometry, material);
-
-			animation = new THREE.Animation(mesh, pieceAnimation.animation);
-
-			resolve({mesh, animation});
-		}());
-	});
-}
+let formation = [
+	new GBObject('/DATA/Monster/Clothes/M001_H1.gb'), 
+	new GBObject('/DATA/Monster/Clothes/M001_B1.gb')
+];
+let bones = new GBObject('/DATA/Monster/Motion/T001_Bone.gb');
+let animation = new GBObject('/DATA/Monster/Motion/T001_0_A_01.gb');
 
 let clock = new THREE.Clock();
 
@@ -64,17 +26,17 @@ camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 let controls = new THREE.EditorControls(camera, canvas);
 
-let promise = createGeometry(monster.formation, monster.bone, monster.animation);
-promise.then(({mesh, animation}) => {
-	scene.add(mesh);
-	animation.play(0);
-});
+let monster = new Model();
+monster.createGeometry(formation, bones);
+monster.setAnimation(animation);
+
+scene.add(monster.container);
 
 (function animate () {
-    requestAnimationFrame(animate);
-
 	let delta = clock.getDelta();
 	THREE.AnimationHandler.update(delta);
 
 	renderer.render(scene, camera);
+
+    requestAnimationFrame(animate);
 }());

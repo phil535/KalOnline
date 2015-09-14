@@ -2,7 +2,6 @@ import 'mrdoob/three.js';
 import FileStream from 'casperlamboo/filestream';
 
 export default class OPLLoader {
-
 	constructor (manager = THREE.DefaultLoadingManager) {
 		this.manager = manager;
 	}
@@ -17,7 +16,7 @@ export default class OPLLoader {
 			}, undefined, reject);
 		});
 	}
-	
+
 	parse (data, resolve) {
 		let fs = new FileStream(data, true);
 
@@ -35,11 +34,10 @@ export default class OPLLoader {
 		};
 
 		let opl = [];
-
 		for (let i = 0; i < header.objectCount; i ++) {
 			let urlLength = fs.read('I');
 
-			let url = fs.readString(urlLength) + '.gb';
+			let url = `${fs.readString(urlLength)}.gb`;
 
 			let posX = fs.read('f') * 8192;
 			let posZ = fs.read('f');
