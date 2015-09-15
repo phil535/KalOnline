@@ -2,7 +2,6 @@ import 'mrdoob/three.js';
 import FileStream from 'casperlamboo/filestream';
 
 export default class KCMLoader {
-	
 	constructor (manager = THREE.DefaultLoadingManager) {
 		this.manager = manager;
 	}
@@ -33,13 +32,14 @@ export default class KCMLoader {
 			unknown5: fs.read('I')
 		};
 
-		let textureMaps = [];
-
 		for (let i = 0; i < 8; i ++) {
 			let texture = fs.read('B');
 
 			if (texture !== 255) {
-				textureMaps.push({"texture": texture, "map": []});
+				textureMaps.push({
+					texture, 
+					map: []
+				});
 			}
 		}
 
@@ -53,17 +53,14 @@ export default class KCMLoader {
 		}
 
 		let heightMap = [];
-
 		for (let y = 0; y < 257; y ++) {
 			for (let x = 0; x < 257; x ++) {
-				//let i = (256-y) * 257 + x;
 				let i = (y) * 257 + x;
 				heightMap[i] = fs.read('H');
 			}
 		}
 
 		let colorMap = [];
-
 		for (let y = 0; y < 256; y ++) {
 			for (let x = 0; x < 256; x ++) {
 				//let i = (255-y) * 256 + x;
@@ -88,6 +85,7 @@ export default class KCMLoader {
 		resolve({
 			header, 
 			textureMaps, 
+			heightMap, 
 			colorMap
 		});
 	}

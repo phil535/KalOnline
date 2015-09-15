@@ -3,7 +3,7 @@ export default class Model {
 		this.container = new THREE.Object3D();
 	}
 
-	async createGeometry (formation, gbBones) {
+	async setGeometry (formation, gbBones) {
 		let geometry = new THREE.Geometry();
 		let materials = [];
 

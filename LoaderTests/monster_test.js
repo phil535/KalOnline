@@ -27,7 +27,7 @@ camera.lookAt(new THREE.Vector3(0, 0, 0));
 let controls = new THREE.EditorControls(camera, canvas);
 
 let monster = new Model();
-monster.createGeometry(formation, bones);
+monster.setGeometry(formation, bones);
 monster.setAnimation(animation);
 
 scene.add(monster.container);
