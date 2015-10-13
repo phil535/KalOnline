@@ -1,5 +1,5 @@
 import 'mrdoob/three.js';
-import 'mrdoob/three.js/controls/EditorControls';
+import 'mrdoob/three.js/controls/EditorControls.js';
 import GBObject from 'src/model/GBObject.js';
 import GTXLoader from 'src/loaders/GTXLoader.js';
 import Model from 'src/model/Model.js';

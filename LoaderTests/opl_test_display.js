@@ -35,7 +35,6 @@ loaderOPL.load('/data/MAPS/n_031_031.opl').then(({header, opl}) => {
 			let {geometry, materials} = await loader.load(`/${url}`);
 
 			let material = new THREE.MeshFaceMaterial(materials);
-			// let material = new THREE.MeshBasicMaterial({wireframe: true});
 			mesh = new THREE.Mesh(geometry, material);
 
 			scene.add(mesh);
@@ -44,13 +43,13 @@ loaderOPL.load('/data/MAPS/n_031_031.opl').then(({header, opl}) => {
 				renderer.render(scene, camera);
 			}
 			catch (error) {
-				console.log(error);
+				console.log(error, url);
 			}
 
 			await new Promise ((resolve, reject) => {
 				setTimeout(resolve, 1000);
 			});
-
 		}
+		console.log('finish');
 	}());
 });

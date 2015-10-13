@@ -1,5 +1,5 @@
 import 'mrdoob/three.js';
-import 'mrdoob/three.js/controls/EditorControls';
+import 'mrdoob/three.js/controls/EditorControls.js';
 import GBLoader from '/src/loaders/GBLoader.js';
 
 let scene = new THREE.Scene();

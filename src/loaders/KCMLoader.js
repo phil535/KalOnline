@@ -16,7 +16,7 @@ export default class KCMLoader {
 			}, undefined, reject);
 		});
 	}
-	
+
 	parse (data, resolve) {
 		let fs = new FileStream(data, true);
 
@@ -32,22 +32,26 @@ export default class KCMLoader {
 			unknown5: fs.read('I')
 		};
 
+		let textureMaps = [];
 		for (let i = 0; i < 8; i ++) {
-			let texture = fs.read('B');
+			let textureID = fs.read('B');
 
-			if (texture !== 255) {
+			if (textureID !== 255) {
 				textureMaps.push({
-					texture, 
-					map: []
+					textureID, 
+					alphaMap: [], 
+					firstLayer: (i === 0)
 				});
 			}
 		}
+
+		fs.position = 52;
 
 		for (let i = 1; i < textureMaps.length; i ++) {
 			for (let y = 0; y < 256; y ++) {
 				for (let x = 0; x < 256; x ++) {
 					let j = y * 256 + x;
-					textureMaps[i].map[j] = fs.read('B');
+					textureMaps[i].alphaMap[j] = fs.read('B');
 				}
 			}
 		}

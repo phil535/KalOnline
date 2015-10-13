@@ -1,5 +1,5 @@
 import 'mrdoob/three.js';
-import 'mrdoob/three.js/controls/EditorControls';
+import 'mrdoob/three.js/controls/EditorControls.js';
 import GTXLoader from '/src/loaders/GTXLoader.js';
 import KCMLoader from '/src/loaders/KCMLoader.js';
 

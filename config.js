@@ -14,7 +14,12 @@ System.config({
   },
 
   meta: {
-    "three.js/controls/EditorControls": {
+    "three.js/controls/EditorControls.js": {
+      "deps": [
+        "three.js"
+      ]
+    }, 
+    "three.js/loaders/DDSLoader.js": {
       "deps": [
         "three.js"
       ]
@@ -27,7 +32,8 @@ System.config({
     "casperlamboo/filestream": "github:casperlamboo/filestream@master",
     "core-js": "npm:core-js@0.9.18",
     "mrdoob/three.js": "github:mrdoob/three.js@master",
-    "mrdoob/three.js/controls/EditorControls": "github:mrdoob/three.js@master/examples/js/controls/EditorControls.js",
+    "mrdoob/three.js/controls/EditorControls.js": "github:mrdoob/three.js@master/examples/js/controls/EditorControls.js",
+    "mrdoob/three.js/loaders/DDSLoader.js": "github:mrdoob/three.js@master/examples/js/loaders/DDSLoader.js",
     "github:jspm/nodelibs-process@0.1.1": {
       "process": "npm:process@0.10.1"
     },

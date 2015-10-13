@@ -25,8 +25,9 @@ import 'mrdoob/three.js';
 import FileStream from 'casperlamboo/filestream';
 import GTXLoader from './GTXLoader.js';
 
-export default class GBLoader {
+const gtxLoader = new GTXLoader();
 
+export default class GBLoader {
 	constructor (manager = THREE.DefaultLoadingManager) {
 		this.manager = manager;
 	}
@@ -106,7 +107,7 @@ export default class GBLoader {
 		header.indexCount = fs.read('H');
 		header.boneIndexCount = fs.read('H');
 		header.keyFrameCount = fs.read('H');
-		header.unknown0 = fs.read('H');
+		header.boneFile = fs.read('H');
 
 		if (header.version === 8) {
 			header.descriptorSize = fs.read('H');
@@ -228,8 +229,10 @@ export default class GBLoader {
 	_readMaterial (fs, header, url, materialData) {
 		var currentPosition = fs.position;
 
-		var material = new THREE.MeshBasicMaterial();
-		// material.skinning = true;
+		var material = new THREE.MeshBasicMaterial({
+			// wireframe: true, 
+			// color: 0xffffff
+		});
 
 		fs.position = fs.size - header.descriptorSize + materialData.materialOffset;
 
@@ -257,17 +260,9 @@ export default class GBLoader {
 		}
 		textureName = textureName.slice(0, textureName.lastIndexOf('.')) + '.gtx';
 
-		// var map = THREE.ImageUtils.loadTexture(textureName);
-
-		try {
-			var loader = new GTXLoader();
-			var map = loader.load(textureName);
-			map.wrapS = map.wrapT = THREE.RepeatWrapping;
-			material.map = map;
-		}
-		catch (error) {
-			console.warn(error);
-		}
+		var map = gtxLoader.load(textureName);
+		map.wrapS = map.wrapT = THREE.RepeatWrapping;
+		material.map = map;
 
 		fs.position = currentPosition;
 

@@ -1,5 +1,5 @@
 import 'mrdoob/three.js';
-import 'mrdoob/three.js/controls/EditorControls';
+import 'mrdoob/three.js/controls/EditorControls.js';
 import Player from '/src/model/Player.js';
 import GBObject from '/src/model/GBObject.js';
 
