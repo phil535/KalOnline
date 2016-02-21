@@ -6,31 +6,29 @@ export default class OPLLoader {
 		this.manager = manager;
 	}
 
-	load (url) {
-		return new Promise((resolve, reject) => {
-			let loader = new THREE.XHRLoader(this.manager);
-			loader.setCrossOrigin(this.crossOrigin);
-			loader.setResponseType('arraybuffer');
-			loader.load(url, (data) => {
-				this.parse(data, resolve);
-			}, undefined, reject);
-		});
+	load (url, onLoad, onProgress, onError) {
+		const loader = new THREE.XHRLoader(this.manager);
+		loader.setCrossOrigin(this.crossOrigin);
+		loader.setResponseType('arraybuffer');
+		loader.load(url, (data) => {
+			onLoad(this.parse(data));
+		}, onProgress, onError);
 	}
 
-	parse (data, resolve) {
+	parse (data) {
 		let fs = new FileStream(data, true);
 
 		let header = {
-			CRC32: fs.read('I'), 
-			unknown0: fs.read('I'), 
-			mapX: fs.read('I'), 
-			mapY: fs.read('I'), 
-			unknown1: fs.read('I'), 
-			unknown2: fs.read('I'), 
-			unknown3: fs.read('I'), 
-			unknown4: fs.read('I'), 
-			unknown5: fs.read('I'), 
-			objectCount: fs.read('I')			
+			CRC32: fs.read('I'),
+			unknown0: fs.read('I'),
+			mapX: fs.read('I'),
+			mapY: fs.read('I'),
+			unknown1: fs.read('I'),
+			unknown2: fs.read('I'),
+			unknown3: fs.read('I'),
+			unknown4: fs.read('I'),
+			unknown5: fs.read('I'),
+			objectCount: fs.read('I')
 		};
 
 		let opl = [];
@@ -50,16 +48,13 @@ export default class OPLLoader {
 			let sclY = fs.read('f');
 
 			opl.push({
-				url: url, 
-				pos: new THREE.Vector3(posX, posZ, posY), 
-				rot: new THREE.Euler().setFromQuaternion(quaternion, 'XZY'), 
+				url: url,
+				pos: new THREE.Vector3(posX, posZ, posY),
+				rot: new THREE.Euler().setFromQuaternion(quaternion, 'XZY'),
 				scl: new THREE.Vector3(sclX, sclZ, sclY)
 			});
 		}
 
-		resolve({
-			header, 
-			opl
-		});
+		return { header, opl };
 	}
 }

@@ -14,42 +14,41 @@ camera.position.z = -150;
 camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 var loaderOPL = new OPLLoader();
-loaderOPL.load('/data/MAPS/n_031_031.opl').then(({header, opl}) => {
+loaderOPL.load('/data/MAPS/n_031_031.opl', async ({header, opl}) => {
+	const loader = new GBLoader();
+	const done = [];
 	let mesh;
-	let loader = new GBLoader();
 
-	let done = [];
-
-	(async () => {
-		for (let {url} of opl) {
-			if (done.indexOf(url) !== -1) {
-				continue;
-			}
-			done.push(url);
-
-			if (mesh) {
-				mesh.geometry.dispose();
-				scene.remove(mesh);
-			}
-
-			let {geometry, materials} = await loader.load(`/${url}`);
-
-			let material = new THREE.MeshFaceMaterial(materials);
-			mesh = new THREE.Mesh(geometry, material);
-
-			scene.add(mesh);
-
-			try {
-				renderer.render(scene, camera);
-			}
-			catch (error) {
-				console.log(error, url);
-			}
-
-			await new Promise ((resolve, reject) => {
-				setTimeout(resolve, 1000);
-			});
+	for (let {url} of opl) {
+		if (done.indexOf(url) !== -1) {
+			continue;
 		}
-		console.log('finish');
-	}());
+		done.push(url);
+
+		if (mesh) {
+			mesh.geometry.dispose();
+			scene.remove(mesh);
+		}
+
+		const { geometry, materials } = await new Promise((resolve, reject) => {
+			loader.load(`/${url}`, resolve, undefined, reject);
+		});
+
+		const material = new THREE.MeshFaceMaterial(materials);
+		mesh = new THREE.Mesh(geometry, material);
+
+		scene.add(mesh);
+
+		try {
+			renderer.render(scene, camera);
+		}
+		catch (error) {
+			console.log(error, url);
+		}
+
+		await new Promise ((resolve, reject) => {
+			setTimeout(resolve, 1000);
+		});
+	}
+	console.log('finish');
 });

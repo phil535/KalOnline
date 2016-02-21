@@ -1,18 +1,18 @@
 // Original software SwordScript GB
 // Ported to JavaScript by Casper Lamboo
-// 
+//
 // Copyright (c) 2007-2008 Peter S. Stevens
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,25 +25,23 @@ import 'mrdoob/three.js';
 import FileStream from 'casperlamboo/filestream';
 import GTXLoader from './GTXLoader.js';
 
-const gtxLoader = new GTXLoader();
+const GTX_LOADER = new GTXLoader();
 
 export default class GBLoader {
 	constructor (manager = THREE.DefaultLoadingManager) {
 		this.manager = manager;
 	}
 
-	load (url) {
-		return new Promise((resolve, reject) => {
-			var loader = new THREE.XHRLoader(this.manager);
-			loader.setCrossOrigin(this.crossOrigin);
-			loader.setResponseType('arraybuffer');
-			loader.load(url, (text) => {
-				this.parse(text, url, resolve, reject);
-			}, undefined, reject);
-		});
+	load (url, onLoad, onProgress, onError) {
+		const loader = new THREE.XHRLoader(this.manager);
+		// loader.setCrossOrigin(this.crossOrigin);
+		loader.setResponseType('arraybuffer');
+		loader.load(url, (text) => {
+			this.parse(text, url, onLoad, onError);
+		}, onProgress, onError);
 	}
-	
-	parse (data, url, resolve, reject) {
+
+	parse (data, url, onLoad, onError) {
 		var fs = new FileStream(data, true);
 
 		//var geometry = new THREE.BufferGeometry();
@@ -52,7 +50,7 @@ export default class GBLoader {
 		var header = this._readHeader(fs);
 
 		if (header.version < 8 || header.version > 12) {
-			reject('Only versions 8 through 12 are supported');
+			onError('Only versions 8 through 12 are supported');
 			return;
 		}
 
@@ -77,7 +75,7 @@ export default class GBLoader {
 			this._readCollision(fs, header);
 		}
 
-		resolve({geometry, materials});
+		onLoad({geometry, materials});
 	}
 
 	_readHeader (fs) {
@@ -164,7 +162,7 @@ export default class GBLoader {
 	}
 
 	_readBones (fs, header) {
-		var bones = [];	
+		var bones = [];
 		var parentBones = [];
 
 		for (var i = 0; i < header.boneCount; i ++) {
@@ -182,7 +180,7 @@ export default class GBLoader {
 			m = new THREE.Matrix4().getInverse(m);
 
 			parentBones.push(m);
-			
+
 			var parent = fs.read('B');
 			if (parent === 255) {
 				parent = -1;
@@ -230,7 +228,7 @@ export default class GBLoader {
 		var currentPosition = fs.position;
 
 		var material = new THREE.MeshBasicMaterial({
-			// wireframe: true, 
+			// wireframe: true,
 			// color: 0xffffff
 		});
 
@@ -245,7 +243,7 @@ export default class GBLoader {
 		var mapDiffuseAnisotropy = fs.read('f');
 
 		fs.position = fs.size - header.descriptorSize + materialData.textureNameOffset;
-		
+
 		var path = url.slice(0, Math.max(url.lastIndexOf('\\'), url.lastIndexOf('/')));
 		var textureName = path + '/tex/';
 		//for (var j = 0; j < materialData.textureNameLength; j ++) {
@@ -260,7 +258,7 @@ export default class GBLoader {
 		}
 		textureName = textureName.slice(0, textureName.lastIndexOf('.')) + '.gtx';
 
-		var map = gtxLoader.load(textureName);
+		var map = GTX_LOADER.load(textureName);
 		map.wrapS = map.wrapT = THREE.RepeatWrapping;
 		material.map = map;
 
@@ -365,11 +363,11 @@ export default class GBLoader {
 				face.materialIndex = materialIndex;
 				geometry.faces.push(face);
 
-		
+
 
 				geometry.faceVertexUvs[0].push([
-					uvs[a], 
-					uvs[b], 
+					uvs[a],
+					uvs[b],
 					uvs[c]
 				]);
 			}
@@ -409,8 +407,8 @@ export default class GBLoader {
 					geometry.faces.push(face);
 
 					geometry.faceVertexUvs[0].push([
-						uvs[a], 
-						uvs[b], 
+						uvs[a],
+						uvs[b],
 						uvs[c]
 					]);
 				}

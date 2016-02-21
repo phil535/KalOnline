@@ -4,7 +4,7 @@ import GTXLoader from '/src/loaders/GTXLoader.js';
 import KCMLoader from '/src/loaders/KCMLoader.js';
 
 let loaderKCM = new KCMLoader();
-loaderKCM.load('/data/MAPS/n_031_031.kcm').then((kcm) => {
+loaderKCM.load('/data/MAPS/n_031_031.kcm', (kcm) => {
 	let {colorMap} = kcm;
 
 	let canvas = document.getElementById('canvas');

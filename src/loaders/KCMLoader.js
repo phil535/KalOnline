@@ -6,29 +6,27 @@ export default class KCMLoader {
 		this.manager = manager;
 	}
 
-	load (url) {
-		return new Promise((resolve, reject) => {
-			let loader = new THREE.XHRLoader(this.manager);
-			loader.setCrossOrigin(this.crossOrigin);
-			loader.setResponseType('arraybuffer');
-			loader.load(url, (data) => {
-				this.parse(data, resolve);
-			}, undefined, reject);
-		});
+	load (url, onLoad, onProgress, onError) {
+		const loader = new THREE.XHRLoader(this.manager);
+		loader.setCrossOrigin(this.crossOrigin);
+		loader.setResponseType('arraybuffer');
+		loader.load(url, (data) => {
+			onLoad(this.parse(data));
+		}, onProgress, onError);
 	}
 
-	parse (data, resolve) {
+	parse (data) {
 		let fs = new FileStream(data, true);
 
 		let header = {
-			CRC32: fs.read('I'), 
-			unknown0: fs.read('I'), 
-			mapX: fs.read('I'), 
-			mapY: fs.read('I'), 
-			unknown1: fs.read('I'), 
-			unknown2: fs.read('I'), 
-			unknown3: fs.read('I'), 
-			unknown4: fs.read('I'), 
+			CRC32: fs.read('I'),
+			unknown0: fs.read('I'),
+			mapX: fs.read('I'),
+			mapY: fs.read('I'),
+			unknown1: fs.read('I'),
+			unknown2: fs.read('I'),
+			unknown3: fs.read('I'),
+			unknown4: fs.read('I'),
 			unknown5: fs.read('I')
 		};
 
@@ -38,8 +36,8 @@ export default class KCMLoader {
 
 			if (textureID !== 255) {
 				textureMaps.push({
-					textureID, 
-					alphaMap: [], 
+					textureID,
+					alphaMap: [],
 					firstLayer: (i === 0)
 				});
 			}
@@ -86,11 +84,6 @@ export default class KCMLoader {
 			}
 		}
 
-		resolve({
-			header, 
-			textureMaps, 
-			heightMap, 
-			colorMap
-		});
+		return { header, textureMaps, heightMap, colorMap };
 	}
 };

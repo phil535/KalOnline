@@ -3,16 +3,16 @@ import {padStr} from '../utils/Utils.js';
 import GBObject from './GBObject.js';
 import 'mrdoob/three.js';
 
-const pathBase = '../../DATA/Model/';
-const typeConfigs = {
+const PATH_BASE = '../../DATA/Model/';
+const CONFIG_TYPES = {
 	'ARCHER': {
-		identifyer: 'm'
-	}, 
+		identifier: 'M'
+	},
 	'MAGE': {
-		identifyer: 'r'
-	}, 
+		identifier: 'R'
+	},
 	'KNIGHT': {
-		identifyer: 'w'
+		identifier: 'W'
 	}
 };
 
@@ -21,7 +21,9 @@ export default class Player extends Model {
 		super();
 
 		this.type = type;
-		this.identifyer = typeConfigs[type].identifyer;
+		this.identifier = CONFIG_TYPES[type].identifier;
+		this.clothesBase = `${PATH_BASE}Clothes/C${this.identifier}`;
+		this.motionBase = `${PATH_BASE}Motion/T${this.identifier}`;
 
 		this.formation = formation;
 		this.setGeometry(this.formation);
@@ -29,27 +31,28 @@ export default class Player extends Model {
 	}
 
 	setGeometry (formationData) {
-		for (let i in formationData) {
-			this.formation[i] = formationData[i];
-		}
+		this.formation = {
+			...this.formation,
+			...formationData
+		};
 
 		let {a, p, f, g, s, h1, h2} = this.formation;
 		h2 = (h1 === 0) ? h2 : '1';
 
-		let formation = [
-			new GBObject(`${pathBase}Clothes/C${this.identifyer}_${a}_a01.gb`), 
-			new GBObject(`${pathBase}Clothes/C${this.identifyer}_${p}_p01.gb`), 
-			new GBObject(`${pathBase}Clothes/C${this.identifyer}_0_f${padStr(f, 2)}.gb`), 
-			new GBObject(`${pathBase}Clothes/C${this.identifyer}_${g}_g01.gb`), 
-			new GBObject(`${pathBase}Clothes/C${this.identifyer}_${s}_s01.gb`), 
-			new GBObject(`${pathBase}Clothes/C${this.identifyer}_${h1}_h${padStr(h2, 2)}.gb`)
+		const formation = [
+			new GBObject(`${this.clothesBase}_${a}_a01.gb`),
+			new GBObject(`${this.clothesBase}_${p}_p01.gb`),
+			new GBObject(`${this.clothesBase}_0_f${padStr(f, 2)}.gb`),
+			new GBObject(`${this.clothesBase}_${g}_g01.gb`),
+			new GBObject(`${this.clothesBase}_${s}_s01.gb`),
+			new GBObject(`${this.clothesBase}_${h1}_h${padStr(h2, 2)}.gb`)
 		];
-		let bones = new GBObject(`${pathBase}Motion/t${this.identifyer}_bone.gb`);
+		const bones = new GBObject(`${this.motionBase}_bone.gb`);
 
 		super.setGeometry(formation, bones);
 	}
 
 	setAnimation () {
-		super.setAnimation(new GBObject(`${pathBase}Motion/T${this.identifyer}_0_01.gb`));
+		super.setAnimation(new GBObject(`${this.motionBase}_0_01.gb`));
 	}
 }

@@ -1,16 +1,23 @@
+const MATRIX = new THREE.Matrix4();
+
 export default class Model {
 	constructor () {
 		this.container = new THREE.Object3D();
 	}
 
+	// TODO
+	// Figure out if loading takes less time when load functions are called in simultaniously
 	async setGeometry (formation, gbBones) {
 		let geometry = new THREE.Geometry();
 		let materials = [];
 
 		for (let piece of formation) {
-			let {geometry: pieceGeometry, materials: pieceMaterials} = await piece.load();
+			let {
+				geometry: pieceGeometry, 
+				materials: pieceMaterials
+			} = await piece.load();
 
-			geometry.merge(pieceGeometry, new THREE.Matrix4(), materials.length);
+			geometry.merge(pieceGeometry, MATRIX, materials.length);
 			materials.push(...pieceMaterials);
 
 			geometry.skinWeights.push(...pieceGeometry.skinWeights);
