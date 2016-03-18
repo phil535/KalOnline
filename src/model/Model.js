@@ -12,10 +12,15 @@ export default class Model {
 		let materials = [];
 
 		for (let piece of formation) {
-			let {
-				geometry: pieceGeometry, 
-				materials: pieceMaterials
+			const {
+				geometry: pieceGeometry,
+				materials: pieceMaterials,
+				boneFile
 			} = await piece.load();
+
+			if (this.boneFile === undefined) {
+				this.boneFile = boneFile;
+			}
 
 			geometry.merge(pieceGeometry, MATRIX, materials.length);
 			materials.push(...pieceMaterials);
