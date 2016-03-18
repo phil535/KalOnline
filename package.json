@@ -1,6 +1,7 @@
 {
   "jspm": {
     "dependencies": {
+      "casperlamboo/canvas-webworker": "github:casperlamboo/canvas-webworker@master",
       "casperlamboo/filestream": "github:casperlamboo/filestream@master",
       "mrdoob/three.js": "github:mrdoob/three.js@r72"
     },
