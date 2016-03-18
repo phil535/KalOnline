@@ -49,6 +49,8 @@ export default class GBLoader {
 
 		var header = this._readHeader(fs);
 
+		console.log(header.boneFile, url);
+
 		if (header.version < 8 || header.version > 12) {
 			onError('Only versions 8 through 12 are supported');
 			return;
