@@ -48,7 +48,7 @@ export default class Model {
 		}
 
 		if (this.animation !== undefined) {
-			let animation = new THREE.Animation(mesh, this.animation.data); 
+			let animation = new THREE.Animation(mesh, this.animation.data);
 			animation.timeScale = this.animation.timeScale;
 			animation.play(this.animation.currentTime);
 			this.animation = animation;
@@ -71,8 +71,8 @@ export default class Model {
 		}
 		else {
 			this.animation = {
-				data: animation, 
-				currentTime: 0, 
+				data: animation,
+				currentTime: 0,
 				timeScale: 1
 			};
 		}
