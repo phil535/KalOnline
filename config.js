@@ -29,6 +29,7 @@ System.config({
   map: {
     "babel": "npm:babel-core@5.8.5",
     "babel-runtime": "npm:babel-runtime@5.8.5",
+    "casperlamboo/EventDispatcher": "github:casperlamboo/EventDispatcher@master",
     "casperlamboo/canvas-webworker": "github:casperlamboo/canvas-webworker@master",
     "casperlamboo/filestream": "github:casperlamboo/filestream@master",
     "core-js": "npm:core-js@0.9.18",
