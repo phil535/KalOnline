@@ -1,7 +1,7 @@
 import 'mrdoob/three.js';
-import 'mrdoob/three.js/controls/EditorControls.js';
 import GTXLoader from '/src/loaders/GTXLoader.js';
 import KCMLoader from '/src/loaders/KCMLoader.js';
+import { padStr } from '/src/utils/Utils.js';
 
 const TEXTURE_WIDTH = 8192;
 const TEXTURE_HEIGHT = 8192;
@@ -18,7 +18,7 @@ const loaderGTX = new GTXLoader();
 loaderKCM.load('/data/MAPS/n_031_031.kcm', async ({ textureMaps }) => {
 	let first = true;
 	for (const { alphaMap, textureID, firstLayer } of textureMaps) {
-		const textureUrl = `../data/MAPS/Tex/b_00${textureID + 1}.GTX`;
+		const textureUrl = `/data/MAPS/Tex/b_${ padStr(Math.max(textureID, 1), 3) }.GTX`;
 
 		const texture = await new Promise((resolve, reject) => {
 			const texture = loaderGTX.load(textureUrl, () => {
