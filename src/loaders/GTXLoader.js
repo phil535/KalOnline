@@ -15,8 +15,8 @@ export default class GTXLoader extends THREE.DDSLoader {
 	parse (buffer, loadMipmaps) {
 		const header = new Int32Array(buffer, 0, 1);
 
-		if (header[ 0 ] === GTX_MAGIC) {
-			//decryption is from bite 8 to 64
+		if (header[0] === GTX_MAGIC) {
+			//decryption is from Byte 8 to 64
 			const decrypt = new Uint8Array(buffer, 8, 64);
 			for (let i = 0; i < decrypt.length; i ++) {
 				decrypt[i] = GTX_TO_DSS[decrypt[i]];
