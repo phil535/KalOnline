@@ -23,10 +23,10 @@ const model = new Player(KNIGHT, { a: 3, p: 3, g: 3, s: 3, f: 1, h1: 3, h2: 1 })
 scene.add(model.container);
 
 (function animate () {
-	const delta = clock.getDelta();
-	THREE.AnimationHandler.update(delta);
+  const delta = clock.getDelta();
+  THREE.AnimationHandler.update(delta);
 
-	renderer.render(scene, camera);
+  renderer.render(scene, camera);
 
-    requestAnimationFrame(animate);
+  requestAnimationFrame(animate);
 }());

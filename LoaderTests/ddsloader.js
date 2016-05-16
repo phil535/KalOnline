@@ -19,18 +19,18 @@ let loaderDDS = new THREE.DDSLoader();
 
 let geometry = new THREE.PlaneGeometry(512, 512, 1, 1);
 let material = new THREE.MeshBasicMaterial({
-	map: loaderDDS.load( '../test.dds' )
+  map: loaderDDS.load( '../test.dds' )
 });
 
 let plane = new THREE.Mesh(geometry, material);
 scene.add(plane);
 
 setTimeout(() => {
-	console.log(material.map);
+  console.log(material.map);
 }, 1000);
 
 (function animate () {
-	renderer.render(scene, camera);
+  renderer.render(scene, camera);
 
     requestAnimationFrame(animate);
 }());

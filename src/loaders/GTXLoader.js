@@ -7,24 +7,24 @@ const DDS_IDENTIFIER = 0x20534444;
 const GTX_IDENTIFIER = 0x204C414B;
 
 export default class GTXLoader extends THREE.DDSLoader {
-	constructor () {
-		super();
-		this._parser = this.parse;
-	}
+  constructor () {
+    super();
+    this._parser = this.parse;
+  }
 
-	parse (buffer, loadMipmaps) {
-		const header = new Int32Array(buffer, 0, 1);
+  parse (buffer, loadMipmaps) {
+    const header = new Int32Array(buffer, 0, 1);
 
-		if (header[0] === GTX_IDENTIFIER) {
-			//decryption is from Byte 8 to 64
-			const decrypt = new Uint8Array(buffer, 8, 64);
-			for (let i = 0; i < decrypt.length; i ++) {
-				decrypt[i] = GTX_TO_DSS[decrypt[i]];
-			}
+    if (header[0] === GTX_IDENTIFIER) {
+      //decryption is from Byte 8 to 64
+      const decrypt = new Uint8Array(buffer, 8, 64);
+      for (let i = 0; i < decrypt.length; i ++) {
+        decrypt[i] = GTX_TO_DSS[decrypt[i]];
+      }
 
-			header[0] = DDS_IDENTIFIER;
-		}
+      header[0] = DDS_IDENTIFIER;
+    }
 
-		return THREE.DDSLoader.parse(buffer, loadMipmaps);
-	}
+    return THREE.DDSLoader.parse(buffer, loadMipmaps);
+  }
 };

@@ -5,8 +5,8 @@ import GTXLoader from 'src/loaders/GTXLoader.js';
 import Model from 'src/model/Model.js';
 
 const formation = [
-	new GBObject('/DATA/Monster/Clothes/M001_H1.gb'), 
-	new GBObject('/DATA/Monster/Clothes/M001_B1.gb')
+  new GBObject('/DATA/Monster/Clothes/M001_H1.gb'), 
+  new GBObject('/DATA/Monster/Clothes/M001_B1.gb')
 ];
 const bones = new GBObject('/DATA/Monster/Motion/T001_Bone.gb');
 const animation = new GBObject('/DATA/Monster/Motion/T001_0_A_01.gb');
@@ -16,7 +16,7 @@ const clock = new THREE.Clock();
 const scene = new THREE.Scene();
 
 const renderer = new THREE.WebGLRenderer({
-	canvas: document.getElementById('canvas')
+  canvas: document.getElementById('canvas')
 });
 
 const camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 1000);
@@ -34,10 +34,10 @@ monster.setAnimation(animation);
 scene.add(monster.container);
 
 (function animate () {
-	const delta = clock.getDelta();
-	THREE.AnimationHandler.update(delta);
+  const delta = clock.getDelta();
+  THREE.AnimationHandler.update(delta);
 
-	renderer.render(scene, camera);
+  renderer.render(scene, camera);
 
     requestAnimationFrame(animate);
 }());
