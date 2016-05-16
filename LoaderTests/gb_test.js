@@ -23,12 +23,12 @@ function loaded ({geometry, materials}) {
 }
 
 const loader = new GBLoader();
-loader.load('/DATA/Model/Clothes/Cm_10_a01.gb').then(loaded);
-loader.load('/DATA/Model/Clothes/Cm_10_p01.gb').then(loaded);
-loader.load('/DATA/Model/Clothes/Cm_0_f01.gb').then(loaded);
-loader.load('/DATA/Model/Clothes/Cm_10_g01.gb').then(loaded);
-loader.load('/DATA/Model/Clothes/Cm_10_s01.gb').then(loaded);
-loader.load('/DATA/Model/Clothes/Cm_10_h01.gb').then(loaded);
+loader.load('/DATA/Model/Clothes/Cm_10_a01.gb', loaded);
+loader.load('/DATA/Model/Clothes/Cm_10_p01.gb', loaded);
+loader.load('/DATA/Model/Clothes/Cm_0_f01.gb', loaded);
+loader.load('/DATA/Model/Clothes/Cm_10_g01.gb', loaded);
+loader.load('/DATA/Model/Clothes/Cm_10_s01.gb', loaded);
+loader.load('/DATA/Model/Clothes/Cm_10_h01.gb', loaded);
 
 // loader.load('/Data/OBJECTS/b/1/land/[a]tree_p02.gb', loaded);
 
