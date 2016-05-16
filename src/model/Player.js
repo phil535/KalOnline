@@ -1,9 +1,10 @@
 import Model from './model.js';
-import {padStr} from '../utils/Utils.js';
+import { padStr } from 'js/utils/Utils.js';
 import GBObject from './GBObject.js';
+
 import 'mrdoob/three.js';
 
-const PATH_BASE = '../../DATA/Model/';
+const PATH_BASE = 'DATA/Model/';
 const CONFIG_TYPES = {
 	'ARCHER': {
 		identifier: 'M'
