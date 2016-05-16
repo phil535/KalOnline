@@ -1,18 +1,18 @@
 import Model from './model.js';
 import { padStr } from 'js/utils/Utils.js';
 import GBObject from './GBObject.js';
-
+import { KNIGHT, MAGE, ARCHER } from 'js/Constants.js';
 import 'mrdoob/three.js';
 
 const PATH_BASE = 'DATA/Model/';
 const CONFIG_TYPES = {
-	'ARCHER': {
+	[ARCHER]: {
 		identifier: 'M'
 	},
-	'MAGE': {
+	[MAGE]: {
 		identifier: 'R'
 	},
-	'KNIGHT': {
+	[KNIGHT]: {
 		identifier: 'W'
 	}
 };

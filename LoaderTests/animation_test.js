@@ -2,6 +2,7 @@ import 'mrdoob/three.js';
 import 'mrdoob/three.js/controls/EditorControls.js';
 import Player from '/src/model/Player.js';
 import GBObject from '/src/model/GBObject.js';
+import { KNIGHT } from 'js/Constants.js';
 
 let clock = new THREE.Clock();
 
@@ -18,7 +19,7 @@ camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 let controls = new THREE.EditorControls(camera, canvas);
 
-let model = new Player('KNIGHT', {a: 3, p: 3, g: 3, s: 3, f:1, h1: 3, h2: 1});
+let model = new Player(KNIGHT, {a: 3, p: 3, g: 3, s: 3, f:1, h1: 3, h2: 1});
 scene.add(model.container);
 
 (function animate () {
