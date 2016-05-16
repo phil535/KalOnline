@@ -19,7 +19,7 @@ camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 const controls = new THREE.EditorControls(camera, canvas);
 
-const model = new Player(KNIGHT, {a: 3, p: 3, g: 3, s: 3, f:1, h1: 3, h2: 1});
+const model = new Player(KNIGHT, { a: 3, p: 3, g: 3, s: 3, f: 1, h1: 3, h2: 1 });
 scene.add(model.container);
 
 (function animate () {

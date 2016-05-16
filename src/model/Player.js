@@ -38,7 +38,7 @@ export default class Player extends Model {
 			}
 		});
 
-		let {a, p, f, g, s, h1, h2} = this.formation;
+		let { a, p, f, g, s, h1, h2 } = this.formation;
 		h2 = (h1 === 0) ? h2 : '1';
 
 		const formation = [
