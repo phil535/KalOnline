@@ -1,10 +1,10 @@
 import Model from './model.js';
-import { padStr } from 'js/utils/Utils.js';
+import { padStr } from 'src/utils/Utils.js';
 import GBObject from './GBObject.js';
-import { KNIGHT, MAGE, ARCHER } from 'js/Constants.js';
+import { KNIGHT, MAGE, ARCHER } from 'src/Constants.js';
 import 'mrdoob/three.js';
 
-const PATH_BASE = 'DATA/Model/';
+const PATH_BASE = '/DATA/Model/';
 const CONFIG_TYPES = {
 	[ARCHER]: {
 		identifier: 'M'

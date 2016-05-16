@@ -2,7 +2,7 @@ import 'mrdoob/three.js';
 import 'mrdoob/three.js/controls/EditorControls.js';
 import Player from '/src/model/Player.js';
 import GBObject from '/src/model/GBObject.js';
-import { KNIGHT } from 'js/Constants.js';
+import { KNIGHT } from 'src/Constants.js';
 
 const clock = new THREE.Clock();
 
