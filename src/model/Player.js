@@ -26,16 +26,17 @@ export default class Player extends Model {
 		this.clothesBase = `${PATH_BASE}Clothes/C${this.identifier}`;
 		this.motionBase = `${PATH_BASE}Motion/T${this.identifier}`;
 
-		this.formation = formation;
-		this.setGeometry(this.formation);
+		this.formation = { a: 0, p: 0, f: 1, g: 0, s: 0, h1: 0, h2: 1 };
+		this.setGeometry(formation);
 		this.setAnimation();
 	}
 
 	setGeometry (formationData) {
-		this.formation = {
-			...this.formation,
-			...formationData
-		};
+		Object.entries(formationData).forEach(([key, value]) => {
+			if (this.formation[key] !== undefined) {
+				this.formation[key] = value;
+			}
+		});
 
 		let {a, p, f, g, s, h1, h2} = this.formation;
 		h2 = (h1 === 0) ? h2 : '1';
