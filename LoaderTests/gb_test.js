@@ -2,27 +2,27 @@ import 'mrdoob/three.js';
 import 'mrdoob/three.js/controls/EditorControls.js';
 import GBLoader from '/src/loaders/GBLoader.js';
 
-let scene = new THREE.Scene();
+const scene = new THREE.Scene();
 
-let canvas = document.getElementById('canvas');
-let renderer = new THREE.WebGLRenderer({canvas});
+const canvas = document.getElementById('canvas');
+const renderer = new THREE.WebGLRenderer({canvas});
 
-let camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 1000);
+const camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 1000);
 camera.position.x = 50;
 camera.position.y = 50;
 camera.position.z = -50;
 camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-let controls = new THREE.EditorControls(camera, canvas);
+const controls = new THREE.EditorControls(camera, canvas);
 
 function loaded ({geometry, materials}) {
-	let material = new THREE.MeshFaceMaterial(materials);
-	let mesh = new THREE.Mesh(geometry, material);
+	const material = new THREE.MeshFaceMaterial(materials);
+	const mesh = new THREE.Mesh(geometry, material);
 
 	scene.add(mesh);
 }
 
-let loader = new GBLoader();
+const loader = new GBLoader();
 loader.load('/DATA/Model/Clothes/Cm_10_a01.gb').then(loaded);
 loader.load('/DATA/Model/Clothes/Cm_10_p01.gb').then(loaded);
 loader.load('/DATA/Model/Clothes/Cm_0_f01.gb').then(loaded);
@@ -35,5 +35,5 @@ loader.load('/DATA/Model/Clothes/Cm_10_h01.gb').then(loaded);
 (function animate () {
 	renderer.render(scene, camera);
 
-    requestAnimationFrame(animate);
+  requestAnimationFrame(animate);
 }());
