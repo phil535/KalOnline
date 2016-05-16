@@ -3,19 +3,30 @@ import 'mrdoob/three.js/controls/EditorControls.js';
 import GTXLoader from '/src/loaders/GTXLoader.js';
 import KCMLoader from '/src/loaders/KCMLoader.js';
 
-let loaderKCM = new KCMLoader();
+const WIDTH = 256;
+const HEIGHT = 256;
+
+const loaderKCM = new KCMLoader();
 loaderKCM.load('/data/MAPS/n_031_031.kcm', (kcm) => {
-  let {colorMap} = kcm;
+  const { colorMap } = kcm;
 
-  let canvas = document.getElementById('canvas');
-  let context = canvas.getContext('2d');
+  const canvas = document.createElement('canvas');
+  canvas.width = WIDTH;
+  canvas.height = HEIGHT;
 
-  for (let i = 0; i < colorMap.length; i += 3) {
-    let [r, g, b] = [colorMap[i], colorMap[i + 1], colorMap[i + 2]];
-    let x = (i/3) % 256;
-    let y = Math.floor((i/3) / 256);
+  const context = canvas.getContext('2d');
+  const imageData = context.getImageData(0, 0, WIDTH, HEIGHT);
 
-    context.fillStyle = `rgb(${r}, ${g}, ${b})`;
-    context.fillRect(x, y, 1, 1);
+  let imageDataIndex = 0;
+  let colorMapIndex = 0;
+  const length = WIDTH * HEIGHT;
+  for (let i = 0; i < length; i ++) {
+    imageData.data[imageDataIndex ++] = colorMap[colorMapIndex ++]; // r
+    imageData.data[imageDataIndex ++] = colorMap[colorMapIndex ++]; // g
+    imageData.data[imageDataIndex ++] = colorMap[colorMapIndex ++]; // b
+    imageData.data[imageDataIndex ++] = 255; // a
   }
+  context.putImageData(imageData, 0, 0);
+
+  document.body.appendChild(canvas);
 });
