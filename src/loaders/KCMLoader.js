@@ -1,5 +1,5 @@
 import 'mrdoob/three.js';
-import FileStream from 'casperlamboo/filestream';
+import FileStream from 'src/utils/filestream.js';
 
 export default class KCMLoader {
 	constructor (manager = THREE.DefaultLoadingManager) {

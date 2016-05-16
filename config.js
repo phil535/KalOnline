@@ -31,7 +31,6 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.5",
     "casperlamboo/EventDispatcher": "github:casperlamboo/EventDispatcher@master",
     "casperlamboo/canvas-webworker": "github:casperlamboo/canvas-webworker@master",
-    "casperlamboo/filestream": "github:casperlamboo/filestream@master",
     "core-js": "npm:core-js@0.9.18",
     "mrdoob/three.js": "github:mrdoob/three.js@r72",
     "mrdoob/three.js/controls/EditorControls.js": "github:mrdoob/three.js@r72/examples/js/controls/EditorControls.js",

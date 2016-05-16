@@ -22,7 +22,7 @@
 // THE SOFTWARE.
 
 import 'mrdoob/three.js';
-import FileStream from 'casperlamboo/filestream';
+import FileStream from 'src/utils/filestream.js';
 import GTXLoader from './GTXLoader.js';
 
 const GTX_LOADER = new GTXLoader();
