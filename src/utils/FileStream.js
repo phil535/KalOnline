@@ -1,5 +1,3 @@
-let byteSizes = {'S': 1, 'B': 1, 'H': 2, 'I': 4, 'F': 4, 'D': 8};
-
 // DataView Shim from THREE.js STL Loader
 // https://github.com/mrdoob/three.js/blob/5c7e0df9b100ba40cdcaaf530196290e16c34858/examples/js/loaders/STLLoader.js
 if (typeof DataView === 'undefined') {
@@ -127,6 +125,8 @@ if (typeof DataView === 'undefined') {
   }
 }
 
+const BYTE_SIZE = { 'S': 1, 'B': 1, 'H': 2, 'I': 4, 'F': 4, 'D': 8 };
+
 export default class FileStream {
   constructor(arrayBuffer, littleEndian = true) {
     this.dataView = new DataView(arrayBuffer);
@@ -148,7 +148,7 @@ export default class FileStream {
       case 'd' : value = this.dataView.getFloat64(this.position, this.littleEndian); break;
     }
 
-    this.position += byteSizes[identifyer.toUpperCase()];
+    this.position += BYTE_SIZE[identifyer.toUpperCase()];
     return value;
   }
   readString(length, littleEndian = true) {
