@@ -1,4 +1,4 @@
-import sleep from '/src/utils/Utils.js';
+import { sleep } from '/src/utils/Utils.js';
 import 'mrdoob/three.js';
 import OPLLoader from '/src/loaders/OPLLoader.js';
 import GBLoader from '/src/loaders/GBLoader.js';
