@@ -84,7 +84,7 @@ if (typeof DataView === 'undefined') {
 
       return sign * (1 + mantissa * Math.pow(2, -52)) * Math.pow(2, exponent);
     }
-    getFloat32 byteOffset, littleEndian) {
+    getFloat32(byteOffset, littleEndian) {
       const b = this._getBytes(4, byteOffset, littleEndian);
       const sign = 1 - (2 * (b[3] >> 7));
       const exponent = (((b[3] << 1) & 0xff) | (b[2] >> 7)) - 127;
