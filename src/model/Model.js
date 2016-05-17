@@ -1,13 +1,12 @@
 const MATRIX = new THREE.Matrix4();
 
 export default class Model {
-  constructor () {
+  constructor() {
     this.container = new THREE.Object3D();
   }
-
   // TODO
   // Figure out if loading takes less time when load functions are called in simultaniously
-  async setGeometry (formation, gbBones) {
+  async setGeometry(formation, gbBones) {
     let geometry = new THREE.Geometry();
     let materials = [];
 
@@ -61,8 +60,7 @@ export default class Model {
     this.mesh = mesh;
     this.container.add(this.mesh);
   }
-
-  async setAnimation (gbObject) {
+  async setAnimation(gbObject) {
     let {geometry: {animation}} = await gbObject.load();
 
     if (this.mesh) {

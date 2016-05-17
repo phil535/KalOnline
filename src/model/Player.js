@@ -18,7 +18,7 @@ const CONFIG_TYPES = {
 };
 
 export default class Player extends Model {
-  constructor (type, formation) {
+  constructor(type, formation) {
     super();
 
     this.type = type;
@@ -30,8 +30,7 @@ export default class Player extends Model {
     this.setGeometry(formation);
     this.setAnimation();
   }
-
-  setGeometry (formationData) {
+  setGeometry(formationData) {
     Object.entries(formationData).forEach(([key, value]) => {
       if (this.formation[key] !== undefined) {
         this.formation[key] = value;
@@ -53,8 +52,7 @@ export default class Player extends Model {
 
     super.setGeometry(formation, bones);
   }
-
-  setAnimation () {
+  setAnimation() {
     super.setAnimation(new GBObject(`${this.motionBase}_0_01.gb`));
   }
 }

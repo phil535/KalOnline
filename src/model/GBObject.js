@@ -4,12 +4,12 @@ const URL_LOOKUP = {};
 const GB_LOADER = new GBLoader();
 
 class GBObject {
-  constructor (url) {
+  constructor(url) {
     this.url = url;
     this.loaded = false;
   }
 
-  async load () {
+  async load() {
     if (!this.loaded) {
       const geometryData = await new Promise((resolve, reject) => {
         GB_LOADER.load(this.url, resolve, undefined, reject);
