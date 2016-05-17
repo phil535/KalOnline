@@ -7,12 +7,11 @@ const DDS_IDENTIFIER = 0x20534444;
 const GTX_IDENTIFIER = 0x204C414B;
 
 export default class GTXLoader extends THREE.DDSLoader {
-  constructor () {
+  constructor() {
     super();
     this._parser = this.parse;
   }
-
-  parse (buffer, loadMipmaps) {
+  parse(buffer, loadMipmaps) {
     const header = new Int32Array(buffer, 0, 1);
 
     if (header[0] === GTX_IDENTIFIER) {
