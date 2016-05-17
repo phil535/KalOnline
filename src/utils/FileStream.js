@@ -135,16 +135,17 @@ export default class FileStream {
     this.position = 0;
   }
   read(identifyer) {
-     switch (identifyer) {
-      case 's' : var value = String.fromCharCode(this.dataView.getInt8(this.position, this.littleEndian)); break;
-      case 'b' : var value = this.dataView.getInt8(this.position, this.littleEndian); break;
-      case 'B' : var value = this.dataView.getUint8(this.position, this.littleEndian); break;
-      case 'h' : var value = this.dataView.getInt16(this.position, this.littleEndian); break;
-      case 'H' : var value = this.dataView.getUint16(this.position, this.littleEndian); break;
-      case "i" : var value = this.dataView.getInt32(this.position, this.littleEndian); break;
-      case "I" : var value = this.dataView.getUint32(this.position, this.littleEndian); break;
-      case 'f' : var value = this.dataView.getFloat32(this.position, this.littleEndian); break;
-      case 'd' : var value = this.dataView.getFloat64(this.position, this.littleEndian); break;
+    let value;
+    switch (identifyer) {
+      case 's' : value = String.fromCharCode(this.dataView.getInt8(this.position, this.littleEndian)); break;
+      case 'b' : value = this.dataView.getInt8(this.position, this.littleEndian); break;
+      case 'B' : value = this.dataView.getUint8(this.position, this.littleEndian); break;
+      case 'h' : value = this.dataView.getInt16(this.position, this.littleEndian); break;
+      case 'H' : value = this.dataView.getUint16(this.position, this.littleEndian); break;
+      case "i" : value = this.dataView.getInt32(this.position, this.littleEndian); break;
+      case "I" : value = this.dataView.getUint32(this.position, this.littleEndian); break;
+      case 'f' : value = this.dataView.getFloat32(this.position, this.littleEndian); break;
+      case 'd' : value = this.dataView.getFloat64(this.position, this.littleEndian); break;
     }
 
     this.position += byteSizes[identifyer.toUpperCase()];
