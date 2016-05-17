@@ -7,10 +7,10 @@ export default class Model {
   // TODO
   // Figure out if loading takes less time when load functions are called in simultaniously
   async setGeometry(formation, gbBones) {
-    let geometry = new THREE.Geometry();
-    let materials = [];
+    const geometry = new THREE.Geometry();
+    const materials = [];
 
-    for (let piece of formation) {
+    for (const piece of formation) {
       const {
         geometry: pieceGeometry,
         materials: pieceMaterials,
@@ -28,7 +28,7 @@ export default class Model {
       geometry.skinIndices.push(...pieceGeometry.skinIndices);
     }
 
-    let material = new THREE.MeshFaceMaterial(materials);
+    const material = new THREE.MeshFaceMaterial(materials);
 
     let mesh;
     if (gbBones !== undefined) {
@@ -36,18 +36,17 @@ export default class Model {
 
       geometry.bones = bones;
 
-      for (let material of materials) {
+      for (const material of materials) {
         material.skinning = true;
       }
 
       mesh = new THREE.SkinnedMesh(geometry, material);
-    }
-    else {
+    } else {
       mesh = new THREE.Mesh(geometry, material);
     }
 
     if (this.animation !== undefined) {
-      let animation = new THREE.Animation(mesh, this.animation.data);
+      const animation = new THREE.Animation(mesh, this.animation.data);
       animation.timeScale = this.animation.timeScale;
       animation.play(this.animation.currentTime);
       this.animation = animation;
@@ -57,17 +56,17 @@ export default class Model {
       this.mesh.geometry.dispose();
       this.container.remove(this.mesh);
     }
+
     this.mesh = mesh;
     this.container.add(this.mesh);
   }
   async setAnimation(gbObject) {
-    let {geometry: {animation}} = await gbObject.load();
+    const { geometry: { animation } } = await gbObject.load();
 
     if (this.mesh) {
       this.animation = new THREE.Animation(this.mesh, animation);
       this.animation.play(0);
-    }
-    else {
+    } else {
       this.animation = {
         data: animation,
         currentTime: 0,
