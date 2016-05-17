@@ -21,3 +21,9 @@ export const padStr = (str, length) => {
 
   return str;
 };
+
+export function sleep(timeout) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, timeout);
+  });
+}

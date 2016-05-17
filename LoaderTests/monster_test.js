@@ -5,7 +5,7 @@ import GTXLoader from 'src/loaders/GTXLoader.js';
 import Model from 'src/model/Model.js';
 
 const formation = [
-  new GBObject('/DATA/Monster/Clothes/M001_H1.gb'), 
+  new GBObject('/DATA/Monster/Clothes/M001_H1.gb'),
   new GBObject('/DATA/Monster/Clothes/M001_B1.gb')
 ];
 const bones = new GBObject('/DATA/Monster/Motion/T001_Bone.gb');
@@ -20,9 +20,7 @@ const renderer = new THREE.WebGLRenderer({
 });
 
 const camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 1000);
-camera.position.x = 50;
-camera.position.y = 50;
-camera.position.z = -50;
+camera.position.set(50, 50, -50);
 camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 const controls = new THREE.EditorControls(camera, canvas);

@@ -18,7 +18,7 @@ const loaderGTX = new GTXLoader();
 loaderKCM.load('/data/MAPS/n_031_031.kcm', async ({ textureMaps }) => {
   let first = true;
   for (const { alphaMap, textureID, firstLayer } of textureMaps) {
-    const textureUrl = `/data/MAPS/Tex/b_${ padStr(Math.max(textureID, 1), 3) }.GTX`;
+    const textureUrl = `/data/MAPS/Tex/b_${padStr(Math.max(textureID, 1), 3)}.GTX`;
 
     const texture = await new Promise((resolve, reject) => {
       const texture = loaderGTX.load(textureUrl, () => {
@@ -36,7 +36,6 @@ loaderKCM.load('/data/MAPS/n_031_031.kcm', async ({ textureMaps }) => {
 
       first = false;
     } else {
-
       const image = combineAlphaPattern(alphaImage, texturePattern, TEXTURE_WIDTH, TEXTURE_HEIGHT);
 
       context.drawImage(image, 0, 0);
@@ -44,7 +43,7 @@ loaderKCM.load('/data/MAPS/n_031_031.kcm', async ({ textureMaps }) => {
   }
 });
 
-function createAlphaMap (map, width, height) {
+function createAlphaMap(map, width, height) {
   const canvas = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
@@ -66,7 +65,7 @@ function createAlphaMap (map, width, height) {
   return canvas;
 }
 
-function textureToImage (texture) {
+function textureToImage(texture) {
   const { width, height } = texture.image;
 
   const renderer = new THREE.WebGLRenderer();

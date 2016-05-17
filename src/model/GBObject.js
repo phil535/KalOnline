@@ -8,7 +8,6 @@ class GBObject {
     this.url = url;
     this.loaded = false;
   }
-
   async load() {
     if (!this.loaded) {
       const geometryData = await new Promise((resolve, reject) => {
@@ -22,7 +21,7 @@ class GBObject {
   }
 }
 
-export default (url) => {
+export default(url) => {
   if (URL_LOOKUP[url] !== undefined) {
     return URL_LOOKUP[url];
   }

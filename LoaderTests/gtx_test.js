@@ -2,27 +2,27 @@ import 'mrdoob/three.js';
 import 'mrdoob/three.js/controls/EditorControls.js';
 import GTXLoader from '/src/loaders/GTXLoader.js';
 
-let scene = new THREE.Scene();
+const scene = new THREE.Scene();
 
-let canvas = document.getElementById('canvas');
-let renderer = new THREE.WebGLRenderer({canvas});
+const canvas = document.getElementById('canvas');
+const renderer = new THREE.WebGLRenderer({ canvas });
 
-let camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 1000);
+const camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 1000);
 camera.position.x = camera.position.y = camera.position.z = 50;
 camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-let controls = new THREE.EditorControls(camera, canvas);
+const controls = new THREE.EditorControls(camera, canvas);
 controls.addEventListener('change', () => {
   renderer.render(scene, camera);
 });
 
-let loader = new GTXLoader();
-let map = loader.load('/DATA/Monster/Clothes/tex/M001.gtx', () => {
+const loader = new GTXLoader();
+const map = loader.load('/DATA/Monster/Clothes/tex/M001.gtx', () => {
   renderer.render(scene, camera);
 });
 
-let geometry = new THREE.PlaneGeometry(50, 50, 5, 5);
-let material = new THREE.MeshBasicMaterial({map: map});
-let mesh = new THREE.Mesh(geometry, material);
+const geometry = new THREE.PlaneGeometry(50, 50, 5, 5);
+const material = new THREE.MeshBasicMaterial({ map });
+const mesh = new THREE.Mesh(geometry, material);
 
 scene.add(mesh);
