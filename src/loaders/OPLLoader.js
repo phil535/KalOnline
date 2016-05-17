@@ -2,11 +2,10 @@ import 'mrdoob/three.js';
 import FileStream from 'src/utils/filestream.js';
 
 export default class OPLLoader {
-  constructor (manager = THREE.DefaultLoadingManager) {
+  constructor(manager = THREE.DefaultLoadingManager) {
     this.manager = manager;
   }
-
-  load (url, onLoad, onProgress, onError) {
+  load(url, onLoad, onProgress, onError) {
     const loader = new THREE.XHRLoader(this.manager);
     loader.setCrossOrigin(this.crossOrigin);
     loader.setResponseType('arraybuffer');
@@ -14,11 +13,10 @@ export default class OPLLoader {
       onLoad(this.parse(data));
     }, onProgress, onError);
   }
+  parse(data) {
+    const fs = new FileStream(data, true);
 
-  parse (data) {
-    let fs = new FileStream(data, true);
-
-    let header = {
+    const header = {
       CRC32: fs.read('I'),
       unknown0: fs.read('I'),
       mapX: fs.read('I'),
@@ -31,21 +29,21 @@ export default class OPLLoader {
       objectCount: fs.read('I')
     };
 
-    let opl = [];
+    const opl = [];
     for (let i = 0; i < header.objectCount; i ++) {
-      let urlLength = fs.read('I');
+      const urlLength = fs.read('I');
 
-      let url = `${fs.readString(urlLength)}.gb`;
+      const url = `${fs.readString(urlLength)}.gb`;
 
-      let posX = fs.read('f') * 8192;
-      let posZ = fs.read('f');
-      let posY = fs.read('f') * 8192;
+      const posX = fs.read('f') * 8192;
+      const posZ = fs.read('f');
+      const posY = fs.read('f') * 8192;
 
-      let quaternion = new THREE.Quaternion(fs.read('f'), fs.read('f'), fs.read('f'), fs.read('f'));
+      const quaternion = new THREE.Quaternion(fs.read('f'), fs.read('f'), fs.read('f'), fs.read('f'));
 
-      let sclX = fs.read('f');
-      let sclZ = fs.read('f');
-      let sclY = fs.read('f');
+      const sclX = fs.read('f');
+      const sclZ = fs.read('f');
+      const sclY = fs.read('f');
 
       opl.push({
         url: url,

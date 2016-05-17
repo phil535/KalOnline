@@ -26,4 +26,4 @@ export default class GTXLoader extends THREE.DDSLoader {
 
     return THREE.DDSLoader.parse(buffer, loadMipmaps);
   }
-};
+}

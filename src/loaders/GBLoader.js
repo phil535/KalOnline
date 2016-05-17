@@ -28,11 +28,10 @@ import GTXLoader from './GTXLoader.js';
 const GTX_LOADER = new GTXLoader();
 
 export default class GBLoader {
-  constructor (manager = THREE.DefaultLoadingManager) {
+  constructor(manager = THREE.DefaultLoadingManager) {
     this.manager = manager;
   }
-
-  load (url, onLoad, onProgress, onError) {
+  load(url, onLoad, onProgress, onError) {
     const loader = new THREE.XHRLoader(this.manager);
     // loader.setCrossOrigin(this.crossOrigin);
     loader.setResponseType('arraybuffer');
@@ -40,14 +39,12 @@ export default class GBLoader {
       this.parse(text, url, onLoad, onError);
     }, onProgress, onError);
   }
+  parse(data, url, onLoad, onError) {
+    const fs = new FileStream(data, true);
 
-  parse (data, url, onLoad, onError) {
-    var fs = new FileStream(data, true);
+    const geometry = new THREE.Geometry();
 
-    //var geometry = new THREE.BufferGeometry();
-    var geometry = new THREE.Geometry();
-
-    var header = this._readHeader(fs);
+    const header = this._readHeader(fs);
 
     if (header.version < 8 || header.version > 12) {
       onError('Only versions 8 through 12 are supported');
@@ -61,9 +58,9 @@ export default class GBLoader {
       geometry.bones = this._readBones(fs, header);
     }
 
-    var materials = this._readMaterials(fs, header, url);
+    const materials = this._readMaterials(fs, header, url);
 
-    for (var i = 0; i < header.geometryCount; i ++) {
+    for (let i = 0; i < header.geometryCount; i ++) {
       this._readGeometry(fs, header, geometry);
     }
 
@@ -75,11 +72,10 @@ export default class GBLoader {
       this._readCollision(fs, header);
     }
 
-    onLoad({geometry, materials});
+    onLoad({ geometry, materials });
   }
-
-  _readHeader (fs) {
-    var header = {
+  _readHeader(fs) {
+    const header = {
       version: fs.read('B'),
       boneCount: fs.read('B'),
       isBoneFile: Boolean(fs.read('B')),
@@ -91,14 +87,14 @@ export default class GBLoader {
     }
 
     if (header.version >= 12) {
-      var fileName = fs.readString(64);
+      const fileName = fs.readString(64);
       header.fileName = fileName;
     }
 
-    var fileNameLength = fs.read('I');
+    const fileNameLength = fs.read('I');
 
-    var verticesCount = [];
-    for (var i = 0; i < ((header.version >= 9) ? 12 : 6); i ++) {
+    const verticesCount = [];
+    for (let i = 0; i < ((header.version >= 9) ? 12 : 6); i ++) {
       verticesCount.push(fs.read('H'));
     }
 
@@ -110,8 +106,7 @@ export default class GBLoader {
     if (header.version === 8) {
       header.descriptorSize = fs.read('H');
       header.collisionSize = fs.read('H');
-    }
-    else {
+    } else {
       header.descriptorSize = fs.read('I');
       header.collisionSize = fs.read('I');
     }
@@ -120,8 +115,7 @@ export default class GBLoader {
 
     if (header.version === 8) {
       header.animationCount = fs.read('B');
-    }
-    else {
+    } else {
       header.animationCount = fs.read('H');
     }
 
@@ -130,9 +124,8 @@ export default class GBLoader {
 
     return header;
   }
-
-  _readBoundingBox (fs, header) {
-    var boundingBox = new THREE.Box3();
+  _readBoundingBox(fs, header) {
+    const boundingBox = new THREE.Box3();
 
     if (header.version >= 11) {
       boundingBox.min.x = fs.read('f');
@@ -146,9 +139,8 @@ export default class GBLoader {
 
     return boundingBox;
   }
-
-  _readBoundingSphere (fs, header) {
-    var boundingSphere = new THREE.Sphere();
+  _readBoundingSphere(fs, header) {
+    const boundingSphere = new THREE.Sphere();
 
     if (header.version >= 9) {
       boundingSphere.center.x = fs.read('f');
@@ -160,18 +152,17 @@ export default class GBLoader {
 
     return boundingSphere;
   }
+  _readBones(fs, header) {
+    const bones = [];
+    const parentBones = [];
 
-  _readBones (fs, header) {
-    var bones = [];
-    var parentBones = [];
-
-    for (var i = 0; i < header.boneCount; i ++) {
-      var n11 = fs.read('f'), n21 = fs.read('f'), n31 = fs.read('f'), n41 = fs.read('f'),
+    for (let i = 0; i < header.boneCount; i ++) {
+      const n11 = fs.read('f'), n21 = fs.read('f'), n31 = fs.read('f'), n41 = fs.read('f'),
       n12 = fs.read('f'), n22 = fs.read('f'), n32 = fs.read('f'), n42 = fs.read('f'),
       n13 = fs.read('f'), n23 = fs.read('f'), n33 = fs.read('f'), n43 = fs.read('f'),
       n14 = fs.read('f'), n24 = fs.read('f'), n34 = fs.read('f'), n44 = fs.read('f');
 
-      var m = new THREE.Matrix4().set(
+      let m = new THREE.Matrix4().set(
         n11, n12, n13, n14,
         n21, n22, n23, n24,
         n31, n32, n33, n34,
@@ -181,17 +172,16 @@ export default class GBLoader {
 
       parentBones.push(m);
 
-      var parent = fs.read('B');
+      let parent = fs.read('B');
       if (parent === 255) {
         parent = -1;
-      }
-      else {
+      } else {
         m = new THREE.Matrix4().getInverse(parentBones[parent]).multiply(m);
       }
 
-      var pos = new THREE.Vector3();
-      var rot = new THREE.Quaternion();
-      var scl = new THREE.Vector3();
+      const pos = new THREE.Vector3();
+      const rot = new THREE.Quaternion();
+      const scl = new THREE.Vector3();
 
       m.decompose(pos, rot, scl);
 
@@ -202,14 +192,14 @@ export default class GBLoader {
         'scl': scl.toArray()
       });
     }
+
     return bones;
   }
+  _readMaterials(fs, header, url) {
+    const materials = [];
 
-  _readMaterials (fs, header, url) {
-    var materials = [];
-
-    for (var i = 0; i < header.materialCount; i ++) {
-      var materialData = {
+    for (let i = 0; i < header.materialCount; i ++) {
+      const materialData = {
         textureNameOffset: fs.read('I'),
         textureMapOption: fs.read('H'),
         textureNameLength: fs.read('I'),
@@ -217,48 +207,46 @@ export default class GBLoader {
         materialOffset: fs.read('I')
       };
 
-      var material = this._readMaterial(fs, header, url, materialData);
+      const material = this._readMaterial(fs, header, url, materialData);
       materials.push(material);
     }
 
     return materials;
   }
+  _readMaterial(fs, header, url, materialData) {
+    const currentPosition = fs.position;
 
-  _readMaterial (fs, header, url, materialData) {
-    var currentPosition = fs.position;
-
-    var material = new THREE.MeshBasicMaterial({
+    const material = new THREE.MeshBasicMaterial({
       // wireframe: true,
       // color: 0xffffff
     });
 
     fs.position = fs.size - header.descriptorSize + materialData.materialOffset;
 
-    var colorAmbient = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
+    const colorAmbient = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
     fs.position += 1;
-    var colorDiffuse = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
+    const colorDiffuse = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
     fs.position += 1;
-    var colorSpecular = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
+    const colorSpecular = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
     fs.position += 1;
-    var mapDiffuseAnisotropy = fs.read('f');
+    const mapDiffuseAnisotropy = fs.read('f');
 
     fs.position = fs.size - header.descriptorSize + materialData.textureNameOffset;
 
-    var path = url.slice(0, Math.max(url.lastIndexOf('\\'), url.lastIndexOf('/')));
-    var textureName = path + '/tex/';
-    //for (var j = 0; j < materialData.textureNameLength; j ++) {
+    const path = url.slice(0, Math.max(url.lastIndexOf('\\'), url.lastIndexOf('/')));
+    let textureName = path + '/tex/';
+    //for (let j = 0; j < materialData.textureNameLength; j ++) {
     while (true) {
-      var s = fs.read('s');
+      const s = fs.read('s');
       if (s === String.fromCharCode(0)) {
         break;
-      }
-      else {
+      } else {
         textureName += s;
       }
     }
     textureName = textureName.slice(0, textureName.lastIndexOf('.')) + '.gtx';
 
-    var map = GTX_LOADER.load(textureName);
+    const map = GTX_LOADER.load(textureName);
     map.wrapS = map.wrapT = THREE.RepeatWrapping;
     material.map = map;
 
@@ -266,54 +254,52 @@ export default class GBLoader {
 
     return material;
   }
+  _readGeometry(fs, header, geometry) {
+    const triangleList = 0;
+    const triangleStrip = 1;
 
-  _readGeometry (fs, header, geometry) {
-    var triangleList = 0;
-    var triangleStrip = 1;
+    const nameOffset = fs.read('I');
+    const materialIndex = fs.read('I');
+    const vertexFormat = fs.read('B');
+    const primitiveType = fs.read('B');
+    const vertexCount = fs.read('H');
+    const faceIndexCount = fs.read('H');
+    const boneIndexCount = fs.read('B');
+    const faceOffset = geometry.vertices.length;
 
-    var nameOffset = fs.read('I');
-    var materialIndex = fs.read('I');
-    var vertexFormat = fs.read('B');
-    var primitiveType = fs.read('B');
-    var vertexCount = fs.read('H');
-    var faceIndexCount = fs.read('H');
-    var boneIndexCount = fs.read('B');
-    var faceOffset = geometry.vertices.length;
-
-    var boneLookup = [];
-    for (var i = 0; i < boneIndexCount; i ++) {
+    const boneLookup = [];
+    for (let i = 0; i < boneIndexCount; i ++) {
       boneLookup.push(fs.read('B'));
     }
 
-    var uvs = [];
+    const uvs = [];
 
-    for (var i = 0; i < vertexCount; i ++) {
-      var pos = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'));
+    for (let i = 0; i < vertexCount; i ++) {
+      const pos = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'));
       geometry.vertices.push(pos);
 
       if (vertexFormat === 0 && boneIndexCount > 0) {
-        var vertexWeight = 1 / header.geometryCount;
+        const vertexWeight = 1 / header.geometryCount;
         if (vertexWeight > 0.25) {
           geometry.skinWeights.push(new THREE.Vector4(vertexWeight, 0, 0, 0));
           geometry.skinIndices.push(new THREE.Vector4(boneLookup[0], 0, 0, 0));
         }
-      }
-      else if (vertexFormat > 0 && vertexFormat < 6) {
-        var vertexWeightCount = (header.version > 10) ? (vertexFormat - 1) : (vertexFormat - 2);
+      } else if (vertexFormat > 0 && vertexFormat < 6) {
+        let vertexWeightCount = (header.version > 10) ? (vertexFormat - 1) : (vertexFormat - 2);
 
         if (boneIndexCount === 0) {
           vertexWeightCount -= 3;
         }
 
-        var vertexWeights = [];
+        const vertexWeights = [];
 
         if (vertexWeightCount === 0) {
           vertexWeights[0] = 1.0;
         }
 
-        var sum = 0;
-        for (var j = 0; j < vertexWeightCount; j ++) {
-          var vertexWeight = fs.read('f');
+        let sum = 0;
+        for (let j = 0; j < vertexWeightCount; j ++) {
+          const vertexWeight = fs.read('f');
           if (vertexWeight > 0) {
             sum += vertexWeight;
             vertexWeights.push(vertexWeight);
@@ -321,26 +307,25 @@ export default class GBLoader {
         }
 
         if (vertexWeights.length > 0) {
-          var difference = 1.0 - sum;
+          const difference = 1.0 - sum;
           if (difference > 0.0) {
             vertexWeights.push(difference);
           }
 
           geometry.skinWeights.push(new THREE.Vector4(vertexWeights[0], 0, 0, 0));
 
-          var vertexGroups = [fs.read('B'), fs.read('B'), fs.read('B'), fs.read('B')];
+          const vertexGroups = [fs.read('B'), fs.read('B'), fs.read('B'), fs.read('B')];
           geometry.skinIndices.push(new THREE.Vector4(boneLookup[vertexGroups[0]], 0, 0, 0));
-        }
-        else {
+        } else {
           geometry.skinIndices.push(new THREE.Vector4(0, 0, 0, 0));
           geometry.skinWeights.push(new THREE.Vector4(0, 0, 0, 0));
         }
       }
 
-      var no = [fs.read('f'), fs.read('f'), fs.read('f')];
+      const no = [fs.read('f'), fs.read('f'), fs.read('f')];
 
-      var uvX = fs.read('f');
-      var uvY = fs.read('f');
+      const uvX = fs.read('f');
+      const uvY = fs.read('f');
       uvs.push(new THREE.Vector2(uvX, uvY));
       //geometry.faceVertexUvs.push(new THREE.Vector2(uvX, uvY));
 
@@ -351,19 +336,17 @@ export default class GBLoader {
     //geometry.faceVertexUvs = [geometry.faceVertexUvs];
 
     if (primitiveType === triangleList) {
-      for (var i = 0; i < faceIndexCount; i += 3) {
-        var a = fs.read('H');
-        var b = fs.read('H');
-        var c = fs.read('H');
+      for (let i = 0; i < faceIndexCount; i += 3) {
+        const a = fs.read('H');
+        const b = fs.read('H');
+        const c = fs.read('H');
 
-        var face = new THREE.Face3();
+        const face = new THREE.Face3();
         face.a = a + faceOffset;
         face.b = b + faceOffset;
         face.c = c + faceOffset;
         face.materialIndex = materialIndex;
         geometry.faces.push(face);
-
-
 
         geometry.faceVertexUvs[0].push([
           uvs[a],
@@ -371,35 +354,33 @@ export default class GBLoader {
           uvs[c]
         ]);
       }
-    }
-    else if (primitiveType === triangleStrip) {
-      var faceIndices = [fs.read('H'), fs.read('H')];
+    } else if (primitiveType === triangleStrip) {
+      const faceIndices = [fs.read('H'), fs.read('H')];
 
-      for (var i = 2; i < faceIndexCount; i ++) {
+      for (let i = 2; i < faceIndexCount; i ++) {
         faceIndices.push(fs.read('H'));
 
-        var faceIndicesCopy = [];
+        const faceIndicesCopy = [];
         if (i % 2 === 0) {
-          for (var j = 0; j < faceIndices.length; j ++) {
+          for (let j = 0; j < faceIndices.length; j ++) {
             faceIndicesCopy.push(faceIndices[j]);
           }
-        }
-        else {
-          for (var j = faceIndices.length -1; j >= 0; j --) {
+        } else {
+          for (let j = faceIndices.length -1; j >= 0; j --) {
             faceIndicesCopy.push(faceIndices[j]);
           }
         }
 
-        var isDegenerateA = faceIndicesCopy[0] !== faceIndicesCopy[1];
-        var isDegenerateB = faceIndicesCopy[0] !== faceIndicesCopy[2];
-        var isDegenerateC = faceIndicesCopy[1] !== faceIndicesCopy[2];
+        const isDegenerateA = faceIndicesCopy[0] !== faceIndicesCopy[1];
+        const isDegenerateB = faceIndicesCopy[0] !== faceIndicesCopy[2];
+        const isDegenerateC = faceIndicesCopy[1] !== faceIndicesCopy[2];
 
         if (isDegenerateA && isDegenerateB && isDegenerateC) {
-          var a = faceIndicesCopy[0];
-          var b = faceIndicesCopy[1];
-          var c = faceIndicesCopy[2];
+          const a = faceIndicesCopy[0];
+          const b = faceIndicesCopy[1];
+          const c = faceIndicesCopy[2];
 
-          var face = new THREE.Face3();
+          const face = new THREE.Face3();
           face.a = a + faceOffset;
           face.b = b + faceOffset;
           face.c = c + faceOffset;
@@ -416,26 +397,27 @@ export default class GBLoader {
       }
     }
   }
+  _readAnimation(fs, header) {
+    let keyFrameCount;
+    let keyFrameDuration;
+    const hierarchy = [];
 
-  _readAnimation (fs, header) {
-    var hierarchy = [];
-
-    for (var i = 0; i < header.boneCount; i ++) {
+    for (let i = 0; i < header.boneCount; i ++) {
       hierarchy.push({'keys': [], 'parent': i - 1});
     }
 
-    for (var i = 0; i < header.animationCount; i ++) {
-      var index = fs.read('I');
-      var keyFrameCount = fs.read('H');
+    for (let i = 0; i < header.animationCount; i ++) {
+      const index = fs.read('I');
+      keyFrameCount = fs.read('H');
 
-      for (var j = 0; j < keyFrameCount; j ++) {
-        var keyFrameDuration = fs.read('H');
-        var animationIndex = fs.read('I');
+      for (let j = 0; j < keyFrameCount; j ++) {
+        keyFrameDuration = fs.read('H');
+        const animationIndex = fs.read('I');
 
         // if (animationIndex == index) {
-          var keyFrameDuration = Math.max(keyFrameDuration / 1000.0, 0);
+          keyFrameDuration = Math.max(keyFrameDuration / 1000.0, 0);
 
-          for (var k = 0; k < hierarchy.length; k ++) {
+          for (let k = 0; k < hierarchy.length; k ++) {
             hierarchy[k].keys[j] = {'time': keyFrameDuration};
           }
         // }
@@ -444,29 +426,29 @@ export default class GBLoader {
 
     // console.log(JSON.parse(JSON.stringify(hierarchy)));
 
-    var boneLookup = [];
-    for (var i = 0; i < keyFrameCount; i ++) {
-      for (var j = 0; j < header.boneCount; j ++) {
+    const boneLookup = [];
+    for (let i = 0; i < keyFrameCount; i ++) {
+      for (let j = 0; j < header.boneCount; j ++) {
         boneLookup.push(fs.read('H'));
       }
     }
 
-    var transformations = [];
-    for (var i = 0; i < header.transformationCount; i ++) {
-      var translation = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'));
-      var rotation = new THREE.Quaternion(fs.read('f'), fs.read('f'), fs.read('f'), fs.read('f'));
-      var scale = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'));
+    const transformations = [];
+    for (let i = 0; i < header.transformationCount; i ++) {
+      const translation = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'));
+      const rotation = new THREE.Quaternion(fs.read('f'), fs.read('f'), fs.read('f'), fs.read('f'));
+      const scale = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'));
 
       transformations.push(new THREE.Matrix4().compose(translation, rotation, scale));
     }
 
     for (let j = 0; j < header.boneCount; j ++) {
       for (let i = 0; i < keyFrameCount; i ++) {
-        let localMatrix = transformations[boneLookup[i * header.boneCount + j]].clone();
+        const localMatrix = transformations[boneLookup[i * header.boneCount + j]].clone();
 
-        let translation = new THREE.Vector3();
-        let rotation = new THREE.Quaternion();
-        let scale = new THREE.Vector3();
+        const translation = new THREE.Vector3();
+        const rotation = new THREE.Quaternion();
+        const scale = new THREE.Vector3();
 
         localMatrix.decompose(translation, rotation, scale);
 
@@ -483,8 +465,7 @@ export default class GBLoader {
       length: keyFrameDuration
     };
   }
-
-  _readCollision (fs, header) {
+  _readCollision(fs, header) {
     //fix something here
     if (fs.position !== fs.size - header.descriptorSize - header.collisionSize) {
       console.warn('error "file stream is at incorrect position at collision"');
@@ -493,29 +474,37 @@ export default class GBLoader {
 
     fs.position = fs.size - header.descriptorSize - header.collisionSize;
 
-    var geometry = {
+    const geometry = {
       vertices: [],
       faces: []
     };
 
-    var vertexCount = fs.read('H');
-    var faceIndexCount = fs.read('H');
+    const vertexCount = fs.read('H');
+    const faceIndexCount = fs.read('H');
 
-    var boundingBoxMin = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'));
-    var boundingBoxMax = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'));
+    const boundingBoxMin = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'));
+    const boundingBoxMax = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'));
 
-    var delta = boundingBoxMax.sub(boundingBoxMin).multiplyScalar(0xffff);
+    const delta = boundingBoxMax.sub(boundingBoxMin).multiplyScalar(0xffff);
 
-    for (var i = 0; i < vertexCount; i ++) {
-      var vertex = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'))
+    for (let i = 0; i < vertexCount; i ++) {
+      const x = fs.read('f');
+      const y = fs.read('f');
+      const z = fs.read('f');
+
+      const vertex = new THREE.Vector3(x, y, z)
         .multiply(delta)
         .add(boundingBoxMin);
 
       geometry.vertices.push(vertex.x, vertex.y, vertex.z);
     }
 
-    for (var i = 0; i < faceIndexCount; i ++) {
-      geometry.faces.push(fs.read('H'), fs.read('H'), fs.read('H'));
+    for (let i = 0; i < faceIndexCount; i ++) {
+      const x = fs.read('H');
+      const y = fs.read('H');
+      const z = fs.read('H');
+
+      geometry.faces.push(x, y, z);
     }
 
     return geometry;
