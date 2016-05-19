@@ -26,6 +26,8 @@ import FileStream from 'src/utils/filestream.js';
 import GTXLoader from './GTXLoader.js';
 
 const GTX_LOADER = new GTXLoader();
+const TRIANGLE_LIST = 0;
+const TRIANGLE_STRIP = 1;
 const MATRIX = new THREE.Matrix4();
 
 export default class GBLoader {
@@ -256,9 +258,6 @@ export default class GBLoader {
     return material;
   }
   _readGeometry(fs, header, geometry) {
-    const triangleList = 0;
-    const triangleStrip = 1;
-
     const nameOffset = fs.read('I');
     const materialIndex = fs.read('I');
     const vertexFormat = fs.read('B');
@@ -336,7 +335,7 @@ export default class GBLoader {
     }
     //geometry.faceVertexUvs = [geometry.faceVertexUvs];
 
-    if (primitiveType === triangleList) {
+    if (primitiveType === TRIANGLE_LIST) {
       for (let i = 0; i < faceIndexCount; i += 3) {
         const a = fs.read('H');
         const b = fs.read('H');
@@ -355,7 +354,7 @@ export default class GBLoader {
           uvs[c]
         ]);
       }
-    } else if (primitiveType === triangleStrip) {
+    } else if (primitiveType === TRIANGLE_STRIP) {
       const faceIndices = [fs.read('H'), fs.read('H')];
 
       for (let i = 2; i < faceIndexCount; i ++) {
