@@ -15,7 +15,7 @@ camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 const controls = new THREE.EditorControls(camera, canvas);
 
-function loaded ({ geometry, materials }) {
+function loaded({ geometry, materials }) {
   const material = new THREE.MeshFaceMaterial(materials);
   const mesh = new THREE.Mesh(geometry, material);
 
@@ -32,7 +32,7 @@ loader.load('/DATA/Model/Clothes/Cm_10_h01.gb', loaded);
 
 // loader.load('/Data/OBJECTS/b/1/land/[a]tree_p02.gb', loaded);
 
-(function animate () {
+(function animate() {
   renderer.render(scene, camera);
 
   requestAnimationFrame(animate);

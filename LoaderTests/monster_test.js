@@ -31,11 +31,11 @@ monster.setAnimation(animation);
 
 scene.add(monster.container);
 
-(function animate () {
+(function animate() {
   const delta = clock.getDelta();
   THREE.AnimationHandler.update(delta);
 
   renderer.render(scene, camera);
 
-    requestAnimationFrame(animate);
+  requestAnimationFrame(animate);
 }());
