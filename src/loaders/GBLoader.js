@@ -29,6 +29,9 @@ const GTX_LOADER = new GTXLoader();
 const TRIANGLE_LIST = 0;
 const TRIANGLE_STRIP = 1;
 const MATRIX = new THREE.Matrix4();
+const POS = new THREE.Vector3();
+const ROTQ = new THREE.Quaternion();
+const SCL = new THREE.Vector3();
 
 export default class GBLoader {
   constructor(manager = THREE.DefaultLoadingManager) {
@@ -183,17 +186,12 @@ export default class GBLoader {
         m.multiplyMatrices(parentBones[parent], m);
       }
 
-      const pos = new THREE.Vector3();
-      const rot = new THREE.Quaternion();
-      const scl = new THREE.Vector3();
-      m.decompose(pos, rot, scl);
+      m.decompose(POS, ROTQ, SCL);
 
-      bones.push({
-        parent,
-        pos: pos.toArray(),
-        rotq: rot.toArray(),
-        scl: scl.toArray()
-      });
+      let pos = POS.toArray();
+      let rotq = ROTQ.toArray();
+      let scl = SCL.toArray();
+      bones.push({ parent, pos, rotq, scl });
     }
 
     return bones;
