@@ -1,6 +1,8 @@
 import 'mrdoob/three.js';
 import FileStream from 'src/utils/filestream.js';
 
+const Q = new THREE.Quaternion();
+
 export default class OPLLoader {
   constructor(manager = THREE.DefaultLoadingManager) {
     this.manager = manager;
@@ -32,25 +34,14 @@ export default class OPLLoader {
     const opl = [];
     for (let i = 0; i < header.objectCount; i ++) {
       const urlLength = fs.read('I');
-
       const url = `${fs.readString(urlLength)}.gb`;
 
-      const posX = fs.read('f') * 8192;
-      const posZ = fs.read('f');
-      const posY = fs.read('f') * 8192;
+      const pos = new THREE.Vector3(fs.read('f') * 8192, fs.read('f'), fs.read('f') * 8192);
+      Q.set(fs.read('f'), fs.read('f'), fs.read('f'), fs.read('f'));
+      const rot = new THREE.Euler().setFromQuaternion(Q, 'XZY');
+      const scl = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'));
 
-      const quaternion = new THREE.Quaternion(fs.read('f'), fs.read('f'), fs.read('f'), fs.read('f'));
-
-      const sclX = fs.read('f');
-      const sclZ = fs.read('f');
-      const sclY = fs.read('f');
-
-      opl.push({
-        url: url,
-        pos: new THREE.Vector3(posX, posZ, posY),
-        rot: new THREE.Euler().setFromQuaternion(quaternion, 'XZY'),
-        scl: new THREE.Vector3(sclX, sclZ, sclY)
-      });
+      opl.push({ url, pos, rot, scl });
     }
 
     return { header, opl };
