@@ -26,6 +26,7 @@ import FileStream from 'src/utils/filestream.js';
 import GTXLoader from './GTXLoader.js';
 
 const GTX_LOADER = new GTXLoader();
+const MATRIX = new THREE.Matrix4();
 
 export default class GBLoader {
   constructor(manager = THREE.DefaultLoadingManager) {
@@ -162,34 +163,34 @@ export default class GBLoader {
       n13 = fs.read('f'), n23 = fs.read('f'), n33 = fs.read('f'), n43 = fs.read('f'),
       n14 = fs.read('f'), n24 = fs.read('f'), n34 = fs.read('f'), n44 = fs.read('f');
 
-      let m = new THREE.Matrix4().set(
+      const m = MATRIX.set(
         n11, n12, n13, n14,
         n21, n22, n23, n24,
         n31, n32, n33, n34,
         n41, n42, n43, n44
       );
-      m = new THREE.Matrix4().getInverse(m);
 
-      parentBones.push(m);
+      parentBones.push(m.clone());
+
+      m.getInverse(m);
 
       let parent = fs.read('B');
       if (parent === 255) {
         parent = -1;
       } else {
-        m = new THREE.Matrix4().getInverse(parentBones[parent]).multiply(m);
+        m.multiplyMatrices(parentBones[parent], m);
       }
 
       const pos = new THREE.Vector3();
       const rot = new THREE.Quaternion();
       const scl = new THREE.Vector3();
-
       m.decompose(pos, rot, scl);
 
       bones.push({
-        'pos': pos.toArray(),
-        'parent': parent,
-        'rotq': rot.toArray(),
-        'scl': scl.toArray()
+        parent,
+        pos: pos.toArray(),
+        rotq: rot.toArray(),
+        scl: scl.toArray()
       });
     }
 
