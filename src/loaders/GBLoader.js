@@ -231,8 +231,15 @@ export default class GBLoader {
 
     fs.position = fs.size - header.descriptorSize + materialData.textureNameOffset;
 
+    let textureNameLength;
+    if (materialData.textureNameLength === 0 || fs.position + materialData.textureNameLength > fs.size) {
+      textureNameLength = fs.size - fs.position;
+    } else {
+      textureNameLength = materialData.textureNameLength;
+    }
+
     const basePath = url.slice(0, Math.max(url.lastIndexOf('\\'), url.lastIndexOf('/'))) + '/tex/';
-    let fileName = fs.readString(Math.min(materialData.textureNameLength, fs.size - fs.position));
+    let fileName = fs.readString(textureNameLength);
     fileName = fileName.slice(0, fileName.lastIndexOf('.')) + '.gtx';
     const textureUrl = basePath + fileName;
 
