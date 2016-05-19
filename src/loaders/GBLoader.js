@@ -226,30 +226,19 @@ export default class GBLoader {
 
     fs.position = fs.size - header.descriptorSize + materialData.materialOffset;
 
-    const colorAmbient = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
-    fs.position += 1;
-    const colorDiffuse = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
-    fs.position += 1;
-    const colorSpecular = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
-    fs.position += 1;
+    const colorAmbient = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
+    const colorDiffuse = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
+    const colorSpecular = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
     const mapDiffuseAnisotropy = fs.read('f');
 
     fs.position = fs.size - header.descriptorSize + materialData.textureNameOffset;
 
-    const path = url.slice(0, Math.max(url.lastIndexOf('\\'), url.lastIndexOf('/')));
-    let textureName = path + '/tex/';
-    //for (let j = 0; j < materialData.textureNameLength; j ++) {
-    while (true) {
-      const s = fs.read('s');
-      if (s === String.fromCharCode(0)) {
-        break;
-      } else {
-        textureName += s;
-      }
-    }
-    textureName = textureName.slice(0, textureName.lastIndexOf('.')) + '.gtx';
+    const basePath = url.slice(0, Math.max(url.lastIndexOf('\\'), url.lastIndexOf('/'))) + '/tex/';
+    let fileName = fs.readString(Math.min(materialData.textureNameLength, fs.size - fs.position));
+    fileName = fileName.slice(0, fileName.lastIndexOf('.')) + '.gtx';
+    const textureUrl = basePath + fileName;
 
-    const map = GTX_LOADER.load(textureName);
+    const map = GTX_LOADER.load(textureUrl);
     map.wrapS = map.wrapT = THREE.RepeatWrapping;
     material.map = map;
 
@@ -348,11 +337,7 @@ export default class GBLoader {
         face.materialIndex = materialIndex;
         geometry.faces.push(face);
 
-        geometry.faceVertexUvs[0].push([
-          uvs[a],
-          uvs[b],
-          uvs[c]
-        ]);
+        geometry.faceVertexUvs[0].push([uvs[a], uvs[b], uvs[c]]);
       }
     } else if (primitiveType === TRIANGLE_STRIP) {
       const faceIndices = [fs.read('H'), fs.read('H')];
@@ -360,15 +345,11 @@ export default class GBLoader {
       for (let i = 2; i < faceIndexCount; i ++) {
         faceIndices.push(fs.read('H'));
 
-        const faceIndicesCopy = [];
+        let faceIndicesCopy;
         if (i % 2 === 0) {
-          for (let j = 0; j < faceIndices.length; j ++) {
-            faceIndicesCopy.push(faceIndices[j]);
-          }
+          faceIndicesCopy = [...faceIndices];
         } else {
-          for (let j = faceIndices.length -1; j >= 0; j --) {
-            faceIndicesCopy.push(faceIndices[j]);
-          }
+          faceIndicesCopy = [...faceIndices].reverse();
         }
 
         const isDegenerateA = faceIndicesCopy[0] !== faceIndicesCopy[1];
@@ -387,11 +368,7 @@ export default class GBLoader {
           face.materialIndex = materialIndex;
           geometry.faces.push(face);
 
-          geometry.faceVertexUvs[0].push([
-            uvs[a],
-            uvs[b],
-            uvs[c]
-          ]);
+          geometry.faceVertexUvs[0].push([uvs[a], uvs[b], uvs[c]]);
         }
         faceIndices.shift();
       }
@@ -403,7 +380,7 @@ export default class GBLoader {
     const hierarchy = [];
 
     for (let i = 0; i < header.boneCount; i ++) {
-      hierarchy.push({'keys': [], 'parent': i - 1});
+      hierarchy.push({ keys: [], parent: i - 1});
     }
 
     for (let i = 0; i < header.animationCount; i ++) {
@@ -418,7 +395,7 @@ export default class GBLoader {
           keyFrameDuration = Math.max(keyFrameDuration / 1000.0, 0);
 
           for (let k = 0; k < hierarchy.length; k ++) {
-            hierarchy[k].keys[j] = {'time': keyFrameDuration};
+            hierarchy[k].keys[j] = { time: keyFrameDuration };
           }
         // }
       }
