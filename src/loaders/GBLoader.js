@@ -94,20 +94,20 @@ export default class GBLoader {
 
     if (header.version >= 12) {
       const fileName = fs.readString(64);
-      header.fileName = fileName;
+      header.fileName = fileName; // NOTUSED
     }
 
-    const fileNameLength = fs.read('I');
+    const fileNameLength = fs.read('I'); // NOTUSED
 
-    const verticesCount = [];
+    const verticesCount = []; // NOTUSED
     for (let i = 0; i < ((header.version >= 9) ? 12 : 6); i ++) {
       verticesCount.push(fs.read('H'));
     }
 
-    header.indexCount = fs.read('H');
+    header.indexCount = fs.read('H'); // NOTUSED
     header.boneIndexCount = fs.read('H');
     header.keyFrameCount = fs.read('H');
-    header.boneFile = fs.read('H');
+    header.boneFile = fs.read('H'); // NOTUSED
 
     if (header.version === 8) {
       header.descriptorSize = fs.read('H');
@@ -126,7 +126,7 @@ export default class GBLoader {
     }
 
     header.materialCount = fs.read('H');
-    header.unknown1 = fs.read('H');
+    header.unknown1 = fs.read('H'); // NOTUSED
 
     return header;
   }
@@ -214,10 +214,10 @@ export default class GBLoader {
 
     fs.position = fs.size - header.descriptorSize + materialData.materialOffset;
 
-    const colorAmbient = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
-    const colorDiffuse = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
-    const colorSpecular = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255];
-    const mapDiffuseAnisotropy = fs.read('f');
+    const colorAmbient = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255]; // NOTUSED
+    const colorDiffuse = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255]; // NOTUSED
+    const colorSpecular = [fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255, fs.read('B') / 255]; // NOTUSED
+    const mapDiffuseAnisotropy = fs.read('f'); // NOTUSED
 
     fs.position = fs.size - header.descriptorSize + materialData.textureNameOffset;
 
@@ -242,7 +242,7 @@ export default class GBLoader {
     return material;
   }
   _readGeometry(fs, header, geometry) {
-    const nameOffset = fs.read('I');
+    const nameOffset = fs.read('I'); // NOTUSED
     const materialIndex = fs.read('I');
     const vertexFormat = fs.read('B');
     const primitiveType = fs.read('B');
@@ -384,6 +384,7 @@ export default class GBLoader {
         keyFrameDuration = fs.read('H');
         const animationIndex = fs.read('I');
 
+        // This check is in original code, has to be implemented in some way
         // if (animationIndex == index) {
           keyFrameDuration = Math.max(keyFrameDuration / 1000.0, 0);
 
