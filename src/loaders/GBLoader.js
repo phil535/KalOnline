@@ -131,31 +131,21 @@ export default class GBLoader {
     return header;
   }
   _readBoundingBox(fs, header) {
-    const boundingBox = new THREE.Box3();
-
+    let boundingBox;
     if (header.version >= 11) {
-      boundingBox.min.x = fs.read('f');
-      boundingBox.min.y = fs.read('f');
-      boundingBox.min.z = fs.read('f');
-
-      boundingBox.max.x = fs.read('f');
-      boundingBox.max.y = fs.read('f');
-      boundingBox.max.z = fs.read('f');
+      boundingBox = new THREE.Box3()
+      boundingBox.min.set(fs.read('f'), fs.read('f'), fs.read('f'));
+      boundingBox.max.set(fs.read('f'), fs.read('f'), fs.read('f'));
     }
-
     return boundingBox;
   }
   _readBoundingSphere(fs, header) {
-    const boundingSphere = new THREE.Sphere();
-
+    let boundingSphere;
     if (header.version >= 9) {
-      boundingSphere.center.x = fs.read('f');
-      boundingSphere.center.y = fs.read('f');
-      boundingSphere.center.z = fs.read('f');
-
+      boundingSphere = new THREE.Sphere();
+      boundingSphere.center.set(fs.read('f'), fs.read('f'), fs.read('f'));
       boundingSphere.radius = fs.read('f');
     }
-
     return boundingSphere;
   }
   _readBones(fs, header) {
@@ -316,11 +306,9 @@ export default class GBLoader {
         }
       }
 
-      const no = [fs.read('f'), fs.read('f'), fs.read('f')];
+      const no = [fs.read('f'), fs.read('f'), fs.read('f')]; // NOTUSED
 
-      const uvX = fs.read('f');
-      const uvY = fs.read('f');
-      uvs.push(new THREE.Vector2(uvX, uvY));
+      uvs.push(new THREE.Vector2(fs.read('f'), fs.read('f')));
       //geometry.faceVertexUvs.push(new THREE.Vector2(uvX, uvY));
 
       if (vertexFormat > 5) {
@@ -470,11 +458,7 @@ export default class GBLoader {
     const delta = boundingBoxMax.sub(boundingBoxMin).multiplyScalar(0xffff);
 
     for (let i = 0; i < vertexCount; i ++) {
-      const x = fs.read('f');
-      const y = fs.read('f');
-      const z = fs.read('f');
-
-      const vertex = new THREE.Vector3(x, y, z)
+      const vertex = new THREE.Vector3(fs.read('f'), fs.read('f'), fs.read('f'))
         .multiply(delta)
         .add(boundingBoxMin);
 
@@ -482,11 +466,7 @@ export default class GBLoader {
     }
 
     for (let i = 0; i < faceIndexCount; i ++) {
-      const x = fs.read('H');
-      const y = fs.read('H');
-      const z = fs.read('H');
-
-      geometry.faces.push(x, y, z);
+      geometry.faces.push(fs.read('f'), fs.read('f'), fs.read('f'));
     }
 
     return geometry;
