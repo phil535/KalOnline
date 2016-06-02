@@ -153,10 +153,12 @@ export default class GBLoader {
     const parentBones = [];
 
     for (let i = 0; i < header.boneCount; i ++) {
-      const n11 = fs.read('f'), n21 = fs.read('f'), n31 = fs.read('f'), n41 = fs.read('f'),
-      n12 = fs.read('f'), n22 = fs.read('f'), n32 = fs.read('f'), n42 = fs.read('f'),
-      n13 = fs.read('f'), n23 = fs.read('f'), n33 = fs.read('f'), n43 = fs.read('f'),
-      n14 = fs.read('f'), n24 = fs.read('f'), n34 = fs.read('f'), n44 = fs.read('f');
+      const [
+        n11, n21, n31, n41,
+        n12, n22, n32, n42,
+        n13, n23, n33, n43,
+        n14, n24, n34, n44
+      ] = Array.from(Array(16)).map(() => fs.read('f'));
 
       const m = MATRIX.set(
         n11, n12, n13, n14,
