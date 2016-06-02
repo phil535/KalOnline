@@ -178,9 +178,9 @@ export default class GBLoader {
 
       m.decompose(POS, ROTQ, SCL);
 
-      let pos = POS.toArray();
-      let rotq = ROTQ.toArray();
-      let scl = SCL.toArray();
+      const pos = POS.toArray();
+      const rotq = ROTQ.toArray();
+      const scl = SCL.toArray();
       bones.push({ parent, pos, rotq, scl });
     }
 
