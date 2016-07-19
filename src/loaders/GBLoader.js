@@ -57,8 +57,8 @@ export default class GBLoader {
       return;
     }
 
-    geometry.boundingBox = this._readBoundingBox(fs, header);
-    geometry.boundingSphere = this._readBoundingSphere(fs, header);
+    /*geometry.boundingBox = */this._readBoundingBox(fs, header);
+    /*geometry.boundingSphere = */this._readBoundingSphere(fs, header);
 
     if (header.isBoneFile) {
       geometry.bones = this._readBones(fs, header);
@@ -78,7 +78,7 @@ export default class GBLoader {
       this._readCollision(fs, header);
     }
 
-    onLoad({ geometry, materials });
+    onLoad({ geometry, materials, header });
   }
   _readHeader(fs) {
     const header = {
