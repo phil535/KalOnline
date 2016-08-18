@@ -65,5 +65,8 @@
         ]
       }
     }
+  },
+  "dependencies": {
+    "jspm": "^0.17.0-beta.25"
   }
 }
