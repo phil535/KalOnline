@@ -1,12 +1,16 @@
 {
   "jspm": {
     "dependencies": {
-      "mrdoob/three.js": "github:mrdoob/three.js@r72"
+      "MeoMix/jspm-loader-css": "github:MeoMix/jspm-loader-css@^1.0.4",
+      "babel-plugin-transform-react-jsx": "npm:babel-plugin-transform-react-jsx@^6.8.0",
+      "mrdoob/three.js": "github:mrdoob/three.js@r72",
+      "react-dom": "npm:react-dom@^15.3.1"
     },
     "devDependencies": {
       "babel-runtime": "npm:babel-runtime@^5.6.4",
       "core-js": "npm:core-js@^1.2.0",
-      "plugin-babel": "npm:systemjs-plugin-babel@^0.0.12"
+      "plugin-babel": "npm:systemjs-plugin-babel@^0.0.12",
+      "systemjs-hot-reloader": "github:capaj/systemjs-hot-reloader@^0.6.0"
     },
     "peerDependencies": {
       "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",
@@ -16,6 +20,7 @@
       "crypto": "github:jspm/nodelibs-crypto@^0.2.0-alpha",
       "dgram": "github:jspm/nodelibs-dgram@^0.2.0-alpha",
       "dns": "github:jspm/nodelibs-dns@^0.2.0-alpha",
+      "domain": "github:jspm/nodelibs-domain@^0.2.0-alpha",
       "ecc-jsbn": "npm:ecc-jsbn@~0.1.1",
       "events": "github:jspm/nodelibs-events@^0.2.0-alpha",
       "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
@@ -29,6 +34,7 @@
       "process": "github:jspm/nodelibs-process@^0.2.0-alpha",
       "punycode": "github:jspm/nodelibs-punycode@^0.2.0-alpha",
       "querystring": "github:jspm/nodelibs-querystring@^0.2.0-alpha",
+      "react": "npm:react@^15.3.1",
       "stream": "github:jspm/nodelibs-stream@^0.2.0-alpha",
       "string_decoder": "github:jspm/nodelibs-string_decoder@^0.2.0-alpha",
       "tls": "github:jspm/nodelibs-tls@^0.2.0-alpha",
@@ -59,14 +65,44 @@
           "_stream_transform": "readable-stream/transform"
         }
       },
+      "npm:debug@2.2.0": {
+        "main": "browser.js",
+        "jspmNodeConversion": false,
+        "format": "cjs",
+        "map": {
+          "./browser.js": {
+            "node": "./node.js"
+          },
+          "fs": "@node/fs",
+          "net": "@node/net",
+          "tty": "@node/tty",
+          "util": "@node/util"
+        }
+      },
       "npm:inherits@2.0.1": {
         "ignore": [
           "test.js"
         ]
+      },
+      "npm:lodash@4.15.0": {
+        "map": {
+          "buffer": "@empty",
+          "process": "@empty"
+        }
+      },
+      "npm:ms@0.7.1": {
+        "jspmNodeConversion": false,
+        "format": "cjs"
       }
     }
   },
   "dependencies": {
     "jspm": "^0.17.0-beta.25"
+  },
+  "devDependencies": {
+    "chokidar-socket-emitter": "^0.5.4"
+  },
+  "scripts": {
+    "start": "chokidar-socket-emitter & serve"
   }
 }
