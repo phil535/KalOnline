@@ -1,0 +1,30 @@
+.chatboxContainer {
+  width: 420px;
+  height: 240px;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.scrollTextBoxContainer {
+  border: 1px solid #cc9955;
+}
+
+.chatBoxInput {
+  width: 100%;
+  border: none;
+  background-color: transparent;
+}
+
+.chatBoxInput:focus {
+  outline: none;
+}
+
+.scrollTextBoxContainer p {
+  margin: 0 1px;
+}
+
+.scrollTextBoxContainer p.textStatus { color: #f84; }
+.scrollTextBoxContainer p.textMessage { color: #fff; }
+.scrollTextBoxContainer p.textGlobal { color: #f9f; }
