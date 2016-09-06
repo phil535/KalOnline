@@ -1,8 +1,8 @@
 {
   "jspm": {
     "dependencies": {
-      "MeoMix/jspm-loader-css": "github:MeoMix/jspm-loader-css@^1.0.4",
       "babel-plugin-transform-react-jsx": "npm:babel-plugin-transform-react-jsx@^6.8.0",
+      "css": "npm:jspm-loader-css-modules@^1.0.1-beta1",
       "mrdoob/three.js": "github:mrdoob/three.js@r72",
       "react-dom": "npm:react-dom@^15.3.1"
     },
@@ -16,6 +16,7 @@
       "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",
       "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha",
       "child_process": "github:jspm/nodelibs-child_process@^0.2.0-alpha",
+      "cluster": "github:jspm/nodelibs-cluster@^0.2.0-alpha",
       "constants": "github:jspm/nodelibs-constants@^0.2.0-alpha",
       "crypto": "github:jspm/nodelibs-crypto@^0.2.0-alpha",
       "dgram": "github:jspm/nodelibs-dgram@^0.2.0-alpha",
@@ -37,6 +38,7 @@
       "react": "npm:react@^15.3.1",
       "stream": "github:jspm/nodelibs-stream@^0.2.0-alpha",
       "string_decoder": "github:jspm/nodelibs-string_decoder@^0.2.0-alpha",
+      "timers": "github:jspm/nodelibs-timers@^0.2.0-alpha",
       "tls": "github:jspm/nodelibs-tls@^0.2.0-alpha",
       "tty": "github:jspm/nodelibs-tty@^0.2.0-alpha",
       "tweetnacl": "npm:tweetnacl@0.13",
@@ -100,7 +102,8 @@
     "jspm": "^0.17.0-beta.25"
   },
   "devDependencies": {
-    "chokidar-socket-emitter": "^0.5.4"
+    "chokidar-socket-emitter": "^0.5.4",
+    "jspm": "^0.17.0-beta.28"
   },
   "scripts": {
     "start": "chokidar-socket-emitter & serve"

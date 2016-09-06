@@ -25,6 +25,11 @@ SystemJS.config({
           "weakee": "npm:weakee@1.0.0",
           "socket.io-client": "github:socketio/socket.io-client@1.4.8"
         }
+      },
+      "npm:debug@2.2.0": {
+        "map": {
+          "ms": "npm:ms@0.7.1"
+        }
       }
     }
   },
@@ -44,7 +49,7 @@ SystemJS.config({
           }
         },
         "*.css": {
-          "loader": "jspm-loader-css"
+          "loader": "css"
         }
       },
       "map": {
@@ -80,6 +85,8 @@ SystemJS.config({
     "github:*/*.json"
   ],
   map: {
+    "css": "npm:jspm-loader-css-modules@1.0.1-beta1",
+    "cluster": "github:jspm/nodelibs-cluster@0.2.0-alpha",
     "babel-plugin-transform-react-jsx": "npm:babel-plugin-transform-react-jsx@6.8.0",
     "domain": "github:jspm/nodelibs-domain@0.2.0-alpha",
     "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
@@ -107,6 +114,7 @@ SystemJS.config({
     "react-dom": "npm:react-dom@15.3.1",
     "stream": "github:jspm/nodelibs-stream@0.2.0-alpha",
     "string_decoder": "github:jspm/nodelibs-string_decoder@0.2.0-alpha",
+    "timers": "github:jspm/nodelibs-timers@0.2.0-alpha",
     "tls": "github:jspm/nodelibs-tls@0.2.0-alpha",
     "tty": "github:jspm/nodelibs-tty@0.2.0-alpha",
     "tweetnacl": "npm:tweetnacl@0.13.3",
@@ -461,7 +469,7 @@ SystemJS.config({
       "map": {
         "babel-runtime": "npm:babel-runtime@6.11.6",
         "lodash": "npm:lodash@4.15.0",
-        "babel-types": "npm:babel-types@6.14.0",
+        "babel-types": "npm:babel-types@6.15.0",
         "esutils": "npm:esutils@2.0.2"
       }
     },
@@ -471,73 +479,115 @@ SystemJS.config({
         "core-js": "npm:core-js@2.4.1"
       }
     },
-    "npm:babel-types@6.14.0": {
+    "npm:babel-types@6.15.0": {
       "map": {
         "babel-runtime": "npm:babel-runtime@6.11.6",
         "esutils": "npm:esutils@2.0.2",
         "lodash": "npm:lodash@4.15.0",
-        "to-fast-properties": "npm:to-fast-properties@1.0.2",
-        "babel-traverse": "npm:babel-traverse@6.14.0"
+        "to-fast-properties": "npm:to-fast-properties@1.0.2"
       }
     },
-    "npm:babel-traverse@6.14.0": {
+    "github:jspm/nodelibs-timers@0.2.0-alpha": {
       "map": {
-        "babel-runtime": "npm:babel-runtime@6.11.6",
-        "babel-types": "npm:babel-types@6.14.0",
-        "lodash": "npm:lodash@4.15.0",
-        "babel-messages": "npm:babel-messages@6.8.0",
-        "babel-code-frame": "npm:babel-code-frame@6.11.0",
-        "globals": "npm:globals@8.18.0",
-        "debug": "npm:debug@2.2.0",
-        "babylon": "npm:babylon@6.9.1",
-        "invariant": "npm:invariant@2.2.1"
+        "timers-browserify": "npm:timers-browserify@1.4.2"
       }
     },
-    "npm:babel-messages@6.8.0": {
+    "npm:timers-browserify@1.4.2": {
       "map": {
-        "babel-runtime": "npm:babel-runtime@6.11.6"
+        "process": "npm:process@0.11.9"
       }
     },
-    "npm:babel-code-frame@6.11.0": {
+    "npm:jspm-loader-css-modules@1.0.1-beta1": {
       "map": {
-        "babel-runtime": "npm:babel-runtime@6.11.6",
-        "esutils": "npm:esutils@2.0.2",
-        "js-tokens": "npm:js-tokens@2.0.0",
-        "chalk": "npm:chalk@1.1.3"
+        "jspm-loader-css": "npm:jspm-loader-css@1.0.1-beta1"
       }
     },
-    "npm:babylon@6.9.1": {
+    "npm:jspm-loader-css@1.0.1-beta1": {
       "map": {
-        "babel-runtime": "npm:babel-runtime@6.11.6"
+        "css-modules-loader-core": "npm:css-modules-loader-core@1.0.1",
+        "debounce": "npm:debounce@1.0.0",
+        "path": "npm:path@0.12.7",
+        "toposort": "npm:toposort@0.2.12"
       }
     },
-    "npm:invariant@2.2.1": {
+    "npm:css-modules-loader-core@1.0.1": {
       "map": {
-        "loose-envify": "npm:loose-envify@1.2.0"
+        "postcss-modules-values": "npm:postcss-modules-values@1.2.2",
+        "icss-replace-symbols": "npm:icss-replace-symbols@1.0.2",
+        "postcss-modules-extract-imports": "npm:postcss-modules-extract-imports@1.0.0",
+        "postcss-modules-scope": "npm:postcss-modules-scope@1.0.2",
+        "postcss": "npm:postcss@5.1.2",
+        "postcss-modules-local-by-default": "npm:postcss-modules-local-by-default@1.1.1"
       }
     },
-    "npm:debug@2.2.0": {
+    "npm:debounce@1.0.0": {
       "map": {
-        "ms": "npm:ms@0.7.1"
+        "date-now": "npm:date-now@1.0.1"
       }
     },
-    "npm:chalk@1.1.3": {
+    "npm:path@0.12.7": {
       "map": {
-        "has-ansi": "npm:has-ansi@2.0.0",
-        "ansi-styles": "npm:ansi-styles@2.2.1",
-        "escape-string-regexp": "npm:escape-string-regexp@1.0.5",
-        "supports-color": "npm:supports-color@2.0.0",
-        "strip-ansi": "npm:strip-ansi@3.0.1"
+        "util": "npm:util@0.10.3",
+        "process": "npm:process@0.11.9"
       }
     },
-    "npm:has-ansi@2.0.0": {
+    "npm:postcss-modules-scope@1.0.2": {
       "map": {
-        "ansi-regex": "npm:ansi-regex@2.0.0"
+        "postcss": "npm:postcss@5.1.2",
+        "css-selector-tokenizer": "npm:css-selector-tokenizer@0.6.0"
       }
     },
-    "npm:strip-ansi@3.0.1": {
+    "npm:postcss-modules-values@1.2.2": {
       "map": {
-        "ansi-regex": "npm:ansi-regex@2.0.0"
+        "icss-replace-symbols": "npm:icss-replace-symbols@1.0.2",
+        "postcss": "npm:postcss@5.1.2"
+      }
+    },
+    "npm:postcss-modules-extract-imports@1.0.0": {
+      "map": {
+        "postcss": "npm:postcss@5.1.2"
+      }
+    },
+    "npm:postcss@5.1.2": {
+      "map": {
+        "supports-color": "npm:supports-color@3.1.2",
+        "js-base64": "npm:js-base64@2.1.9",
+        "source-map": "npm:source-map@0.5.6"
+      }
+    },
+    "npm:util@0.10.3": {
+      "map": {
+        "inherits": "npm:inherits@2.0.1"
+      }
+    },
+    "npm:supports-color@3.1.2": {
+      "map": {
+        "has-flag": "npm:has-flag@1.0.0"
+      }
+    },
+    "npm:css-selector-tokenizer@0.6.0": {
+      "map": {
+        "fastparse": "npm:fastparse@1.1.1",
+        "cssesc": "npm:cssesc@0.1.0",
+        "regexpu-core": "npm:regexpu-core@1.0.0"
+      }
+    },
+    "npm:regexpu-core@1.0.0": {
+      "map": {
+        "regenerate": "npm:regenerate@1.3.1",
+        "regjsparser": "npm:regjsparser@0.1.5",
+        "regjsgen": "npm:regjsgen@0.2.0"
+      }
+    },
+    "npm:regjsparser@0.1.5": {
+      "map": {
+        "jsesc": "npm:jsesc@0.5.0"
+      }
+    },
+    "npm:postcss-modules-local-by-default@1.1.1": {
+      "map": {
+        "postcss": "npm:postcss@5.1.2",
+        "css-selector-tokenizer": "npm:css-selector-tokenizer@0.6.0"
       }
     }
   }
