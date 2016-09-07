@@ -1,4 +1,4 @@
-.chatboxContainer {
+#chatboxContainer {
   width: 420px;
   height: 240px;
   background-color: rgba(0, 0, 0, 0.5);
@@ -9,9 +9,15 @@
 
 .scrollTextBoxContainer {
   border: 1px solid #cc9955;
+  border-radius: 1px;
+}
+
+.scrollTextBoxContainer + .scrollTextBoxContainer {
+  margin-top: 2px;
 }
 
 .chatBoxInput {
+  padding: 1px;
   width: 100%;
   border: none;
   background-color: transparent;

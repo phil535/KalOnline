@@ -10,7 +10,7 @@ export default class ScrollTextBox extends React.Component {
     const { height, children } = this.props;
 
     return (
-      <div style={{height}} className={styles.scrollTextBoxContainer}>
+      <div style={{ height }} className={styles.scrollTextBoxContainer}>
         {children}
       </div>
     );
