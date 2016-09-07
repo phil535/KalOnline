@@ -85,7 +85,7 @@ SystemJS.config({
     "github:*/*.json"
   ],
   map: {
-    "css": "npm:jspm-loader-css-modules@1.0.1-beta1",
+    "css": "github:MeoMix/jspm-loader-css@master",
     "cluster": "github:jspm/nodelibs-cluster@0.2.0-alpha",
     "babel-plugin-transform-react-jsx": "npm:babel-plugin-transform-react-jsx@6.8.0",
     "domain": "github:jspm/nodelibs-domain@0.2.0-alpha",
@@ -130,7 +130,7 @@ SystemJS.config({
         "cipher-base": "npm:cipher-base@1.0.2",
         "create-hash": "npm:create-hash@1.1.2",
         "evp_bytestokey": "npm:evp_bytestokey@1.0.0",
-        "inherits": "npm:inherits@2.0.1",
+        "inherits": "npm:inherits@2.0.2",
         "systemjs-json": "github:systemjs/plugin-json@0.1.2"
       }
     },
@@ -145,7 +145,7 @@ SystemJS.config({
       "map": {
         "cipher-base": "npm:cipher-base@1.0.2",
         "des.js": "npm:des.js@1.0.0",
-        "inherits": "npm:inherits@2.0.1"
+        "inherits": "npm:inherits@2.0.2"
       }
     },
     "npm:browserify-rsa@4.0.1": {
@@ -161,7 +161,7 @@ SystemJS.config({
         "create-hash": "npm:create-hash@1.1.2",
         "create-hmac": "npm:create-hmac@1.1.4",
         "elliptic": "npm:elliptic@6.3.1",
-        "inherits": "npm:inherits@2.0.1",
+        "inherits": "npm:inherits@2.0.2",
         "parse-asn1": "npm:parse-asn1@5.0.0"
       }
     },
@@ -178,7 +178,7 @@ SystemJS.config({
     },
     "npm:cipher-base@1.0.2": {
       "map": {
-        "inherits": "npm:inherits@2.0.1"
+        "inherits": "npm:inherits@2.0.2"
       }
     },
     "npm:core-util-is@1.0.2": {
@@ -193,7 +193,7 @@ SystemJS.config({
     "npm:create-hash@1.1.2": {
       "map": {
         "cipher-base": "npm:cipher-base@1.0.2",
-        "inherits": "npm:inherits@2.0.1",
+        "inherits": "npm:inherits@2.0.2",
         "ripemd160": "npm:ripemd160@1.0.1",
         "sha.js": "npm:sha.js@2.4.5"
       }
@@ -201,7 +201,7 @@ SystemJS.config({
     "npm:create-hmac@1.1.4": {
       "map": {
         "create-hash": "npm:create-hash@1.1.2",
-        "inherits": "npm:inherits@2.0.1"
+        "inherits": "npm:inherits@2.0.2"
       }
     },
     "npm:crypto-browserify@3.11.0": {
@@ -212,7 +212,7 @@ SystemJS.config({
         "create-hash": "npm:create-hash@1.1.2",
         "create-hmac": "npm:create-hmac@1.1.4",
         "diffie-hellman": "npm:diffie-hellman@5.0.2",
-        "inherits": "npm:inherits@2.0.1",
+        "inherits": "npm:inherits@2.0.2",
         "pbkdf2": "npm:pbkdf2@3.0.4",
         "public-encrypt": "npm:public-encrypt@4.0.0",
         "randombytes": "npm:randombytes@2.0.3"
@@ -220,7 +220,7 @@ SystemJS.config({
     },
     "npm:des.js@1.0.0": {
       "map": {
-        "inherits": "npm:inherits@2.0.1",
+        "inherits": "npm:inherits@2.0.2",
         "minimalistic-assert": "npm:minimalistic-assert@1.0.0"
       }
     },
@@ -244,11 +244,8 @@ SystemJS.config({
     },
     "npm:hash.js@1.0.3": {
       "map": {
-        "inherits": "npm:inherits@2.0.1"
+        "inherits": "npm:inherits@2.0.2"
       }
-    },
-    "npm:inherits@2.0.1": {
-      "map": {}
     },
     "npm:jodid25519@1.0.2": {
       "map": {
@@ -300,7 +297,7 @@ SystemJS.config({
     },
     "npm:sha.js@2.4.5": {
       "map": {
-        "inherits": "npm:inherits@2.0.1"
+        "inherits": "npm:inherits@2.0.2"
       }
     },
     "npm:string_decoder@0.10.31": {
@@ -316,7 +313,7 @@ SystemJS.config({
     },
     "npm:stream-browserify@2.0.1": {
       "map": {
-        "inherits": "npm:inherits@2.0.1",
+        "inherits": "npm:inherits@2.0.2",
         "readable-stream": "npm:readable-stream@2.1.5"
       }
     },
@@ -377,7 +374,7 @@ SystemJS.config({
       "map": {
         "isarray": "npm:isarray@1.0.0",
         "string_decoder": "npm:string_decoder@0.10.31",
-        "inherits": "npm:inherits@2.0.1",
+        "inherits": "npm:inherits@2.0.2",
         "util-deprecate": "npm:util-deprecate@1.0.2",
         "process-nextick-args": "npm:process-nextick-args@1.0.7",
         "core-util-is": "npm:core-util-is@1.0.2",
@@ -387,7 +384,7 @@ SystemJS.config({
     "npm:stream-http@2.3.1": {
       "map": {
         "readable-stream": "npm:readable-stream@2.1.5",
-        "inherits": "npm:inherits@2.0.1",
+        "inherits": "npm:inherits@2.0.2",
         "xtend": "npm:xtend@4.0.1",
         "builtin-status-codes": "npm:builtin-status-codes@2.0.0",
         "to-arraybuffer": "npm:to-arraybuffer@1.0.1"
@@ -396,14 +393,14 @@ SystemJS.config({
     "npm:elliptic@6.3.1": {
       "map": {
         "bn.js": "npm:bn.js@4.11.6",
-        "inherits": "npm:inherits@2.0.1",
+        "inherits": "npm:inherits@2.0.2",
         "hash.js": "npm:hash.js@1.0.3",
         "brorand": "npm:brorand@1.0.5"
       }
     },
     "npm:asn1.js@4.8.0": {
       "map": {
-        "inherits": "npm:inherits@2.0.1",
+        "inherits": "npm:inherits@2.0.2",
         "bn.js": "npm:bn.js@4.11.6",
         "minimalistic-assert": "npm:minimalistic-assert@1.0.0"
       }
@@ -497,67 +494,271 @@ SystemJS.config({
         "process": "npm:process@0.11.9"
       }
     },
-    "npm:jspm-loader-css-modules@1.0.1-beta1": {
+    "github:MeoMix/jspm-loader-css@master": {
       "map": {
-        "jspm-loader-css": "npm:jspm-loader-css@1.0.1-beta1"
+        "cssnano": "npm:cssnano@3.7.4",
+        "node-cssnano": "npm:cssnano@3.7.4",
+        "css-modules-loader-core": "npm:css-modules-loader-core@1.0.1"
       }
     },
-    "npm:jspm-loader-css@1.0.1-beta1": {
+    "npm:cssnano@3.7.4": {
       "map": {
-        "css-modules-loader-core": "npm:css-modules-loader-core@1.0.1",
-        "debounce": "npm:debounce@1.0.0",
-        "path": "npm:path@0.12.7",
-        "toposort": "npm:toposort@0.2.12"
+        "decamelize": "npm:decamelize@1.2.0",
+        "postcss-colormin": "npm:postcss-colormin@2.2.0",
+        "postcss-minify-params": "npm:postcss-minify-params@1.0.5",
+        "postcss-filter-plugins": "npm:postcss-filter-plugins@2.0.1",
+        "postcss-minify-selectors": "npm:postcss-minify-selectors@2.0.5",
+        "postcss-merge-rules": "npm:postcss-merge-rules@2.0.10",
+        "postcss": "npm:postcss@5.2.0",
+        "postcss-reduce-idents": "npm:postcss-reduce-idents@2.3.0",
+        "postcss-discard-overridden": "npm:postcss-discard-overridden@0.1.1",
+        "has": "npm:has@1.0.1",
+        "postcss-ordered-values": "npm:postcss-ordered-values@2.2.1",
+        "postcss-discard-duplicates": "npm:postcss-discard-duplicates@2.0.1",
+        "postcss-reduce-initial": "npm:postcss-reduce-initial@1.0.0",
+        "postcss-convert-values": "npm:postcss-convert-values@2.4.0",
+        "postcss-normalize-charset": "npm:postcss-normalize-charset@1.1.0",
+        "postcss-svgo": "npm:postcss-svgo@2.1.4",
+        "postcss-merge-longhand": "npm:postcss-merge-longhand@2.0.1",
+        "postcss-calc": "npm:postcss-calc@5.3.1",
+        "postcss-normalize-url": "npm:postcss-normalize-url@3.0.7",
+        "autoprefixer": "npm:autoprefixer@6.4.1",
+        "postcss-unique-selectors": "npm:postcss-unique-selectors@2.0.2",
+        "postcss-zindex": "npm:postcss-zindex@2.1.1",
+        "postcss-reduce-transforms": "npm:postcss-reduce-transforms@1.0.3",
+        "postcss-minify-font-values": "npm:postcss-minify-font-values@1.0.5",
+        "postcss-discard-empty": "npm:postcss-discard-empty@2.1.0",
+        "postcss-minify-gradients": "npm:postcss-minify-gradients@1.0.3",
+        "postcss-merge-idents": "npm:postcss-merge-idents@2.1.7",
+        "postcss-discard-unused": "npm:postcss-discard-unused@2.2.1",
+        "object-assign": "npm:object-assign@4.1.0",
+        "defined": "npm:defined@1.0.0",
+        "postcss-discard-comments": "npm:postcss-discard-comments@2.0.4",
+        "postcss-value-parser": "npm:postcss-value-parser@3.3.0"
       }
     },
     "npm:css-modules-loader-core@1.0.1": {
       "map": {
-        "postcss-modules-values": "npm:postcss-modules-values@1.2.2",
+        "postcss": "npm:postcss@5.1.2",
         "icss-replace-symbols": "npm:icss-replace-symbols@1.0.2",
         "postcss-modules-extract-imports": "npm:postcss-modules-extract-imports@1.0.0",
+        "postcss-modules-local-by-default": "npm:postcss-modules-local-by-default@1.1.1",
         "postcss-modules-scope": "npm:postcss-modules-scope@1.0.2",
-        "postcss": "npm:postcss@5.1.2",
-        "postcss-modules-local-by-default": "npm:postcss-modules-local-by-default@1.1.1"
+        "postcss-modules-values": "npm:postcss-modules-values@1.2.2"
       }
     },
-    "npm:debounce@1.0.0": {
+    "npm:postcss-filter-plugins@2.0.1": {
       "map": {
-        "date-now": "npm:date-now@1.0.1"
+        "postcss": "npm:postcss@5.2.0",
+        "uniqid": "npm:uniqid@3.1.0"
       }
     },
-    "npm:path@0.12.7": {
+    "npm:postcss-minify-params@1.0.5": {
       "map": {
-        "util": "npm:util@0.10.3",
-        "process": "npm:process@0.11.9"
+        "postcss": "npm:postcss@5.2.0",
+        "postcss-value-parser": "npm:postcss-value-parser@3.3.0",
+        "alphanum-sort": "npm:alphanum-sort@1.0.2",
+        "uniqs": "npm:uniqs@2.0.0"
       }
     },
-    "npm:postcss-modules-scope@1.0.2": {
+    "npm:postcss-colormin@2.2.0": {
       "map": {
-        "postcss": "npm:postcss@5.1.2",
-        "css-selector-tokenizer": "npm:css-selector-tokenizer@0.6.0"
+        "postcss": "npm:postcss@5.2.0",
+        "colormin": "npm:colormin@1.1.2",
+        "postcss-value-parser": "npm:postcss-value-parser@3.3.0"
       }
     },
-    "npm:postcss-modules-values@1.2.2": {
+    "npm:postcss-merge-rules@2.0.10": {
       "map": {
-        "icss-replace-symbols": "npm:icss-replace-symbols@1.0.2",
-        "postcss": "npm:postcss@5.1.2"
+        "postcss": "npm:postcss@5.2.0",
+        "vendors": "npm:vendors@1.0.1"
       }
     },
-    "npm:postcss-modules-extract-imports@1.0.0": {
+    "npm:postcss-reduce-idents@2.3.0": {
       "map": {
-        "postcss": "npm:postcss@5.1.2"
+        "postcss": "npm:postcss@5.2.0",
+        "postcss-value-parser": "npm:postcss-value-parser@3.3.0"
+      }
+    },
+    "npm:postcss-minify-selectors@2.0.5": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0",
+        "alphanum-sort": "npm:alphanum-sort@1.0.2",
+        "postcss-selector-parser": "npm:postcss-selector-parser@2.2.1"
+      }
+    },
+    "npm:postcss-discard-overridden@0.1.1": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0"
+      }
+    },
+    "npm:postcss-ordered-values@2.2.1": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0",
+        "postcss-value-parser": "npm:postcss-value-parser@3.3.0"
+      }
+    },
+    "npm:postcss-normalize-charset@1.1.0": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0"
+      }
+    },
+    "npm:postcss-svgo@2.1.4": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0",
+        "is-svg": "npm:is-svg@2.0.1",
+        "svgo": "npm:svgo@0.6.6",
+        "postcss-value-parser": "npm:postcss-value-parser@3.3.0"
+      }
+    },
+    "npm:postcss-discard-duplicates@2.0.1": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0"
+      }
+    },
+    "npm:postcss-convert-values@2.4.0": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0",
+        "postcss-value-parser": "npm:postcss-value-parser@3.3.0"
+      }
+    },
+    "npm:postcss-reduce-initial@1.0.0": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0"
+      }
+    },
+    "npm:postcss-merge-longhand@2.0.1": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0"
+      }
+    },
+    "npm:autoprefixer@6.4.1": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0",
+        "num2fraction": "npm:num2fraction@1.2.2",
+        "browserslist": "npm:browserslist@1.3.6",
+        "caniuse-db": "npm:caniuse-db@1.0.30000528",
+        "normalize-range": "npm:normalize-range@0.1.2",
+        "postcss-value-parser": "npm:postcss-value-parser@3.3.0"
+      }
+    },
+    "npm:postcss-calc@5.3.1": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0",
+        "reduce-css-calc": "npm:reduce-css-calc@1.3.0",
+        "postcss-message-helpers": "npm:postcss-message-helpers@2.0.0"
+      }
+    },
+    "npm:postcss-normalize-url@3.0.7": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0",
+        "is-absolute-url": "npm:is-absolute-url@2.0.0",
+        "postcss-value-parser": "npm:postcss-value-parser@3.3.0",
+        "normalize-url": "npm:normalize-url@1.6.1"
+      }
+    },
+    "npm:postcss-unique-selectors@2.0.2": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0",
+        "alphanum-sort": "npm:alphanum-sort@1.0.2",
+        "uniqs": "npm:uniqs@2.0.0"
+      }
+    },
+    "npm:postcss-zindex@2.1.1": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0",
+        "uniqs": "npm:uniqs@2.0.0"
+      }
+    },
+    "npm:postcss-minify-font-values@1.0.5": {
+      "map": {
+        "object-assign": "npm:object-assign@4.1.0",
+        "postcss": "npm:postcss@5.2.0",
+        "postcss-value-parser": "npm:postcss-value-parser@3.3.0"
+      }
+    },
+    "npm:postcss-minify-gradients@1.0.3": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0",
+        "postcss-value-parser": "npm:postcss-value-parser@3.3.0"
+      }
+    },
+    "npm:postcss-reduce-transforms@1.0.3": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0",
+        "postcss-value-parser": "npm:postcss-value-parser@3.3.0"
+      }
+    },
+    "npm:postcss-merge-idents@2.1.7": {
+      "map": {
+        "has": "npm:has@1.0.1",
+        "postcss": "npm:postcss@5.2.0",
+        "postcss-value-parser": "npm:postcss-value-parser@3.3.0"
+      }
+    },
+    "npm:postcss-discard-empty@2.1.0": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0"
+      }
+    },
+    "npm:postcss-discard-unused@2.2.1": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0",
+        "uniqs": "npm:uniqs@2.0.0",
+        "flatten": "npm:flatten@1.0.2"
+      }
+    },
+    "npm:postcss@5.2.0": {
+      "map": {
+        "supports-color": "npm:supports-color@3.1.2",
+        "source-map": "npm:source-map@0.5.6",
+        "js-base64": "npm:js-base64@2.1.9"
       }
     },
     "npm:postcss@5.1.2": {
       "map": {
         "supports-color": "npm:supports-color@3.1.2",
-        "js-base64": "npm:js-base64@2.1.9",
-        "source-map": "npm:source-map@0.5.6"
+        "source-map": "npm:source-map@0.5.6",
+        "js-base64": "npm:js-base64@2.1.9"
       }
     },
-    "npm:util@0.10.3": {
+    "npm:has@1.0.1": {
       "map": {
-        "inherits": "npm:inherits@2.0.1"
+        "function-bind": "npm:function-bind@1.1.0"
+      }
+    },
+    "npm:postcss-discard-comments@2.0.4": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0"
+      }
+    },
+    "npm:colormin@1.1.2": {
+      "map": {
+        "has": "npm:has@1.0.1",
+        "color": "npm:color@0.11.3",
+        "css-color-names": "npm:css-color-names@0.0.4"
+      }
+    },
+    "npm:browserslist@1.3.6": {
+      "map": {
+        "caniuse-db": "npm:caniuse-db@1.0.30000528"
+      }
+    },
+    "npm:postcss-modules-extract-imports@1.0.0": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0"
+      }
+    },
+    "npm:postcss-modules-scope@1.0.2": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0",
+        "css-selector-tokenizer": "npm:css-selector-tokenizer@0.6.0"
+      }
+    },
+    "npm:postcss-modules-local-by-default@1.1.1": {
+      "map": {
+        "postcss": "npm:postcss@5.2.0",
+        "css-selector-tokenizer": "npm:css-selector-tokenizer@0.6.0"
       }
     },
     "npm:supports-color@3.1.2": {
@@ -565,18 +766,136 @@ SystemJS.config({
         "has-flag": "npm:has-flag@1.0.0"
       }
     },
+    "npm:reduce-css-calc@1.3.0": {
+      "map": {
+        "math-expression-evaluator": "npm:math-expression-evaluator@1.2.14",
+        "balanced-match": "npm:balanced-match@0.4.2",
+        "reduce-function-call": "npm:reduce-function-call@1.0.1"
+      }
+    },
+    "npm:is-svg@2.0.1": {
+      "map": {
+        "html-comment-regex": "npm:html-comment-regex@1.1.1"
+      }
+    },
+    "npm:normalize-url@1.6.1": {
+      "map": {
+        "object-assign": "npm:object-assign@4.1.0",
+        "query-string": "npm:query-string@4.2.3",
+        "prepend-http": "npm:prepend-http@1.0.4",
+        "sort-keys": "npm:sort-keys@1.1.2"
+      }
+    },
+    "npm:svgo@0.6.6": {
+      "map": {
+        "whet.extend": "npm:whet.extend@0.9.9",
+        "js-yaml": "npm:js-yaml@3.6.1",
+        "coa": "npm:coa@1.0.1",
+        "mkdirp": "npm:mkdirp@0.5.1",
+        "colors": "npm:colors@1.1.2",
+        "csso": "npm:csso@2.0.0",
+        "sax": "npm:sax@1.2.1"
+      }
+    },
+    "npm:uniqid@3.1.0": {
+      "map": {
+        "macaddress": "npm:macaddress@0.2.8"
+      }
+    },
+    "npm:csso@2.0.0": {
+      "map": {
+        "source-map": "npm:source-map@0.5.6",
+        "clap": "npm:clap@1.1.1"
+      }
+    },
+    "npm:postcss-modules-values@1.2.2": {
+      "map": {
+        "icss-replace-symbols": "npm:icss-replace-symbols@1.0.2",
+        "postcss": "npm:postcss@5.2.0"
+      }
+    },
+    "npm:math-expression-evaluator@1.2.14": {
+      "map": {
+        "lodash.indexof": "npm:lodash.indexof@4.0.5"
+      }
+    },
+    "npm:color@0.11.3": {
+      "map": {
+        "color-string": "npm:color-string@0.3.0",
+        "color-convert": "npm:color-convert@1.5.0",
+        "clone": "npm:clone@1.0.2"
+      }
+    },
     "npm:css-selector-tokenizer@0.6.0": {
       "map": {
         "fastparse": "npm:fastparse@1.1.1",
-        "cssesc": "npm:cssesc@0.1.0",
-        "regexpu-core": "npm:regexpu-core@1.0.0"
+        "regexpu-core": "npm:regexpu-core@1.0.0",
+        "cssesc": "npm:cssesc@0.1.0"
+      }
+    },
+    "npm:query-string@4.2.3": {
+      "map": {
+        "object-assign": "npm:object-assign@4.1.0",
+        "strict-uri-encode": "npm:strict-uri-encode@1.1.0"
+      }
+    },
+    "npm:coa@1.0.1": {
+      "map": {
+        "q": "npm:q@1.4.1"
+      }
+    },
+    "npm:js-yaml@3.6.1": {
+      "map": {
+        "argparse": "npm:argparse@1.0.7",
+        "esprima": "npm:esprima@2.7.3"
+      }
+    },
+    "npm:mkdirp@0.5.1": {
+      "map": {
+        "minimist": "npm:minimist@0.0.8"
+      }
+    },
+    "npm:postcss-selector-parser@2.2.1": {
+      "map": {
+        "flatten": "npm:flatten@1.0.2",
+        "indexes-of": "npm:indexes-of@1.0.1",
+        "uniq": "npm:uniq@1.0.1"
+      }
+    },
+    "npm:color-string@0.3.0": {
+      "map": {
+        "color-name": "npm:color-name@1.1.1"
+      }
+    },
+    "npm:reduce-function-call@1.0.1": {
+      "map": {
+        "balanced-match": "npm:balanced-match@0.1.0"
       }
     },
     "npm:regexpu-core@1.0.0": {
       "map": {
-        "regenerate": "npm:regenerate@1.3.1",
         "regjsparser": "npm:regjsparser@0.1.5",
-        "regjsgen": "npm:regjsgen@0.2.0"
+        "regjsgen": "npm:regjsgen@0.2.0",
+        "regenerate": "npm:regenerate@1.3.1"
+      }
+    },
+    "npm:clap@1.1.1": {
+      "map": {
+        "chalk": "npm:chalk@1.1.3"
+      }
+    },
+    "npm:argparse@1.0.7": {
+      "map": {
+        "sprintf-js": "npm:sprintf-js@1.0.3"
+      }
+    },
+    "npm:chalk@1.1.3": {
+      "map": {
+        "supports-color": "npm:supports-color@2.0.0",
+        "ansi-styles": "npm:ansi-styles@2.2.1",
+        "has-ansi": "npm:has-ansi@2.0.0",
+        "escape-string-regexp": "npm:escape-string-regexp@1.0.5",
+        "strip-ansi": "npm:strip-ansi@3.0.1"
       }
     },
     "npm:regjsparser@0.1.5": {
@@ -584,10 +903,19 @@ SystemJS.config({
         "jsesc": "npm:jsesc@0.5.0"
       }
     },
-    "npm:postcss-modules-local-by-default@1.1.1": {
+    "npm:sort-keys@1.1.2": {
       "map": {
-        "postcss": "npm:postcss@5.1.2",
-        "css-selector-tokenizer": "npm:css-selector-tokenizer@0.6.0"
+        "is-plain-obj": "npm:is-plain-obj@1.1.0"
+      }
+    },
+    "npm:has-ansi@2.0.0": {
+      "map": {
+        "ansi-regex": "npm:ansi-regex@2.0.0"
+      }
+    },
+    "npm:strip-ansi@3.0.1": {
+      "map": {
+        "ansi-regex": "npm:ansi-regex@2.0.0"
       }
     }
   }
