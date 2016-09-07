@@ -12,3 +12,13 @@
   font-size: 10px;
   color: white;
 }
+
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  overflow: auto;
+}
