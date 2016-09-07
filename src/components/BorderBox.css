@@ -1,0 +1,20 @@
+.borderBox {
+  position: relative;
+  border: 1px solid #200;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: 2px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;;
+}
+.borderBox:before {
+  position: absolute;
+  content: " ";
+  z-index: -1;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 1px solid #742;
+  outline: 1px solid #c95;
+}
