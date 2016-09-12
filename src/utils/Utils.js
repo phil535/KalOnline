@@ -13,14 +13,14 @@ export const MathExtended = {
   }
 };
 
-export const padStr = (str, length) => {
+export function padStr(str, length) {
   str = String(str);
   while (str.length < length) {
     str = `0${str}`;
   }
 
   return str;
-};
+}
 
 export function sleep(timeout) {
   return new Promise((resolve) => {
