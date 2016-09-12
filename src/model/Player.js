@@ -1,3 +1,4 @@
+import 'core-js';
 import Model from './model.js';
 import { padStr } from 'src/utils/Utils.js';
 import GBObject from './GBObject.js';
