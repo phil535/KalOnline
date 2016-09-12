@@ -18,7 +18,7 @@ export default class StatusBar extends React.Component {
         <div id={styles.statusBarLeft} />
         <BorderBox width={120} height={37}>
           <div
-            className={`${styles.bar} ${styles.heightBar}`}
+            className={`${styles.bar} ${styles.healthBar}`}
             style={{ width: `${healthPoints}%` }}
           />
           <div
