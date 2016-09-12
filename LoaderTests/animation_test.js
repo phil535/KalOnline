@@ -1,3 +1,4 @@
+import 'systemjs-hot-reloader/default-listener.js';
 import 'mrdoob/three.js';
 import 'mrdoob/three.js/controls/EditorControls.js';
 import Player from '/src/model/Player.js';

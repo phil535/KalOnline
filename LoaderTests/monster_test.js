@@ -1,3 +1,4 @@
+import 'systemjs-hot-reloader/default-listener.js';
 import 'mrdoob/three.js';
 import 'mrdoob/three.js/controls/EditorControls.js';
 import GBObject from 'src/model/GBObject.js';

@@ -1,3 +1,4 @@
+import 'systemjs-hot-reloader/default-listener.js';
 import OPLLoader from '/src/loaders/OPLLoader.js';
 
 const loaderOPL = new OPLLoader();

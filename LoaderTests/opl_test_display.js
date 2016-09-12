@@ -1,3 +1,4 @@
+import 'systemjs-hot-reloader/default-listener.js';
 import { sleep } from '/src/utils/Utils.js';
 import 'mrdoob/three.js';
 import OPLLoader from '/src/loaders/OPLLoader.js';

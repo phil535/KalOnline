@@ -1,3 +1,4 @@
+import 'systemjs-hot-reloader/default-listener.js';
 import 'mrdoob/three.js';
 import GTXLoader from '/src/loaders/GTXLoader.js';
 import KCMLoader from '/src/loaders/KCMLoader.js';
