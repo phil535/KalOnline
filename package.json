@@ -148,11 +148,8 @@
       }
     }
   },
-  "dependencies": {
-    "jspm": "^0.17.0-beta.25",
-    "serve": "^1.4.0"
-  },
   "devDependencies": {
+    "serve": "^1.4.0",
     "chokidar-socket-emitter": "^0.5.4",
     "jspm": "^0.17.0-beta.28"
   },

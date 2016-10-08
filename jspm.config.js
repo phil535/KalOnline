@@ -51,11 +51,6 @@ SystemJS.config({
         "*.css": {
           "loader": "css"
         }
-      },
-      "map": {
-        "./js/services/talkus.js": {
-          "~production": "@empty"
-        }
       }
     }
   },
