@@ -1,2 +1,40 @@
-.scrollTextBoxContainer {
+.scrollBoxContainer {
+  display: flex;
+  overflow-y: hidden;
+}
+
+.childrenContainer {
+  float: left;
+  flex-grow: 1;
+  min-height: 100%;
+}
+
+.scrollContainer {
+  padding: 1px;
+  box-sizing: border-box;
+  height: 100%;
+  float: left;
+  flex-shrink: 0;
+  width: 11px;
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollTop {
+  height: 12px;
+  width: 9px;
+  background-image: url("http://localhost:3000/src/components/img/button_arrow_up.png");
+  flex-shrink: 0;
+}
+.scrollBottom {
+  height: 12px;
+  width: 9px;
+  background-image: url("http://localhost:3000/src/components/img/button_arrow_down.png");
+  flex-shrink: 0;
+}
+
+.scrollSlider {
+  flex-grow: 1;
+  background-image: url("http://localhost:3000/src/components/img/scroll_tab.png");
+  background-repeat: no-repeat;
 }

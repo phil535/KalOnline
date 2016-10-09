@@ -13,8 +13,9 @@ export default class ChatBox extends React.Component {
         </div>
         <div className={styles.scrollTextBoxContainer}>
           <ScrollTextBox height={147}>
-          <p className={styles.textMessage}>test</p>
-          <p className={styles.textGlobal}>test</p>
+            {Array.from(Array(100)).map((key, i) => (
+              <p key={i} className={styles.textMessage}>test, {i}</p>
+            ))}
           </ScrollTextBox>
           <input type="text" className={styles.chatBoxInput} />
         </div>

@@ -29,6 +29,7 @@
 
 .scrollTextBoxContainer p {
   margin: 0 1px;
+  line-height: 12px;
 }
 
 .scrollTextBoxContainer p.textStatus { color: #f84; }
