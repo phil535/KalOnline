@@ -3,7 +3,7 @@
     "dependencies": {
       "babel-plugin-transform-react-jsx": "npm:babel-plugin-transform-react-jsx@^6.8.0",
       "css": "github:MeoMix/jspm-loader-css@master",
-      "mrdoob/three.js": "github:mrdoob/three.js@r72",
+      "mrdoob/three.js": "github:mrdoob/three.js@r81",
       "react-dom": "npm:react-dom@^15.3.1"
     },
     "devDependencies": {
@@ -48,7 +48,7 @@
       "zlib": "github:jspm/nodelibs-zlib@^0.2.0-alpha"
     },
     "overrides": {
-      "github:mrdoob/three.js@r72": {
+      "github:mrdoob/three.js@r81": {
         "format": "global"
       },
       "npm:babel-runtime@5.8.38": {
@@ -84,7 +84,7 @@
       "npm:esprima@2.7.3": {
         "jspmNodeConversion": false
       },
-      "npm:inherits@2.0.2": {
+      "npm:inherits@2.0.3": {
         "ignore": [
           "test.js"
         ]
@@ -154,6 +154,7 @@
     "jspm": "^0.17.0-beta.28"
   },
   "scripts": {
+    "postinstall": "jspm install",
     "start": "chokidar-socket-emitter & serve"
   }
 }

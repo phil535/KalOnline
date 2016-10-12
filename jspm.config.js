@@ -67,9 +67,8 @@ SystemJS.config({
     }
   },
   map: {
-    "babel": "npm:babel-core@5.8.38",
-    "mrdoob/three.js/controls/EditorControls.js": "github:mrdoob/three.js@r72/examples/js/controls/EditorControls.js",
-    "mrdoob/three.js/loaders/DDSLoader.js": "github:mrdoob/three.js@r72/examples/js/loaders/DDSLoader.js"
+    "mrdoob/three.js/controls/EditorControls.js": "github:mrdoob/three.js@r81/examples/js/controls/EditorControls.js",
+    "mrdoob/three.js/loaders/DDSLoader.js": "github:mrdoob/three.js@r81/examples/js/loaders/DDSLoader.js"
   }
 });
 
@@ -98,7 +97,7 @@ SystemJS.config({
     "https": "github:jspm/nodelibs-https@0.2.0-alpha",
     "jodid25519": "npm:jodid25519@1.0.2",
     "jsbn": "npm:jsbn@0.1.0",
-    "mrdoob/three.js": "github:mrdoob/three.js@r72",
+    "mrdoob/three.js": "github:mrdoob/three.js@r81",
     "net": "github:jspm/nodelibs-net@0.2.0-alpha",
     "os": "github:jspm/nodelibs-os@0.2.0-alpha",
     "path": "github:jspm/nodelibs-path@0.2.0-alpha",
@@ -125,7 +124,7 @@ SystemJS.config({
         "cipher-base": "npm:cipher-base@1.0.2",
         "create-hash": "npm:create-hash@1.1.2",
         "evp_bytestokey": "npm:evp_bytestokey@1.0.0",
-        "inherits": "npm:inherits@2.0.2",
+        "inherits": "npm:inherits@2.0.3",
         "systemjs-json": "github:systemjs/plugin-json@0.1.2"
       }
     },
@@ -140,7 +139,7 @@ SystemJS.config({
       "map": {
         "cipher-base": "npm:cipher-base@1.0.2",
         "des.js": "npm:des.js@1.0.0",
-        "inherits": "npm:inherits@2.0.2"
+        "inherits": "npm:inherits@2.0.3"
       }
     },
     "npm:browserify-rsa@4.0.1": {
@@ -156,7 +155,7 @@ SystemJS.config({
         "create-hash": "npm:create-hash@1.1.2",
         "create-hmac": "npm:create-hmac@1.1.4",
         "elliptic": "npm:elliptic@6.3.1",
-        "inherits": "npm:inherits@2.0.2",
+        "inherits": "npm:inherits@2.0.3",
         "parse-asn1": "npm:parse-asn1@5.0.0"
       }
     },
@@ -173,7 +172,7 @@ SystemJS.config({
     },
     "npm:cipher-base@1.0.2": {
       "map": {
-        "inherits": "npm:inherits@2.0.2"
+        "inherits": "npm:inherits@2.0.3"
       }
     },
     "npm:core-util-is@1.0.2": {
@@ -188,7 +187,7 @@ SystemJS.config({
     "npm:create-hash@1.1.2": {
       "map": {
         "cipher-base": "npm:cipher-base@1.0.2",
-        "inherits": "npm:inherits@2.0.2",
+        "inherits": "npm:inherits@2.0.3",
         "ripemd160": "npm:ripemd160@1.0.1",
         "sha.js": "npm:sha.js@2.4.5"
       }
@@ -196,7 +195,7 @@ SystemJS.config({
     "npm:create-hmac@1.1.4": {
       "map": {
         "create-hash": "npm:create-hash@1.1.2",
-        "inherits": "npm:inherits@2.0.2"
+        "inherits": "npm:inherits@2.0.3"
       }
     },
     "npm:crypto-browserify@3.11.0": {
@@ -207,7 +206,7 @@ SystemJS.config({
         "create-hash": "npm:create-hash@1.1.2",
         "create-hmac": "npm:create-hmac@1.1.4",
         "diffie-hellman": "npm:diffie-hellman@5.0.2",
-        "inherits": "npm:inherits@2.0.2",
+        "inherits": "npm:inherits@2.0.3",
         "pbkdf2": "npm:pbkdf2@3.0.4",
         "public-encrypt": "npm:public-encrypt@4.0.0",
         "randombytes": "npm:randombytes@2.0.3"
@@ -215,7 +214,7 @@ SystemJS.config({
     },
     "npm:des.js@1.0.0": {
       "map": {
-        "inherits": "npm:inherits@2.0.2",
+        "inherits": "npm:inherits@2.0.3",
         "minimalistic-assert": "npm:minimalistic-assert@1.0.0"
       }
     },
@@ -239,7 +238,7 @@ SystemJS.config({
     },
     "npm:hash.js@1.0.3": {
       "map": {
-        "inherits": "npm:inherits@2.0.2"
+        "inherits": "npm:inherits@2.0.3"
       }
     },
     "npm:jodid25519@1.0.2": {
@@ -292,7 +291,7 @@ SystemJS.config({
     },
     "npm:sha.js@2.4.5": {
       "map": {
-        "inherits": "npm:inherits@2.0.2"
+        "inherits": "npm:inherits@2.0.3"
       }
     },
     "npm:string_decoder@0.10.31": {
@@ -308,7 +307,7 @@ SystemJS.config({
     },
     "npm:stream-browserify@2.0.1": {
       "map": {
-        "inherits": "npm:inherits@2.0.2",
+        "inherits": "npm:inherits@2.0.3",
         "readable-stream": "npm:readable-stream@2.1.5"
       }
     },
@@ -369,7 +368,7 @@ SystemJS.config({
       "map": {
         "isarray": "npm:isarray@1.0.0",
         "string_decoder": "npm:string_decoder@0.10.31",
-        "inherits": "npm:inherits@2.0.2",
+        "inherits": "npm:inherits@2.0.3",
         "util-deprecate": "npm:util-deprecate@1.0.2",
         "process-nextick-args": "npm:process-nextick-args@1.0.7",
         "core-util-is": "npm:core-util-is@1.0.2",
@@ -379,7 +378,7 @@ SystemJS.config({
     "npm:stream-http@2.3.1": {
       "map": {
         "readable-stream": "npm:readable-stream@2.1.5",
-        "inherits": "npm:inherits@2.0.2",
+        "inherits": "npm:inherits@2.0.3",
         "xtend": "npm:xtend@4.0.1",
         "builtin-status-codes": "npm:builtin-status-codes@2.0.0",
         "to-arraybuffer": "npm:to-arraybuffer@1.0.1"
@@ -388,14 +387,14 @@ SystemJS.config({
     "npm:elliptic@6.3.1": {
       "map": {
         "bn.js": "npm:bn.js@4.11.6",
-        "inherits": "npm:inherits@2.0.2",
+        "inherits": "npm:inherits@2.0.3",
         "hash.js": "npm:hash.js@1.0.3",
         "brorand": "npm:brorand@1.0.5"
       }
     },
     "npm:asn1.js@4.8.0": {
       "map": {
-        "inherits": "npm:inherits@2.0.2",
+        "inherits": "npm:inherits@2.0.3",
         "bn.js": "npm:bn.js@4.11.6",
         "minimalistic-assert": "npm:minimalistic-assert@1.0.0"
       }

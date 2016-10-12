@@ -7,7 +7,7 @@ export default class KCMLoader {
   }
   load(url, onLoad, onProgress, onError) {
     const loader = new THREE.XHRLoader(this.manager);
-    loader.setCrossOrigin(this.crossOrigin);
+    // loader.setCrossOrigin(this.crossOrigin);
     loader.setResponseType('arraybuffer');
     loader.load(url, (data) => {
       onLoad(this.parse(data));
