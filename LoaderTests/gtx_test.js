@@ -6,7 +6,8 @@ import GTXLoader from '/src/loaders/GTXLoader.js';
 const scene = new THREE.Scene();
 
 const canvas = document.getElementById('canvas');
-const renderer = new THREE.WebGLRenderer({ canvas });
+const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+renderer.setClearColor( 0xffffff, 0);
 
 const camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 1000);
 camera.position.x = camera.position.y = camera.position.z = 50;
