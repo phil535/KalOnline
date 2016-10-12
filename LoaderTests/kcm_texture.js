@@ -10,6 +10,7 @@ const TEXTURE_HEIGHT = 8192;
 const canvas = document.createElement('canvas');
 canvas.width = TEXTURE_WIDTH;
 canvas.height = TEXTURE_HEIGHT;
+canvas.style.width = '512px';
 const context = canvas.getContext('2d');
 
 document.body.appendChild(canvas);
