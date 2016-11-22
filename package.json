@@ -3,7 +3,7 @@
     "dependencies": {
       "babel-plugin-transform-react-jsx": "npm:babel-plugin-transform-react-jsx@^6.8.0",
       "css": "github:MeoMix/jspm-loader-css@master",
-      "mrdoob/three.js": "github:mrdoob/three.js@r81",
+      "mrdoob/three.js": "github:mrdoob/three.js@r72",
       "react-dom": "npm:react-dom@^15.3.1"
     },
     "devDependencies": {
@@ -48,7 +48,7 @@
       "zlib": "github:jspm/nodelibs-zlib@^0.2.0-alpha"
     },
     "overrides": {
-      "github:mrdoob/three.js@r81": {
+      "github:mrdoob/three.js@r72": {
         "format": "global"
       },
       "npm:babel-runtime@5.8.38": {

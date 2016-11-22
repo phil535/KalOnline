@@ -67,8 +67,8 @@ SystemJS.config({
     }
   },
   map: {
-    "mrdoob/three.js/controls/EditorControls.js": "github:mrdoob/three.js@r81/examples/js/controls/EditorControls.js",
-    "mrdoob/three.js/loaders/DDSLoader.js": "github:mrdoob/three.js@r81/examples/js/loaders/DDSLoader.js"
+    "mrdoob/three.js/controls/EditorControls.js": "github:mrdoob/three.js@r72/examples/js/controls/EditorControls.js",
+    "mrdoob/three.js/loaders/DDSLoader.js": "github:mrdoob/three.js@r72/examples/js/loaders/DDSLoader.js"
   }
 });
 
@@ -97,7 +97,7 @@ SystemJS.config({
     "https": "github:jspm/nodelibs-https@0.2.0-alpha",
     "jodid25519": "npm:jodid25519@1.0.2",
     "jsbn": "npm:jsbn@0.1.0",
-    "mrdoob/three.js": "github:mrdoob/three.js@r81",
+    "mrdoob/three.js": "github:mrdoob/three.js@r72",
     "net": "github:jspm/nodelibs-net@0.2.0-alpha",
     "os": "github:jspm/nodelibs-os@0.2.0-alpha",
     "path": "github:jspm/nodelibs-path@0.2.0-alpha",
