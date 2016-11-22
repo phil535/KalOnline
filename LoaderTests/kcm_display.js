@@ -35,10 +35,7 @@ LOADER_KCM.load('/data/MAPS/n_031_031.kcm', async ({ heightMap, textureMaps }) =
   const map = await createTexture(textureMaps);
 
   const geometry = new THREE.PlaneGeometry(TEXTURE_WIDTH, TEXTURE_HEIGHT, 256, 256);
-  const material = new THREE.MeshLambertMaterial({
-    map,
-    color: 0xffffff
-  });
+  const material = new THREE.MeshLambertMaterial({ map, color: 0xffffff });
   const plane = new THREE.Mesh(geometry, material);
 
   geometry.vertices.forEach((vertex, i) => {
