@@ -49,7 +49,7 @@ export default class ScrollBox extends React.Component {
         <div className={styles.scrollContainer}>
           <div className={styles.scrollTop} />
           <div
-            style={{ backgroundPosition: `0 ${ scrollSliderPosition }%` }}
+            style={{ backgroundPosition: `0 ${scrollSliderPosition}%` }}
             className={styles.scrollSlider}
           />
           <div className={styles.scrollBottom} />
