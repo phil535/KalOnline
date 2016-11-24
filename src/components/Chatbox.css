@@ -7,12 +7,12 @@
   left: 0;
 }
 
-.scrollTextBoxContainer {
+.container {
   border: 1px solid #cc9955;
   border-radius: 1px;
 }
 
-.scrollTextBoxContainer + .scrollTextBoxContainer {
+.container + .container {
   margin-top: 2px;
 }
 
@@ -27,11 +27,11 @@
   outline: none;
 }
 
-.scrollTextBoxContainer p {
+.container p {
   margin: 0 1px;
   line-height: 12px;
 }
 
-.scrollTextBoxContainer p.textStatus { color: #f84; }
-.scrollTextBoxContainer p.textMessage { color: #fff; }
-.scrollTextBoxContainer p.textGlobal { color: #f9f; }
+.container p.textStatus { color: #f84; }
+.container p.textMessage { color: #fff; }
+.container p.textGlobal { color: #f9f; }

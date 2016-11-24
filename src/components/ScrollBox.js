@@ -1,7 +1,7 @@
-import styles from './ScrollTextBox.css';
+import styles from './ScrollBox.css';
 import React, { PropTypes } from 'react';
 
-export default class ScrollTextBox extends React.Component {
+export default class ScrollBox extends React.Component {
   static propTypes = {
     height: PropTypes.number.isRequired
   };
