@@ -13,16 +13,20 @@ export default class ScrollBox extends React.Component {
 
   onScroll = (event) => {
     const { deltaY } = event;
-    const { height } = this.props;
-    let { scrollPos, childrenHeight } = this.state;
 
-    scrollPos -= (deltaY === 0 ? 0 : deltaY > 0 ? 1 : -1) * 12;
-    scrollPos = Math.min(Math.max(scrollPos, 0), childrenHeight - height);
+    const delta = (deltaY) === 0 ? 0 : deltaY > 0 ? 1 : -1;
+
+    this.updateScroll(delta);
+  };
+
+  updateScroll(delta) {
+    const { height } = this.props;
+    const { scrollPos, childrenHeight } = this.state;
 
     this.setState({
-      scrollPos
+      scrollPos: Math.min(Math.max(scrollPos - (delta * 12), 0), childrenHeight - height)
     });
-  };
+  }
 
   render() {
     const { height, children } = this.props;
