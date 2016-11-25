@@ -54,12 +54,12 @@ export default class ScrollBox extends React.Component {
           </ReactHeight>
         </div>
         <div className={styles.scrollContainer}>
-          <div className={styles.scrollTop} />
+          <div onClick={() => this.updateScroll(-1)} className={styles.scrollTop} />
           <div
             style={{ backgroundPosition: `0 ${scrollSliderPosition}%` }}
             className={styles.scrollSlider}
           />
-          <div className={styles.scrollBottom} />
+          <div onClick={() => this.updateScroll(1)} className={styles.scrollBottom} />
         </div>
       </div>
     );
