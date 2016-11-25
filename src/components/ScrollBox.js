@@ -1,37 +1,38 @@
 import styles from './ScrollBox.css';
 import React, { PropTypes } from 'react';
+import ReactHeight from 'react-height';
 
 export default class ScrollBox extends React.Component {
   static propTypes = {
     height: PropTypes.number.isRequired
   };
   state = {
+    childrenHeight: 0,
     scrollPos: 0
   };
 
   onScroll = (event) => {
     const { deltaY } = event;
-    const { children, height } = this.props;
-    let { scrollPos } = this.state;
+    const { height } = this.props;
+    let { scrollPos, childrenHeight } = this.state;
 
-    scrollPos -= deltaY === 0 ? 0 : deltaY > 0 ? 1 : -1;
-    scrollPos = Math.min(Math.max(scrollPos, 0), children.length - height / 12);
+    scrollPos -= (deltaY === 0 ? 0 : deltaY > 0 ? 1 : -1) * 12;
+    scrollPos = Math.min(Math.max(scrollPos, 0), childrenHeight - height);
 
     this.setState({
-      ...this.state,
       scrollPos
     });
   };
 
   render() {
     const { height, children } = this.props;
-    const { scrollPos } = this.state;
+    const { scrollPos, childrenHeight } = this.state;
 
     let scrollTextOffset;
     let scrollSliderPosition;
-    if (children.length * 12 > height) {
-      scrollTextOffset = -(children.length - scrollPos) * 12 + height;
-      scrollSliderPosition = (1 - scrollPos / (children.length - height / 12)) * 100;
+    if (childrenHeight > height) {
+      scrollTextOffset = -(childrenHeight - scrollPos) + height;
+      scrollSliderPosition = (1 - scrollPos / (childrenHeight - height)) * 100;
     } else {
       scrollTextOffset = 0;
       scrollSliderPosition = 0;
@@ -44,7 +45,9 @@ export default class ScrollBox extends React.Component {
           style={{ marginTop: `${scrollTextOffset}px` }}
           className={styles.childrenContainer}
         >
+          <ReactHeight onHeightReady={childrenHeight => this.setState({ childrenHeight })}>
           {children}
+          </ReactHeight>
         </div>
         <div className={styles.scrollContainer}>
           <div className={styles.scrollTop} />
