@@ -4,7 +4,8 @@
       "babel-plugin-transform-react-jsx": "npm:babel-plugin-transform-react-jsx@^6.8.0",
       "css": "github:casperlamboo/jspm-loader-css",
       "mrdoob/three.js": "github:mrdoob/three.js@r72",
-      "react-dom": "npm:react-dom@^15.3.1"
+      "react-dom": "npm:react-dom@^15.3.1",
+      "react-height": "npm:react-height@^2.1.1"
     },
     "devDependencies": {
       "babel-runtime": "npm:babel-runtime@^5.6.4",
@@ -25,7 +26,7 @@
       "ecc-jsbn": "npm:ecc-jsbn@~0.1.1",
       "events": "npm:jspm-nodelibs-events@^0.2.0",
       "fs": "npm:jspm-nodelibs-fs@^0.2.0",
-      "http": "npm:jspm-nodelibs-http@^0.2.0",
+      "http": "github:jspm/nodelibs-http@^0.2.0-alpha",
       "https": "npm:jspm-nodelibs-https@^0.2.0",
       "jodid25519": "npm:jodid25519@^1.0.0",
       "jsbn": "npm:jsbn@0.1",
