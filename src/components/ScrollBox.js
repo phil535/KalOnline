@@ -24,7 +24,7 @@ export default class ScrollBox extends React.Component {
     const { scrollPos, childrenHeight } = this.state;
 
     this.setState({
-      scrollPos: Math.min(Math.max(scrollPos - (delta * 12), 0), childrenHeight - height)
+      scrollPos: Math.max(Math.min(scrollPos - (delta * 12), childrenHeight - height), 0)
     });
   }
 
