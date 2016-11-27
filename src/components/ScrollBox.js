@@ -14,7 +14,7 @@ export default class ScrollBox extends React.Component {
   onScroll = (event) => {
     const { deltaY } = event;
 
-    const delta = (deltaY) === 0 ? 0 : deltaY > 0 ? 1 : -1;
+    const delta = (deltaY) === 0 ? 0 : deltaY > 0 ? 12 : -12;
 
     this.updateScroll(delta);
   };
@@ -24,7 +24,7 @@ export default class ScrollBox extends React.Component {
     const { scrollPos, childrenHeight } = this.state;
 
     this.setState({
-      scrollPos: Math.max(Math.min(scrollPos - (delta * 12), childrenHeight - height), 0)
+      scrollPos: Math.max(Math.min(scrollPos - delta, childrenHeight - height), 0)
     });
   }
 
@@ -54,12 +54,12 @@ export default class ScrollBox extends React.Component {
           </ReactHeight>
         </div>
         <div className={styles.scrollContainer}>
-          <div onClick={() => this.updateScroll(-1)} className={styles.scrollTop} />
+          <div onClick={() => this.updateScroll(-12)} className={styles.scrollTop} />
           <div
             style={{ backgroundPosition: `0 ${scrollSliderPosition}%` }}
             className={styles.scrollSlider}
           />
-          <div onClick={() => this.updateScroll(1)} className={styles.scrollBottom} />
+          <div onClick={() => this.updateScroll(12)} className={styles.scrollBottom} />
         </div>
       </div>
     );
