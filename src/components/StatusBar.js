@@ -26,9 +26,9 @@ export default class StatusBar extends React.Component {
             style={{ width: `${manaPoints}%` }}
           />
           <div className={styles.expBarContainer}>
-            {Array.from(Array(Math.floor(experiencePoints / 10))).map((value, i) => {
-              return (<div key={i} className={`${styles.bar} ${styles.expBar} ${styles.expBlock}`} />);
-            })}
+            {Array.from(Array(Math.floor(experiencePoints / 10))).map((value, i) => (
+              <div key={i} className={`${styles.bar} ${styles.expBar} ${styles.expBlock}`} />
+            ))}
           </div>
           <div
             className={`${styles.bar} ${styles.expBar}`}
