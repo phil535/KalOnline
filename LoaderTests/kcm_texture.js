@@ -61,27 +61,6 @@ function createAlphaMap(map, width, height) {
   return canvas;
 }
 
-function textureToImage(texture) {
-  const { width, height } = texture.image;
-
-  const renderer = new THREE.WebGLRenderer();
-  renderer.setSize(width, height);
-
-  const scene = new THREE.Scene();
-
-  const geometry = new THREE.PlaneGeometry(width, height, 1, 1);
-  const material = new THREE.MeshBasicMaterial({ map: texture });
-  const plane = new THREE.Mesh(geometry, material);
-
-  scene.add(plane);
-
-  const camera = new THREE.OrthographicCamera(width / -2, width / 2, height / 2, height / -2, 0, 1);
-
-  renderer.render(scene, camera);
-
-  return renderer.domElement;
-}
-
 function combineAlphaPattern(alpha, pattern, width, height) {
   const canvas = document.createElement('canvas');
   canvas.width = width;
