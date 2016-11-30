@@ -1,8 +1,0 @@
-Data/OBJECTS/b/1/land/[a]tree_p02.gb
-Data/OBJECTS/b/1/land/[a]tree_p01.gb
-Data/OBJECTS/b/1/land/[a]tree_p03.gb
-Data/OBJECTS/b/1/land/[a]tree_p05.gb
-Data/OBJECTS/b/1/land/[a]tree_p04.gb
-Data/OBJECTS/B/1/structure/[a]lamp_04.gb
-DATA/OBJECTS/b/1/structure/[a]lamp_04.gb
-Data/OBJECTS/b/1/land/[a]tree_p04_01.gb
