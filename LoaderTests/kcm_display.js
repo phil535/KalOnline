@@ -3,7 +3,7 @@ import 'mrdoob/three.js';
 import 'mrdoob/three.js/controls/EditorControls.js';
 import GTXLoader from '/src/loaders/GTXLoader.js';
 import KCMLoader from '/src/loaders/KCMLoader.js';
-import { padStr } from '/src/utils/Utils.js';
+import { padStr, gtxToImage } from '/src/utils/Utils.js';
 
 const TEXTURE_WIDTH = 8192;
 const TEXTURE_HEIGHT = 8192;
@@ -67,13 +67,7 @@ async function createTexture(textureMaps) {
   for (const { alphaMap, textureID, firstLayer } of textureMaps) {
     const textureUrl = `/data/MAPS/Tex/b_${padStr(Math.max(textureID, 1), 3)}.GTX`;
 
-    const texture = await new Promise((resolve, reject) => {
-      const texture = LOADER_GTX.load(textureUrl, () => {
-        resolve(texture);
-      }, undefined, reject);
-    });
-
-    const textureImage = textureToImage(texture);
+    const textureImage = await gtxToImage(textureUrl);
     const texturePattern = context.createPattern(textureImage, 'repeat');
     const alphaImage = createAlphaMap(alphaMap, 256, 256);
 
@@ -115,27 +109,6 @@ function createAlphaMap(map, width, height) {
   context.putImageData(imageData, 0, 0);
 
   return canvas;
-}
-
-function textureToImage(texture) {
-  const { width, height } = texture.image;
-
-  const renderer = new THREE.WebGLRenderer();
-  renderer.setSize(width, height);
-
-  const scene = new THREE.Scene();
-
-  const geometry = new THREE.PlaneGeometry(width, height, 1, 1);
-  const material = new THREE.MeshBasicMaterial({ map: texture });
-  const plane = new THREE.Mesh(geometry, material);
-
-  scene.add(plane);
-
-  const camera = new THREE.OrthographicCamera(width / -2, width / 2, height / 2, height / -2, 0, 1);
-
-  renderer.render(scene, camera);
-
-  return renderer.domElement;
 }
 
 function combineAlphaPattern(alpha, pattern, width, height) {
