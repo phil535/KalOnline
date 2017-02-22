@@ -1,6 +1,6 @@
 import 'systemjs-hot-reloader/default-listener.js';
-import 'mrdoob/three.js';
-import 'mrdoob/three.js/controls/EditorControls.js';
+import 'three';
+import 'three/controls/EditorControls.js';
 import GTXLoader from '/src/loaders/GTXLoader.js';
 import KCMLoader from '/src/loaders/KCMLoader.js';
 import { padStr, gtxToImage } from '/src/utils/Utils.js';

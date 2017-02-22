@@ -1,5 +1,5 @@
 // DataView Shim from THREE.js STL Loader
-// https://github.com/mrdoob/three.js/blob/5c7e0df9b100ba40cdcaaf530196290e16c34858/examples/js/loaders/STLLoader.js
+// https://github.com/three/blob/5c7e0df9b100ba40cdcaaf530196290e16c34858/examples/js/loaders/STLLoader.js
 if (typeof DataView === 'undefined') {
   class DataView {
     constructor(buffer = {}, byteOffset = 0, byteLength = buffer.byteLength = buffer.length) {

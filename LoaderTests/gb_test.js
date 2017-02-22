@@ -1,6 +1,6 @@
 import 'systemjs-hot-reloader/default-listener.js';
-import 'mrdoob/three.js';
-import 'mrdoob/three.js/controls/EditorControls.js';
+import 'three';
+import 'three/controls/EditorControls.js';
 import GBLoader from '/src/loaders/GBLoader.js';
 
 const scene = new THREE.Scene();

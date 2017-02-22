@@ -1,4 +1,4 @@
-import 'mrdoob/three.js';
+import 'three';
 import FileStream from 'src/utils/filestream.js';
 
 export default class KCMLoader {

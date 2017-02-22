@@ -1,6 +1,6 @@
 import 'systemjs-hot-reloader/default-listener.js';
-import 'mrdoob/three.js';
-import 'mrdoob/three.js/controls/EditorControls.js';
+import 'three';
+import 'three/controls/EditorControls.js';
 import Player from '/src/model/Player.js';
 import GBObject from '/src/model/GBObject.js';
 import * as JOBS from 'src/constants/jobs.js';

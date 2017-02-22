@@ -3,7 +3,7 @@ import Model from './model.js';
 import { padStr } from 'src/utils/Utils.js';
 import GBObject from './GBObject.js';
 import * as JOBS from 'src/constants/jobs.js';
-import 'mrdoob/three.js';
+import 'three';
 
 const PATH_BASE = '/DATA/Model/';
 const CONFIG_TYPES = {

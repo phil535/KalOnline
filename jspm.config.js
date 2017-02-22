@@ -55,20 +55,20 @@ SystemJS.config({
     }
   },
   meta: {
-    "three.js/controls/EditorControls.js": {
+    "three/controls/EditorControls.js": {
       "deps": [
-        "three.js"
+        "three"
       ]
     },
-    "three.js/loaders/DDSLoader.js": {
+    "three/loaders/DDSLoader.js": {
       "deps": [
-        "three.js"
+        "three"
       ]
     }
   },
   map: {
-    "mrdoob/three.js/controls/EditorControls.js": "github:mrdoob/three.js@r72/examples/js/controls/EditorControls.js",
-    "mrdoob/three.js/loaders/DDSLoader.js": "github:mrdoob/three.js@r72/examples/js/loaders/DDSLoader.js"
+    "three/controls/EditorControls.js": "npm:three@0.84.0/examples/js/controls/EditorControls.js",
+    "three/loaders/DDSLoader.js": "npm:three@0.84.0/examples/js/loaders/DDSLoader.js"
   }
 });
 
@@ -93,11 +93,10 @@ SystemJS.config({
     "ecc-jsbn": "npm:ecc-jsbn@0.1.1",
     "events": "npm:jspm-nodelibs-events@0.2.0",
     "fs": "npm:jspm-nodelibs-fs@0.2.0",
-    "http": "github:jspm/nodelibs-http@0.2.0-alpha",
+    "http": "npm:jspm-nodelibs-http@0.2.0",
     "https": "npm:jspm-nodelibs-https@0.2.0",
     "jodid25519": "npm:jodid25519@1.0.2",
     "jsbn": "npm:jsbn@0.1.0",
-    "mrdoob/three.js": "github:mrdoob/three.js@r72",
     "net": "npm:jspm-nodelibs-net@0.2.0",
     "os": "npm:jspm-nodelibs-os@0.2.0",
     "path": "npm:jspm-nodelibs-path@0.2.0",
@@ -109,6 +108,7 @@ SystemJS.config({
     "react-height": "npm:react-height@2.1.1",
     "stream": "npm:jspm-nodelibs-stream@0.2.0",
     "string_decoder": "npm:jspm-nodelibs-string_decoder@0.2.0",
+    "three": "npm:three@0.84.0",
     "timers": "npm:jspm-nodelibs-timers@0.2.0",
     "tls": "npm:jspm-nodelibs-tls@0.2.0",
     "tty": "npm:jspm-nodelibs-tty@0.2.0",
@@ -913,7 +913,7 @@ SystemJS.config({
         "is-stream": "npm:is-stream@1.1.0"
       }
     },
-    "github:jspm/nodelibs-http@0.2.0-alpha": {
+    "npm:jspm-nodelibs-http@0.2.0": {
       "map": {
         "http-browserify": "npm:stream-http@2.5.0"
       }

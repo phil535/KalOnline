@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import 'mrdoob/three.js';
+import 'three';
 import FileStream from 'src/utils/filestream.js';
 import GTXLoader from './GTXLoader.js';
 

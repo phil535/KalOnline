@@ -1,5 +1,5 @@
-import 'mrdoob/three.js';
-import 'mrdoob/three.js/loaders/DDSLoader.js';
+import 'three';
+import 'three/loaders/DDSLoader.js';
 
 // GTX is just a DDS with an encrypted header
 // GTX to DDS header loopup table
