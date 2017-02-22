@@ -38,7 +38,7 @@ export default class GBLoader {
     this.manager = manager;
   }
   load(url, onLoad, onProgress, onError) {
-    const loader = new THREE.XHRLoader(this.manager);
+    const loader = new THREE.FileLoader(this.manager);
     // loader.setCrossOrigin(this.crossOrigin);
     loader.setResponseType('arraybuffer');
     loader.load(url, (text) => {

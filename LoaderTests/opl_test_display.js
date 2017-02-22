@@ -34,7 +34,7 @@ loaderOPL.load('/data/MAPS/n_031_031.opl', async ({ header, opl }) => {
       loader.load(`/${url}`, resolve, undefined, reject);
     });
 
-    const material = new THREE.MeshFaceMaterial(materials);
+    const material = new THREE.MultiMaterial(materials);
     mesh = new THREE.Mesh(geometry, material);
 
     scene.add(mesh);

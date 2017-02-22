@@ -28,7 +28,7 @@ export default class Model {
       geometry.skinIndices.push(...pieceGeometry.skinIndices);
     }
 
-    const material = new THREE.MeshFaceMaterial(materials);
+    const material = new THREE.MultiMaterial(materials);
 
     let mesh;
     if (gbBones !== undefined) {

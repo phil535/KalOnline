@@ -17,7 +17,7 @@ camera.lookAt(new THREE.Vector3(0, 0, 0));
 const controls = new THREE.EditorControls(camera, canvas);
 
 function loaded({ geometry, materials }) {
-  const material = new THREE.MeshFaceMaterial(materials);
+  const material = new THREE.MultiMaterial(materials);
   const mesh = new THREE.Mesh(geometry, material);
 
   scene.add(mesh);
