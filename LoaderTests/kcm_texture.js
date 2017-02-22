@@ -2,7 +2,7 @@ import 'systemjs-hot-reloader/default-listener.js';
 import 'three';
 import GTXLoader from '/src/loaders/GTXLoader.js';
 import KCMLoader from '/src/loaders/KCMLoader.js';
-import { padStr, gtxToImage } from '/src/utils/Utils.js';
+import { padStr, loadGTX, textureToImage } from '/src/utils/Utils.js';
 
 const TEXTURE_WIDTH = 8192;
 const TEXTURE_HEIGHT = 8192;
@@ -22,7 +22,7 @@ loaderKCM.load('/data/MAPS/n_031_031.kcm', async ({ textureMaps }) => {
   for (const { alphaMap, textureID, firstLayer } of textureMaps) {
     const textureUrl = `/data/MAPS/Tex/b_${padStr(Math.max(textureID, 1), 3)}.GTX`;
 
-    const textureImage = await gtxToImage(textureUrl);
+    const textureImage = textureToImage(await loadGTX(textureUrl));
     const texturePattern = context.createPattern(textureImage, 'repeat');
     const alphaImage = createAlphaMap(alphaMap, 256, 256);
 
