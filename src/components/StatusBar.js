@@ -79,20 +79,20 @@ export default class StatusBar extends React.Component {
         <BorderBox width={120} height={37}>
           <div
             className={`${classes.bar} ${classes.healthBar}`}
-            style={{ width: `${healthPoints}%` }}
+            style={{ width: `${healthPoints * 100}%` }}
           />
           <div
             className={`${classes.bar} ${classes.manaBar}`}
-            style={{ width: `${manaPoints}%` }}
+            style={{ width: `${manaPoints * 100}%` }}
           />
           <div className={classes.expBarContainer}>
-            {Array.from(Array(Math.floor(experiencePoints / 10))).map((value, i) => (
+            {Array.from(Array(Math.floor(experiencePoints * 10.0))).map((value, i) => (
               <div key={`${i}`} className={`${classes.bar} ${classes.expBar} ${classes.expBlock}`} />
             ))}
           </div>
           <div
             className={`${classes.bar} ${classes.expBar}`}
-            style={{ width: `${(experiencePoints % 10) * 10}%` }}
+            style={{ width: `${(experiencePoints % 0.1) * 100.0}%` }}
           />
         </BorderBox>
         <div className={classes.statusBarRight}>

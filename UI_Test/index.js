@@ -13,9 +13,9 @@ ReactDOM.render(React.createElement('div', null, [
   React.createElement(ChatBox, { key: 'chatbox' }),
   React.createElement(StatusBar, {
     key: 'statusbar',
-    manaPoints: 100,
-    healthPoints: 100,
-    experiencePoints: 56,
+    manaPoints: 1.0,
+    healthPoints: 1.0,
+    experiencePoints: 0.56,
     compass: 1.2
   })
 ]), document.getElementById('container'));
