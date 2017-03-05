@@ -2,7 +2,6 @@
   "jspm": {
     "dependencies": {
       "babel-plugin-transform-react-jsx": "npm:babel-plugin-transform-react-jsx@^6.8.0",
-      "css": "github:casperlamboo/jspm-loader-css",
       "jss-preset-default": "npm:jss-preset-default@^1.3.1",
       "pixel-bmp": "npm:pixel-bmp@^0.0.1",
       "react-dom": "npm:react-dom@^15.3.1",
@@ -39,7 +38,7 @@
       "net": "npm:jspm-nodelibs-net@^0.2.0",
       "os": "npm:jspm-nodelibs-os@^0.2.0",
       "path": "npm:jspm-nodelibs-path@^0.2.0",
-      "process": "github:jspm/nodelibs-process@^0.2.0-alpha",
+      "process": "npm:jspm-nodelibs-process@^0.2.0",
       "punycode": "npm:jspm-nodelibs-punycode@^0.2.0",
       "querystring": "npm:jspm-nodelibs-querystring@^0.2.0",
       "react": "npm:react@^15.3.1",
@@ -85,9 +84,6 @@
           "util": "@node/util"
         }
       },
-      "npm:esprima@2.7.3": {
-        "jspmNodeConversion": false
-      },
       "npm:inherits@2.0.3": {
         "ignore": [
           "test.js"
@@ -102,56 +98,6 @@
       "npm:ms@0.7.1": {
         "jspmNodeConversion": false,
         "format": "cjs"
-      },
-      "npm:svgo@0.7.1": {
-        "meta": {
-          "lib/svgo/config.js": {
-            "deps": [
-              "../../plugins/removeDoctype",
-              "../../plugins/removeXMLProcInst",
-              "../../plugins/removeComments",
-              "../../plugins/removeMetadata",
-              "../../plugins/removeEditorsNSData",
-              "../../plugins/cleanupAttrs",
-              "../../plugins/minifyStyles",
-              "../../plugins/convertStyleToAttrs",
-              "../../plugins/cleanupIDs",
-              "../../plugins/removeRasterImages",
-              "../../plugins/removeUselessDefs",
-              "../../plugins/cleanupNumericValues",
-              "../../plugins/cleanupListOfValues",
-              "../../plugins/convertColors",
-              "../../plugins/removeUnknownsAndDefaults",
-              "../../plugins/removeNonInheritableGroupAttrs",
-              "../../plugins/removeUselessStrokeAndFill",
-              "../../plugins/removeViewBox",
-              "../../plugins/cleanupEnableBackground",
-              "../../plugins/removeHiddenElems",
-              "../../plugins/removeEmptyText",
-              "../../plugins/convertShapeToPath",
-              "../../plugins/moveElemsAttrsToGroup",
-              "../../plugins/moveGroupAttrsToElems",
-              "../../plugins/collapseGroups",
-              "../../plugins/convertPathData",
-              "../../plugins/convertTransform",
-              "../../plugins/removeEmptyAttrs",
-              "../../plugins/removeEmptyContainers",
-              "../../plugins/mergePaths",
-              "../../plugins/removeUnusedNS",
-              "../../plugins/transformsWithOnePath",
-              "../../plugins/sortAttrs",
-              "../../plugins/removeTitle",
-              "../../plugins/removeDesc",
-              "../../plugins/removeDimensions",
-              "../../plugins/removeAttrs",
-              "../../plugins/addClassesToSVGElement",
-              "../../plugins/removeStyleElement",
-              "../../plugins/removeXMLNS",
-              "../../plugins/removeElementsByAttr",
-              "../../plugins/addAttributesToSVGElement"
-            ]
-          }
-        }
       },
       "npm:three@0.84.0": {
         "format": "global"
