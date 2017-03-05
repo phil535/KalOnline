@@ -1,10 +1,9 @@
-import { gtxToImage } from '../utils/Utils.js'
+import { loadGTX, canvas, canvasToBlob } from '../utils/Utils.js';
 
 export async function fetch(load) {
-  const canvas = await gtxToImage(load.address);
-  const blob = await new Promise((resolve, reject) => {
-    canvas.toBlob(resolve, 'image/png');
-  });
+  const texture = await loadGTX(load.address);
+  const canvas = textureToImage(texture);
+  const blob = await canvasToBlob(canvas);
   const url = URL.createObjectURL(blob);
 
   load.metadata.url = url;

@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactHeight from 'react-height';
 import injectSheet from 'react-jss'
+import buttonArrowUp from 'data/HyperText/button_arrow_up.bmp!src/plugins/bmp.js';
+import buttonArrowDown from 'data/HyperText/button_arrow_down.bmp!src/plugins/bmp.js';
+import buttonArrowTab from 'data/HyperText/scroll_tab.bmp!src/plugins/bmp.js';
 
 const styles = {
   scrollBoxContainer: {
@@ -25,18 +28,18 @@ const styles = {
   scrollTop: {
     height: '12px',
     width: '9px',
-    backgroundImage: 'url("http://localhost:3000/src/components/img/button_arrow_up.png")',
+    backgroundImage: `url("${buttonArrowUp}")`,
     flexShrink: 0
   },
   scrollBottom: {
     height: '12px',
     width: '9px',
-    backgroundImage: 'url("http://localhost:3000/src/components/img/button_arrow_down.png")',
+    backgroundImage: `url("${buttonArrowDown}")`,
     flexShrink: 0
   },
   scrollSlider: {
     flexGrow: 1,
-    backgroundImage: 'url("http://localhost:3000/src/components/img/scroll_tab.png")',
+    backgroundImage: `url("${buttonArrowTab}")`,
     backgroundRepeat: 'no-repeat'
   }
 };

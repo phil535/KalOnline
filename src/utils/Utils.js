@@ -30,30 +30,42 @@ export function sleep(timeout) {
   });
 }
 
-const RENDERER = new THREE.WebGLRenderer();
-RENDERER.preserverDrawingBuffer = true;
-const GTX_LOADER = new GTXLoader();
-const SCENE = new THREE.Scene();
-export async function gtxToImage(url) {
-  const texture = await new Promise((resolve, reject) => {
-    const texture = GTX_LOADER.load(url, () => {
-      resolve(texture);
-    }, undefined, reject);
-  });
+export const loadGTX = (() => {
+  const GTX_LOADER = new GTXLoader();
 
-  const { width, height } = texture.image;
+  return (url) => {
+    return new Promise((resolve, reject) => {
+      const texture = GTX_LOADER.load(url, () => {
+        resolve(texture);
+      }, undefined, reject);
+    });
+  };
+})();
 
-  RENDERER.setSize(width, height);
+export const textureToImage = (() => {
+  const RENDERER = new THREE.WebGLRenderer();
+  RENDERER.preserverDrawingBuffer = true;
+  const SCENE = new THREE.Scene();
 
-  const geometry = new THREE.PlaneGeometry(width, height, 1, 1);
-  const material = new THREE.MeshBasicMaterial({ map: texture });
-  const plane = new THREE.Mesh(geometry, material);
+  return (texture) => {
+    const { width, height } = texture.image;
 
-  SCENE.add(plane);
+    RENDERER.setSize(width, height);
 
-  const camera = new THREE.OrthographicCamera(width / -2, width / 2, height / 2, height / -2, 0, 1);
+    const geometry = new THREE.PlaneGeometry(width, height, 1, 1);
+    const material = new THREE.MeshBasicMaterial({ map: texture });
+    const plane = new THREE.Mesh(geometry, material);
 
-  RENDERER.render(SCENE, camera);
+    SCENE.add(plane);
 
-  return RENDERER.domElement;
-}
+    const camera = new THREE.OrthographicCamera(width / -2, width / 2, height / 2, height / -2, 0, 1);
+
+    RENDERER.render(SCENE, camera);
+
+    return RENDERER.domElement;
+  };
+})();
+
+export const canvasToBlob = canvas => new Promise(resolve => {
+  canvas.toBlob(resolve, 'image/png');
+});

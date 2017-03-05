@@ -1,6 +1,9 @@
 import React from 'react';
 import BorderBox from './BorderBox.js';
 import injectSheet from 'react-jss'
+import statusLeft from 'data/HyperText/status_left.bmp!src/plugins/bmp.js';
+import statusRight from 'data/HyperText/status_right.bmp!src/plugins/bmp.js';
+import compass from 'data/HyperText/compas.bmp!src/plugins/bmp.js';
 
 const styles = {
   statusBarContainer: {
@@ -14,19 +17,19 @@ const styles = {
   statusBarLeft: {
     width: '13px',
     height: '52px',
-    backgroundImage: 'url("http://localhost:3000/src/components/img/status_left.png")'
+    backgroundImage: `url("${statusLeft}")`
   },
   statusBarRight: {
     width: '96px',
     height: '52px',
-    backgroundImage: 'url("http://localhost:3000/src/components/img/status_right.png")'
+    backgroundImage: `url("${statusRight}")`
   },
   compass: {
     marginTop: '2px',
     marginLeft: '13px',
     width: '49px',
     height: '49px',
-    backgroundImage: 'url("http://localhost:3000/src/components/img/compass.png")'
+    backgroundImage: `url("${compass}")`
   },
   bar: {
     boxSizing: 'border-box',
