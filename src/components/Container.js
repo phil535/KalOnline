@@ -8,7 +8,9 @@ const styles = {
     fontFamily: '"apple_regular", monospace',
     fontSize: '10px',
     color: 'white',
-    position: 'relative'
+    position: 'relative',
+    width: '100%',
+    height: '100%'
   },
   '@font-face': {
     fontFamily: 'apple_regular',
@@ -20,10 +22,10 @@ const styles = {
 
 class Container extends React.Component {
   render() {
-    const { children, classes, width, height } = this.props;
+    const { children, classes } = this.props;
 
     return (
-      <div style={{ width, height }} className={classes.container}>
+      <div className={classes.container}>
         {children}
       </div>
     );

@@ -9,7 +9,7 @@ import preset from 'jss-preset-default';
 
 jss.setup(preset());
 
-ReactDOM.render(React.createElement(Container, { width: 720, height: 480 }, [
+ReactDOM.render(React.createElement(Container, null, [
   React.createElement(ChatBox, { key: 'chatbox' }),
   React.createElement(StatusBar, {
     key: 'statusbar',
