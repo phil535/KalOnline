@@ -146,7 +146,7 @@ const loader = new GBLoader();
     });
   }
   console.log(JSON.stringify(headers, null, 2));
-}());
+})();
 
 // loader.load('/Data/OBJECTS/b/1/land/[a]tree_p02.gb', loaded);
 
