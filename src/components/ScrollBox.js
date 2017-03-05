@@ -1,10 +1,49 @@
-import styles from './ScrollBox.css';
-import React, { PropTypes } from 'react';
+import React from 'react';
 import ReactHeight from 'react-height';
+import injectSheet from 'react-jss'
 
-export default class ScrollBox extends React.Component {
+const styles = {
+  scrollBoxContainer: {
+    display: 'flex',
+    overflowY: 'hidden'
+  },
+  childrenContainer: {
+    float: 'left',
+    flexGrow: '1',
+    minHeight: '100%'
+  },
+  scrollContainer: {
+    padding: '1px',
+    boxSizing: 'borderBox',
+    height: '100%',
+    float: 'left',
+    flexShrink: 0,
+    width: '11px',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  scrollTop: {
+    height: '12px',
+    width: '9px',
+    backgroundImage: 'url("http://localhost:3000/src/components/img/button_arrow_up.png")',
+    flexShrink: 0
+  },
+  scrollBottom: {
+    height: '12px',
+    width: '9px',
+    backgroundImage: 'url("http://localhost:3000/src/components/img/button_arrow_down.png")',
+    flexShrink: 0
+  },
+  scrollSlider: {
+    flexGrow: 1,
+    backgroundImage: 'url("http://localhost:3000/src/components/img/scroll_tab.png")',
+    backgroundRepeat: 'no-repeat'
+  }
+};
+
+class ScrollBox extends React.Component {
   static propTypes = {
-    height: PropTypes.number.isRequired
+    height: React.PropTypes.number.isRequired
   };
   state = {
     childrenHeight: 0,
@@ -29,7 +68,7 @@ export default class ScrollBox extends React.Component {
   }
 
   render() {
-    const { height, children } = this.props;
+    const { height, children, classes } = this.props;
     const { scrollPos, childrenHeight } = this.state;
 
     let scrollTextOffset;
@@ -43,25 +82,27 @@ export default class ScrollBox extends React.Component {
     }
 
     return (
-      <div style={{ height }} className={styles.scrollBoxContainer}>
+      <div style={{ height }} className={classes.scrollBoxContainer}>
         <div
           onWheel={this.onScroll}
           style={{ marginTop: `${scrollTextOffset}px` }}
-          className={styles.childrenContainer}
+          className={classes.childrenContainer}
         >
           <ReactHeight onHeightReady={childrenHeight => this.setState({ childrenHeight })}>
           {children}
           </ReactHeight>
         </div>
-        <div className={styles.scrollContainer}>
-          <div onClick={() => this.updateScroll(-12)} className={styles.scrollTop} />
+        <div className={classes.scrollContainer}>
+          <div onClick={() => this.updateScroll(-12)} className={classes.scrollTop} />
           <div
             style={{ backgroundPosition: `0 ${scrollSliderPosition}%` }}
-            className={styles.scrollSlider}
+            className={classes.scrollSlider}
           />
-          <div onClick={() => this.updateScroll(12)} className={styles.scrollBottom} />
+          <div onClick={() => this.updateScroll(12)} className={classes.scrollBottom} />
         </div>
       </div>
     );
   }
 }
+
+export default injectSheet(styles)(ScrollBox);

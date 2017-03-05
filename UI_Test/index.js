@@ -1,11 +1,15 @@
-import 'systemjs-hot-reloader/default-listener.js';
+// import 'systemjs-hot-reloader/default-listener.js';
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import 'src/components/main.css';
 import ChatBox from 'src/components/Chatbox.js';
 import StatusBar from 'src/components/StatusBar.js';
+import jss from 'jss';
+import preset from 'jss-preset-default';
 
-render(React.createElement('div', null, [
+jss.setup(preset());
+
+ReactDOM.render(React.createElement('div', null, [
   React.createElement(ChatBox, { key: 'chatbox' }),
   React.createElement(StatusBar, {
     key: 'statusbar',

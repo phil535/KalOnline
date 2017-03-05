@@ -3,8 +3,10 @@
     "dependencies": {
       "babel-plugin-transform-react-jsx": "npm:babel-plugin-transform-react-jsx@^6.8.0",
       "css": "github:casperlamboo/jspm-loader-css",
+      "jss-preset-default": "npm:jss-preset-default@^1.3.1",
       "react-dom": "npm:react-dom@^15.3.1",
       "react-height": "npm:react-height@^2.1.1",
+      "react-jss": "npm:react-jss@^5.3.0",
       "three": "npm:three@0.84.0"
     },
     "devDependencies": {
@@ -30,6 +32,7 @@
       "https": "npm:jspm-nodelibs-https@^0.2.0",
       "jodid25519": "npm:jodid25519@^1.0.0",
       "jsbn": "npm:jsbn@0.1",
+      "jss": "npm:jss@^6.2.0",
       "net": "npm:jspm-nodelibs-net@^0.2.0",
       "os": "npm:jspm-nodelibs-os@^0.2.0",
       "path": "npm:jspm-nodelibs-path@^0.2.0",
